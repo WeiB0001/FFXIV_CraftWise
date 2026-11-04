@@ -373,6 +373,7 @@ const save = () => { try { localStorage.setItem(STORE, JSON.stringify({ cfg: CFG
 const DB = { ready: false, names: {}, cat: {}, catNames: {}, marketable: null, recipes: {}, vendor: {}, gather: {}, dcs: [], worlds: {} };
 const P = {};       // 物品 id -> 市場資料 {vN,vH,aN,aH,mN,mH,wN,wH,t}
 let priceTarget = null; // P 對應的伺服器
+let marketEpoch = 0; // 切換伺服器時讓舊的非同步回應失效
 
 /* ================= 資料庫載入 ================= */
 async function loadDB() {
@@ -475,6 +476,9 @@ function fillCats() {
 
 /* ================= 設定 UI ================= */
 function targetChanged() {
+  if (ST.abort) ST.abort.abort();
+  resetMarket(); // 立即清除舊伺服器行情；舊請求回來也不會寫入
+  ++planToken;
   renderServerChips(); save();
   if (ST.scanned.length) { ST.scanned = []; ST.rows = []; ST.scanMeta = ''; renderRanking(); setStatus('已切換伺服器，請重新掃描。'); }
 }
@@ -531,7 +535,8 @@ const L = {};              // 物品 id -> 在售掛單 [{p,hq,w,t}]（只在最
 const HIST_DAYS = 14, HIST_N = 80;
 function targetWorldId() { if (CFG.isDC) return null; for (const k in DB.worlds) if (DB.worlds[k] === CFG.target) return +k; return null; }
 function pick(node, f) { if (!node) return undefined; return CFG.isDC ? (node.dc && node.dc[f] !== undefined ? node.dc[f] : undefined) : node.world ? node.world[f] : undefined; }
-function storeAgg(item) {
+function storeAgg(item, epoch = marketEpoch) {
+  if (epoch !== marketEpoch) return;
   const nq = item.nq || {}, hq = item.hq || {};
   const ups = {}; let up = null;
   for (const u of item.worldUploadTimes || []) { if (EXCL.has(u.worldId)) continue; ups[u.worldId] = u.timestamp; if (up == null || u.timestamp > up) up = u.timestamp; }
@@ -546,22 +551,25 @@ function storeAgg(item) {
   };
 }
 /* 抓一批 /aggregated。全服查詢時，最低價若來自已關服的伺服器（拉姆）就先拿掉，回傳待修正的物品 */
-async function fetchAgg(ids, signal) {
-  const t = encodeURIComponent(CFG.target);
+async function fetchAgg(ids, signal, epoch = marketEpoch) {
+  const t = encodeURIComponent(CFG.target), isDC = CFG.isDC;
+  if (epoch !== marketEpoch) return [];
   const data = await fetchJSON(`${UNI}/aggregated/${t}/${ids.join(',')}`, { signal });
   const affected = [];
+  if (epoch !== marketEpoch || (signal && signal.aborted)) return [];
   for (const it of (data && data.results) || []) {
     let hit = false;
-    if (CFG.isDC) for (const q of ['nq', 'hq']) {
+    if (isDC) for (const q of ['nq', 'hq']) {
       const m = it[q] && it[q].minListing;
       if (m && m.dc && EXCL.has(m.dc.worldId)) { delete m.dc; delete m.world; hit = true; }
     }
-    if (hit) affected.push(it); else storeAgg(it);
+    if (hit) affected.push(it); else storeAgg(it, epoch);
   }
   return affected;
 }
 /* 待修正的物品集中起來，逐一查詢同資料中心其他伺服器的最低價（與貝爾的市場小屋相同做法） */
-async function fixExcluded(items, signal, conc, onProg) {
+async function fixExcluded(items, signal, conc, onProg, epoch = marketEpoch) {
+  if (epoch !== marketEpoch) return;
   const dc = DB.dcs.find(d => d.name === CFG.target); const ws = dc ? dc.worlds : [];
   const byId = new Map(items.map(it => [it.itemId, it]));
   const ids = [...byId.keys()], jobs = [];
@@ -573,6 +581,7 @@ async function fixExcluded(items, signal, conc, onProg) {
       const j = jobs[next++];
       try {
         const d = await fetchJSON(`${UNI}/aggregated/${j.w}/${j.ids.join(',')}`, { signal });
+        if (epoch !== marketEpoch || (signal && signal.aborted)) return;
         for (const r of (d && d.results) || []) for (const q of ['nq', 'hq']) {
           const p = r[q] && r[q].minListing && r[q].minListing.world && r[q].minListing.world.price;
           const it = byId.get(r.itemId); if (p == null || !it || !it[q]) continue;
@@ -584,11 +593,11 @@ async function fixExcluded(items, signal, conc, onProg) {
     }
   }
   await Promise.all(Array.from({ length: Math.min(conc, jobs.length) }, worker));
-  items.forEach(storeAgg);
+  if (epoch === marketEpoch && !(signal && signal.aborted)) items.forEach(it => storeAgg(it, epoch));
 }
 /* 成交明細：用來剔除極端值、判斷是否仍有近期成交 */
 function normItems(d) { if (!d) return []; const it = d.items; if (Array.isArray(it)) return it; if (it && typeof it === 'object') return Object.values(it).filter(Boolean); if (d.itemID) return [d]; return []; }
-async function fetchHist(ids, signal, conc, onProg) {
+async function fetchHist(ids, signal, conc, onProg, epoch = marketEpoch) {
   const t = encodeURIComponent(CFG.target);
   const batches = []; for (let i = 0; i < ids.length; i += 100) batches.push(ids.slice(i, i + 100));
   let next = 0, done = 0, failed = 0;
@@ -598,6 +607,7 @@ async function fetchHist(ids, signal, conc, onProg) {
       const b = batches[next++];
       try {
         const d = await fetchJSON(`${UNI}/history/${t}/${b.join(',')}?entriesToReturn=${HIST_N}&entriesWithin=${HIST_DAYS * 86400}`, { signal });
+        if (epoch !== marketEpoch || (signal && signal.aborted)) return;
         b.forEach(id => { H[id] = []; });
         for (const it of normItems(d)) H[it.itemID] = (it.entries || [])
           .filter(e => e && e.pricePerUnit > 0 && !EXCL.has(e.worldID))
@@ -607,13 +617,13 @@ async function fetchHist(ids, signal, conc, onProg) {
     }
   }
   await Promise.all(Array.from({ length: Math.min(conc, batches.length) }, worker));
-  RB.clear();
+  if (epoch === marketEpoch) RB.clear();
   return failed;
 }
-function resetMarket() { for (const k in P) delete P[k]; for (const k in H) delete H[k]; for (const k in L) delete L[k]; RB.clear(); priceTarget = CFG.target; }
+function resetMarket() { ++marketEpoch; for (const k in P) delete P[k]; for (const k in H) delete H[k]; for (const k in L) delete L[k]; RB.clear(); priceTarget = CFG.target; }
 const forget = id => { delete P[id]; delete H[id]; delete L[id]; };
 /* 最低掛單被判定為極端值或過期時，抓前 20 筆掛單，改用其中最便宜的合理掛單 */
-async function fetchListings(ids, signal, conc, onProg) {
+async function fetchListings(ids, signal, conc, onProg, epoch = marketEpoch) {
   const t = encodeURIComponent(CFG.target), tw = targetWorldId();
   const f = 'items.listings.pricePerUnit,items.listings.hq,items.listings.worldID,items.listings.lastReviewTime,items.listings.quantity,listings.pricePerUnit,listings.hq,listings.worldID,listings.lastReviewTime,listings.quantity,itemID,items.itemID';
   const batches = []; for (let i = 0; i < ids.length; i += 100) batches.push(ids.slice(i, i + 100));
@@ -624,6 +634,7 @@ async function fetchListings(ids, signal, conc, onProg) {
       const b = batches[next++];
       try {
         const d = await fetchJSON(`${UNI}/${t}/${b.join(',')}?listings=20&entries=0&fields=${f}`, { signal });
+        if (epoch !== marketEpoch || (signal && signal.aborted)) return;
         // 單一物品時 Universalis 直接回本體；多物品時以 id 為鍵
         const map = b.length === 1 ? { [b[0]]: d } : ((d && d.items) || {});
         for (const id of b) {
@@ -643,6 +654,7 @@ function needsListings(id) {
 }
 async function fetchPrices(ids, { signal, label = '抓價', conc = 6, onBatch, hist = true } = {}) {
   if (priceTarget !== CFG.target) resetMarket();
+  const epoch = marketEpoch;
   const uniq = [...new Set(ids)].filter(id => DB.marketable.has(+id));
   const need = uniq.filter(id => !P[id]);
   const batches = []; for (let i = 0; i < need.length; i += 100) batches.push(need.slice(i, i + 100));
@@ -651,17 +663,18 @@ async function fetchPrices(ids, { signal, label = '抓價', conc = 6, onBatch, h
     while (next < batches.length) {
       if (signal && signal.aborted) return;
       const b = batches[next++];
-      try { affected.push(...await fetchAgg(b, signal)); } catch (e) { if (e.name === 'AbortError') return; failed++; }
+      try { affected.push(...await fetchAgg(b, signal, epoch)); } catch (e) { if (e.name === 'AbortError') return; failed++; }
       done++; onBatch && onBatch(done, batches.length, failed, label);
     }
   }
   await Promise.all(Array.from({ length: Math.min(conc, batches.length) }, worker));
-  if (affected.length) await fixExcluded(affected, signal, conc, (d, t) => onBatch && onBatch(d, t, 0, `排除關服伺服器 ${affected.length} 項`));
-  if (hist && !(signal && signal.aborted)) {
+  if (epoch !== marketEpoch || (signal && signal.aborted)) return { total: batches.length, failed, count: need.length, stale: true };
+  if (affected.length) await fixExcluded(affected, signal, conc, (d, t) => onBatch && onBatch(d, t, 0, `排除關服伺服器 ${affected.length} 項`), epoch);
+  if (hist && epoch === marketEpoch && !(signal && signal.aborted)) {
     const hn = uniq.filter(id => !H[id] && P[id]);
-    if (hn.length) failed += await fetchHist(hn, signal, conc, (d, t, f) => onBatch && onBatch(d, t, f, label + '・成交明細'));
+    if (hn.length) failed += await fetchHist(hn, signal, conc, (d, t, f) => onBatch && onBatch(d, t, f, label + '・成交明細'), epoch);
     const ln = uniq.filter(needsListings);
-    if (ln.length && !(signal && signal.aborted)) await fetchListings(ln, signal, conc, (d, t) => onBatch && onBatch(d, t, 0, `補抓被排除的掛單 ${ln.length} 項`));
+    if (ln.length && epoch === marketEpoch && !(signal && signal.aborted)) await fetchListings(ln, signal, conc, (d, t) => onBatch && onBatch(d, t, 0, `補抓被排除的掛單 ${ln.length} 項`), epoch);
   }
   return { total: batches.length, failed, count: need.length };
 }
@@ -766,7 +779,9 @@ function resolve(id, memo, depth = 0, stack = new Set()) {
   const giAll = DB.gather[id] ? gatherInfo(id, false) : null;
   gi = gatherInfo(id);
   if (!gi && giAll && ST.ov[id] === 'gather') gi = giAll;
-  if (CFG.src.gather && gi) opts.gather = ((mi && mi.value) || 0) * CFG.gPct / 100;
+  // 自採計價比例為 0 時允許現金零成本；比例大於 0 但缺市場價時，不應虛構零成本。
+  if (CFG.src.gather && gi && (CFG.gPct === 0 || (mi && mi.value != null)))
+    opts.gather = CFG.gPct === 0 ? 0 : mi.value * CFG.gPct / 100;
   const rec = DB.recipes[id];
   let kids = null;
   if (CFG.src.craft && depth < MAXD && craftable(rec) && !stack.has(id)) {
@@ -975,8 +990,20 @@ $('suggest').addEventListener('click', e => { const b = e.target.closest('button
 document.addEventListener('click', e => { if (!e.target.closest('.picker')) $('suggest').classList.add('hidden'); });
 $('batch').addEventListener('input', () => { ST.batch = Math.min(9999, Math.max(1, Math.floor(+$('batch').value) || 1)); save(); renderPlanner(); });
 $('refresh-item').addEventListener('click', async () => {
-  if (!ST.selected) return; const ids = [ST.selected, ...closure([ST.selected])]; ids.forEach(forget); RB.clear();
-  delete detailCache[ST.selected]; renderPlanner(); toast('已重新抓取行情');
+  if (!ST.selected) return;
+  const btn = $('refresh-item'), id = ST.selected, target = CFG.target;
+  const ids = [id, ...closure([id])];
+  btn.disabled = true; btn.textContent = '↻ 更新中…';
+  try {
+    ids.forEach(forget); RB.clear();
+    delete detailCache[id];
+    const result = await fetchPrices(ids, { label: '重新抓價' });
+    if (target !== CFG.target || result.stale) return;
+    await renderPlanner();
+    if (result.failed || ids.some(x => DB.marketable.has(+x) && !P[x])) toast('部分行情抓取失敗，請稍後重試');
+    else toast('行情已更新');
+  } catch (e) { toast('行情更新失敗，請稍後重試'); }
+  finally { btn.disabled = false; btn.textContent = '↻ 重新抓價'; }
 });
 const detailCache = {};
 async function loadDetail(id) {
