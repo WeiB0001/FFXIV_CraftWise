@@ -100,6 +100,10 @@ td strong{display:block;font-size:13px}td small{display:block;font-size:11px;col
 .rrow .sc{display:flex;flex-direction:column;gap:5px}.rrow .sc span{font-size:12px;font-weight:700}
 .rrow .sc .track{height:6px;border-radius:4px;background:#22344a;overflow:hidden}.rrow .sc .scorebar{margin:0;height:100%}
 .rrow .fa{display:flex;gap:6px;margin-top:6px}
+.vtag{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:7px;white-space:nowrap}
+.vtag.sell{background:#4a2631;color:#ffb3bf;border:1px solid #8a4152}.vtag.craft{background:#173a33;color:#a6f0dc;border:1px solid #2f6f62}
+.rrow.sellmat{border-color:#5a3240;background:linear-gradient(160deg,#21202f,#171b29);box-shadow:inset 3px 0 0 #e0788a}
+.rrow.sellmat .profit{opacity:.75}
 .rlist .empty{border:1px dashed #2b4157;border-radius:13px}
 @media(max-width:900px){.rhead{display:none}
  .rrow{grid-template-columns:30px 1fr auto;grid-template-areas:"st nm pf" "st cr sc" "st c1 c2" "st c3 c3";row-gap:8px}
@@ -153,7 +157,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
    <div class="controls"><div class="field"><label for="c-lvl">製作等級 ≤</label><input class="input" id="c-lvl" type="number" min="1" max="100" value="100"></div><div class="field"><label for="c-minlvl">成品等級 ≥</label><input class="input" id="c-minlvl" type="number" min="1" max="100" value="1"></div><div class="field"><label for="g-lvl">採集等級 ≤</label><input class="input" id="g-lvl" type="number" min="1" max="100" value="100"></div></div></div>
   <div class="group"><span class="flabel">材料成本來源（逐項取最低）</span><div class="chips sm" id="src-chips"></div>
    <div class="controls"><div class="field"><label for="g-pct">自採計價（市價 %）</label><input class="input" id="g-pct" type="number" min="0" max="100" step="5" value="0"></div><div class="field"><label for="mat-basis">市場材料價</label><select class="input" id="mat-basis"><option value="min">目前最低掛單</option><option value="avg">近期成交均價</option><option value="low">兩者取低</option></select></div></div>
-   <div class="controls"><label class="switch"><input type="checkbox" id="g-nolimited"> 自採排除限時節點</label><label class="switch"><input type="checkbox" id="g-nolegend" checked> 自採排除傳說節點</label></div></div>
+   <div class="controls"><label class="switch"><input type="checkbox" id="g-nolimited"> 自採排除限時節點</label><label class="switch"><input type="checkbox" id="g-nolegend"> 自採排除傳說節點</label></div></div>
   <div class="group"><span class="flabel">成品售價</span><div class="chips sm" id="qual-chips"><button class="chip on" data-q="all">綜合</button><button class="chip" data-q="nq">只算 NQ</button><button class="chip" data-q="hq">只算 HQ</button></div>
    <div class="controls"><div class="field"><label for="sell-basis">售價基準</label><select class="input" id="sell-basis"><option value="avg">近期成交均價</option><option value="min">目前最低掛單</option><option value="low">兩者取低（保守）</option></select></div><div class="field"><label for="tax">市場稅 (%)</label><input class="input" id="tax" type="number" min="0" max="20" step="1" value="5"></div><div class="field"><label for="min-vel">每日售出 ≥</label><input class="input" id="min-vel" type="number" min="0" step="0.5" value="1"></div></div></div>
   <div class="group"><span class="flabel">資料品質</span>
@@ -172,17 +176,17 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
  <div class="controls" style="margin-bottom:12px">
   <div class="field search"><label for="search">搜尋商品</label><input class="input" id="search" placeholder="名稱或分類…"></div>
   <div class="field"><label for="cat">分類</label><select class="input" id="cat"><option value="">全部分類</option></select></div>
-  <div class="field"><label for="sort">排行依據</label><select class="input" id="sort"><option value="score">划算度</option><option value="profit">淨利</option><option value="velocity">每日售出</option><option value="cost">單個成本（低→高）</option><option value="price">單個售價</option><option value="roi">ROI</option></select></div>
+  <div class="field"><label for="sort">排行依據</label><select class="input" id="sort"><option value="score">划算度</option><option value="profit">淨利</option><option value="added">加工增值（比單賣材料）</option><option value="velocity">每日售出</option><option value="cost">單個成本（低→高）</option><option value="price">單個售價</option><option value="roi">ROI</option></select></div>
   <div class="field"><label for="max-cost">單個成本上限 (G)</label><input class="input" id="max-cost" type="number" min="0" step="1000" value="0" title="0 = 不限"></div>
  </div>
- <div class="controls" style="margin-bottom:14px"><label class="switch"><input type="checkbox" id="only-profit" checked> 只看有利潤</label><label class="switch"><input type="checkbox" id="hide-missing" checked> 隱藏材料缺價</label><label class="switch"><input type="checkbox" id="no-gather-only"> 只看不需自採</label><label class="switch"><input type="checkbox" id="hide-stale" checked> 隱藏行情過期</label><label class="switch"><input type="checkbox" id="fav-only"> 只看收藏 ★</label></div>
+ <div class="controls" style="margin-bottom:14px"><label class="switch"><input type="checkbox" id="only-profit" checked> 只看有利潤</label><label class="switch"><input type="checkbox" id="hide-missing" checked> 隱藏材料缺價</label><label class="switch"><input type="checkbox" id="no-gather-only"> 只看不需自採</label><label class="switch" title="自採材料直接拿去賣，不如做成成品賣的才顯示"><input type="checkbox" id="worth-craft"> 只看比單賣材料划算</label><label class="switch"><input type="checkbox" id="hide-stale" checked> 隱藏行情過期</label><label class="switch"><input type="checkbox" id="fav-only"> 只看收藏 ★</label></div>
  <div class="rlist" id="rank-list">
   <div class="rhead"><span></span><span>名稱</span><span>製作</span><span class="sortable num" data-k="cost">單個成本</span><span class="sortable num" data-k="price">單個售價</span><span class="sortable num" data-k="profit">淨利</span><span class="sortable num" data-k="velocity">每日售出</span><span class="sortable" data-k="score">划算度</span></div>
   <div id="rank-body"><div class="empty">資料庫載入後按「開始掃描」。</div></div>
  </div>
  <div class="controls" style="margin-top:12px;justify-content:space-between"><span class="subtle" id="count"></span><button class="btn small hidden" id="more-btn">顯示更多</button></div>
 </div>
-<div class="note">收益是估算，不保證獲利。淨利 = 售價 × (1−稅) − 單個成本；單個成本 = Σ 材料單價 × 數量 ÷ 成品數。每日售出 = 市場近期日均成交件數。售價與材料市價都已剔除極端值並排除過期掛單。「自採」預設計為 0 G，可在進階設定改成市價的百分比。未計入製作失敗、HQ 成功率與時間成本。</div>
+<div class="note">收益是估算，不保證獲利。淨利 = 售價 × (1−稅) − 單個成本；單個成本 = Σ 材料單價 × 數量 ÷ 成品數。每日售出 = 市場近期日均成交件數。售價與材料市價都已剔除極端值並排除過期掛單。「自採」成本預設計為 0 G，但淨利下方的「比單賣材料」會用自採材料的市價告訴你：做成成品是否比直接賣材料划算。未計入製作失敗、HQ 成功率與時間成本。</div>
 </section>
 
 <!-- ============ 生產規劃 ============ -->
@@ -222,6 +226,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
  <b>材料逐項取最低</b>：每種材料比較 ① 市場（最低掛單或成交均價）② NPC 吉爾商店 ③ 自採（市價 × 自採計價 %）④ 自製（遞迴計算它自己的材料，最多 4 層，並除以產出數），自動挑最便宜的；在「生產規劃」可逐項改成指定來源，偏好會套用到所有用到該材料的配方。<br>
  <b>剔除極端值</b>：每個成品與材料都抓近 14 天最多 80 筆成交，用中位數 ± 3 × 1.4826 × MAD（約 3σ）剔除極端成交後取平均（樣本少於 4 筆不剔除；近 14 天沒有成交就不採用舊均價）。最低掛單（NQ、HQ 各自對照同品質成交）若低於中位數 60% 或高於 180% 且超出 3σ 範圍（異常低的釣魚價、異常高的亂掛），或該筆掛單超過設定時數沒有被重新確認，就不採用，改抓前 20 筆掛單找最便宜的合理掛單；都不合理時改用剔除後的成交均價。可在掃描設定關閉。<br>
  <b>時效</b>：每列顯示行情最後上傳時間；超過「掛單資料過期」時數會標紅，預設從排行隱藏。行情來自 Universalis 的玩家上傳，只有有人開啟市場板的物品才會更新。<br>
+ <b>單賣材料 vs 製成成品</b>：自採材料雖然成本算 0（或自採計價 %），仍會用它的市價（同樣剔除極端值）估算「直接拿去賣」能拿多少。加工增值 = 成品售價 ×(1−稅) − 實際要買的材料 − 自採材料市值 ×(1−稅)；大於 0 代表做成成品比單賣材料划算。自製中間材裡用到的自採材料也會一起算進去。<br>
  <b>划算度</b>：淨利<sup>w₂</sup> × 每日售出<sup>w₁</sup> ÷ 成本基準<sup>w₃</sup>（預設 1、0.5、0.5），在單個成本與每日售出數量之間取平衡；成本基準至少取售價 10%。虧錢的配方 0 分。<br>
  <b>缺價</b>：任何材料四種來源都抓不到價格時整筆標成「材料缺價」，不會當成 0 元。<br>
  <b>品質</b>：材料以 NQ／HQ 中較便宜的掛單計價；成品可選綜合、只算 NQ 或只算 HQ 的售價（HQ 需自行確保做得出 HQ）。
@@ -318,16 +323,16 @@ async function fetchRepoJSON(path) {
 /* ================= 狀態 ================= */
 const DEF = {
   dc: '陸行鳥', target: '陸行鳥', isDC: true, jobs: [8, 9, 10, 11, 12, 13, 14, 15], cLvl: 100, cMinLvl: 1,
-  src: { mkt: true, npc: true, gather: true, craft: true }, gLvl: 100, gPct: 0, matBasis: 'min', noLimited: false, noLegend: true,
+  src: { mkt: true, npc: true, gather: true, craft: true }, gLvl: 100, gPct: 0, matBasis: 'min', noLimited: false, noLegend: false,
   quality: 'all', sellBasis: 'avg', tax: 5, minVel: 1, wv: 0.5, wa: 1, wc: 0.5,
   sort: 'score', desc: true, onlyProfit: true, hideMissing: true, noGatherOnly: false, maxCost: 0, minROI: 0,
-  robust: true, staleH: 48, hideStale: true, favOnly: false,
+  robust: true, staleH: 48, hideStale: true, favOnly: false, worthCraft: false,
 };
 const STORE = 'craftwise-live-v1';
 let saved = {}; try { saved = JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch { saved = {}; }
 const CFG = Object.assign({}, DEF, saved.cfg || {}); CFG.src = Object.assign({}, DEF.src, (saved.cfg || {}).src || {});
 if (!('wc' in (saved.cfg || {}))) CFG.wv = DEF.wv;   // 舊版設定：划算度公式已改
-if (!['score', 'profit', 'velocity', 'cost', 'price', 'roi'].includes(CFG.sort)) { CFG.sort = 'score'; CFG.desc = true; }
+if (!['score', 'profit', 'added', 'velocity', 'cost', 'price', 'roi'].includes(CFG.sort)) { CFG.sort = 'score'; CFG.desc = true; }
 const ST = {
   tab: 'ranking', selected: saved.selected || null, batch: saved.batch || 5,
   ov: saved.ov && typeof saved.ov === 'object' ? saved.ov : {},          // 材料 id -> 指定來源
@@ -354,6 +359,8 @@ async function loadDB() {
       fetchJSON(UNI + '/marketable'),
       fetchRepoJSON(TCJ + '/nodes.json').catch(() => null),
     ]);
+    // 釣魚點不在 nodes.json 裡，另外讀（失敗不影響其他功能）
+    const [fishSpots, bigFish] = await Promise.all([fetchRepoJSON(TCJ + '/fishing-spots.json').catch(() => null), fetchRepoJSON(TCJ + '/legendary-fish.json').catch(() => null)]);
     // 伺服器
     if (srv && srv[0] && srv[1]) {
       srv[1].forEach(w => DB.worlds[w.id] = w.name);
@@ -399,6 +406,14 @@ async function loadDB() {
           const g = DB.gather[iid] || (DB.gather[iid] = { nodes: [] });
           g.nodes.push({ job, lvl: n.level || 0, limited: !!n.limited, legend: !!(n.legendary || n.folklore) });
         }
+      }
+    }
+    if (Array.isArray(fishSpots)) {
+      const big = bigFish || {};
+      for (const sp of fishSpots) for (const iid of sp.fishes || []) {
+        if (!iid) continue;
+        const g = DB.gather[iid] || (DB.gather[iid] = { nodes: [] });
+        g.nodes.push({ job: 'FSH', lvl: sp.level || 0, limited: false, legend: !!big[iid], fish: true });
       }
     }
     DB.ready = true;
@@ -458,7 +473,7 @@ $('src-chips').addEventListener('click', e => {
 $('qual-chips').addEventListener('click', e => { const b = e.target.closest('[data-q]'); if (!b) return; CFG.quality = b.dataset.q; renderStaticChips(); save(); recompute(); });
 const NUMS = { 'stale-h': 'staleH', 'c-lvl': 'cLvl', 'c-minlvl': 'cMinLvl', 'g-lvl': 'gLvl', 'g-pct': 'gPct', tax: 'tax', 'min-vel': 'minVel', 'max-cost': 'maxCost' };
 const SELS = { 'mat-basis': 'matBasis', 'sell-basis': 'sellBasis', sort: 'sort' };
-const CHKS = { 'g-nolimited': 'noLimited', 'g-nolegend': 'noLegend', 'only-profit': 'onlyProfit', 'hide-missing': 'hideMissing', 'no-gather-only': 'noGatherOnly', robust: 'robust', 'hide-stale': 'hideStale', 'fav-only': 'favOnly' };
+const CHKS = { 'g-nolimited': 'noLimited', 'g-nolegend': 'noLegend', 'only-profit': 'onlyProfit', 'hide-missing': 'hideMissing', 'no-gather-only': 'noGatherOnly', robust: 'robust', 'hide-stale': 'hideStale', 'fav-only': 'favOnly', 'worth-craft': 'worthCraft' };
 function syncInputs() {
   for (const [id, k] of Object.entries(NUMS)) $(id).value = CFG[k];
   for (const [id, k] of Object.entries(SELS)) $(id).value = CFG[k];
@@ -688,12 +703,19 @@ function matInfo(id) {
 }
 const marketMat = id => { const m = matInfo(id); return m ? m.value : null; };
 function marketWorld(id) { const m = matInfo(id); if (!m || m.usedAvg) return ''; return m.world ? (DB.worlds[m.world] || '') : (CFG.isDC ? '' : CFG.target); }
-function gatherInfo(id) {
+/* strict = 依設定（採集等級、排除限時／傳說）過濾；false = 只要遊戲裡採得到就算，用於手動指定「自採」 */
+function gatherInfo(id, strict = true) {
   const g = DB.gather[id]; if (!g) return null;
-  const ok = g.nodes.filter(n => (!n.lvl || n.lvl <= CFG.gLvl) && !(CFG.noLimited && n.limited) && !(CFG.noLegend && n.legend));
+  const ok = strict ? g.nodes.filter(n => (!n.lvl || n.lvl <= CFG.gLvl) && !(CFG.noLimited && n.limited) && !(CFG.noLegend && n.legend)) : g.nodes;
   if (!ok.length) return null;
   const jobs = [...new Set(ok.map(n => n.job))], lvl = Math.min(...ok.map(n => n.lvl || 1));
-  return { jobs, lvl, limited: ok.every(n => n.limited) };
+  const why = [];
+  if (!strict) {
+    if (ok.every(n => n.legend)) why.push('傳說');
+    if (ok.every(n => n.limited)) why.push('限時');
+    if (ok.every(n => n.lvl && n.lvl > CFG.gLvl)) why.push(`需 Lv${lvl}`);
+  }
+  return { jobs, lvl, limited: ok.every(n => n.limited), legend: ok.every(n => n.legend), why };
 }
 function craftable(rec) { return rec && CFG.jobs.includes(rec.job) && rec.lvl <= CFG.cLvl; }
 /* 單一材料：比較所有允許的來源，取最低（或使用者指定的來源） */
@@ -706,7 +728,11 @@ function resolve(id, memo, depth = 0, stack = new Set()) {
   if (CFG.src.mkt && mi && mi.value != null) opts.mkt = mi.value;
   if (CFG.src.npc && DB.vendor[id] > 0) opts.npc = DB.vendor[id];
   let gi = null;
-  if (CFG.src.gather && (gi = gatherInfo(id))) opts.gather = ((mi && mi.value) || 0) * CFG.gPct / 100;
+  // 被設定排除的採集品（傳說／限時／等級不足）不參與自動取最低，但手動指定「自採」時仍可使用
+  const giAll = DB.gather[id] ? gatherInfo(id, false) : null;
+  gi = gatherInfo(id);
+  if (!gi && giAll && ST.ov[id] === 'gather') gi = giAll;
+  if (CFG.src.gather && gi) opts.gather = ((mi && mi.value) || 0) * CFG.gPct / 100;
   const rec = DB.recipes[id];
   let kids = null;
   if (CFG.src.craft && depth < MAXD && craftable(rec) && !stack.has(id)) {
@@ -721,7 +747,11 @@ function resolve(id, memo, depth = 0, stack = new Set()) {
   const best = src;
   const want = ST.ov[id];
   if (want && opts[want] != null) { src = want; unit = opts[want]; }
-  const out = { id, unit, src, best, opts, gi, mi, rec: opts.craft != null ? rec : null, kids: opts.craft != null ? kids : null };
+  // gv：這 1 個材料裡「自己採集的部分」拿去市場賣的市值；gc：其中自採計價的成本（用來和現金成本分開）
+  let gv = 0, gc = 0;
+  if (src === 'gather') { gv = (mi && mi.value) || 0; gc = unit || 0; }
+  else if (src === 'craft' && kids) { rec.ing.forEach((x, i) => { gv += (kids[i].gv || 0) * x.amount; gc += (kids[i].gc || 0) * x.amount; }); gv /= rec.yields; gc /= rec.yields; }
+  const out = { id, unit, src, best, opts, gi, giAll, mi, gv, gc, rec: opts.craft != null ? rec : null, kids: opts.craft != null ? kids : null };
   memo.set(key, out);
   return out;
 }
@@ -764,6 +794,15 @@ function evalItem(id, memo) {
   // 划算度：在「單個成本」與「每日售出數量」之間取平衡（成本基準至少取售價 10%，避免 0 成本無限大）
   out.costBase = Math.max(cost || 0, (s.price || 0) * 0.1, 1);
   out.score = out.profit > 0 && out.vel > 0 ? Math.pow(out.profit, CFG.wa) * Math.pow(out.vel, CFG.wv) / Math.pow(out.costBase, CFG.wc) : 0;
+  // 單賣材料 vs 製成成品：自採的材料直接拿去市場賣能拿多少，和做成成品比
+  out.gv = missing ? null : ings.reduce((a, x) => a + (x.gv || 0) * x.amount, 0) / rec.yields;
+  const gc = missing ? 0 : ings.reduce((a, x) => a + (x.gc || 0) * x.amount, 0) / rec.yields;
+  if (out.profit != null && out.gv != null) {
+    out.cash = cost - gc;                                   // 實際要花錢買的部分
+    out.matSell = out.gv * (1 - CFG.tax / 100);             // 自採材料直接賣的稅後收入
+    out.craftNet = s.price * (1 - CFG.tax / 100) - out.cash; // 製成成品的稅後收入扣掉買材料的錢
+    out.added = out.craftNet - out.matSell;                 // 加工增值：> 0 代表做成成品比較划算
+  }
   out.stale = CFG.staleH > 0 && (s.up == null || Date.now() - s.up > CFG.staleH * 3600e3);
   return out;
 }
@@ -833,7 +872,7 @@ function filteredRows() {
     r.vel != null && r.vel >= CFG.minVel &&
     !(CFG.hideMissing && r.missing) && !(CFG.onlyProfit && !(r.profit > 0)) &&
     !(CFG.maxCost > 0 && r.cost != null && r.cost > CFG.maxCost) &&
-    !(CFG.noGatherOnly && r.mix.gather) && !(CFG.hideStale && r.stale) && !(CFG.favOnly && !isFav(r.id)));
+    !(CFG.noGatherOnly && r.mix.gather) && !(CFG.hideStale && r.stale) && !(CFG.worthCraft && !(r.added > 0)) && !(CFG.favOnly && !isFav(r.id)));
 }
 const mixTags = mix => Object.keys(SRC).filter(k => mix[k]).map(k => `${SRC[k]}×${mix[k]}`).join(' ');
 /* 一列「卡片化」排行：名稱／製作／單個成本／單個售價／淨利／每日售出／划算度 */
@@ -842,13 +881,17 @@ function rowHTML(r, i, maxScore, opts = {}) {
   const st = r.st;
   const priceSub = st ? `${st.n} 筆成交${st.dropped ? `・剔除 ${st.dropped}` : ''}` : (CFG.robust ? `<span class="negative">近 ${HIST_DAYS} 天無成交</span>` : '未剔除');
   const tip = st ? `中位數 ${fmt(st.med)}｜原始均價 ${fmt(r.rawAvg)}｜最低掛單 ${fmt(r.minL)}｜最近成交 ${ago(st.last)}` : '';
-  return `<div class="rrow" data-id="${r.id}">
+  const sellMat = r.gv > 0 && r.added != null && r.added <= 0;   // 直接賣自採材料比較划算
+  const craftWin = r.gv > 0 && r.added != null && r.added > 0;
+  const verdict = sellMat ? `<span class="vtag sell" title="自採材料直接賣：${fmt(r.matSell)} G／件（稅後）｜做成成品：${fmt(r.craftNet)} G／件">⚠ 直接賣材料較划算・多 ${fmt(-r.added)} G／件</span>`
+    : craftWin ? `<span class="vtag craft" title="自採材料直接賣：${fmt(r.matSell)} G／件（稅後）｜做成成品：${fmt(r.craftNet)} G／件">✓ 製成成品較划算・多 ${fmt(r.added)} G／件</span>` : '';
+  return `<div class="rrow${sellMat ? ' sellmat' : ''}" data-id="${r.id}">
    <div>${starBtn(r.id)}</div>
-   <div class="nm">${opts.rank === false ? '' : `<span class="rk">#${i + 1}</span>`}<b>${esc(r.name)}</b><small>${esc(r.catName)} · <span class="${ageCls(r.up)}">更新 ${ago(r.up)}</span></small>${opts.actions ? `<div class="fa"><button class="btn small" data-open="${r.id}">規劃</button><button class="btn small" data-addfav="${r.id}">＋清單</button></div>` : ''}</div>
+   <div class="nm">${opts.rank === false ? '' : `<span class="rk">#${i + 1}</span>`}<b>${esc(r.name)}</b><small>${esc(r.catName)} · <span class="${ageCls(r.up)}">更新 ${ago(r.up)}</span></small>${verdict}${opts.actions ? `<div class="fa"><button class="btn small" data-open="${r.id}">規劃</button><button class="btn small" data-addfav="${r.id}">＋清單</button></div>` : ''}</div>
    <div class="cr" data-l="製作"><span class="tag craft">${JOBS[r.rec.job]} Lv${r.rec.lvl}${r.rec.stars ? ' ' + '★'.repeat(r.rec.stars) : ''}</span>${r.rec.yields > 1 ? `<span class="tag">×${r.rec.yields}</span>` : ''}${opts.actions && !craftable(r.rec) ? '<span class="tag warn">職業／等級不符</span>' : ''}</div>
    <div class="num" data-l="單個成本"><span class="val">${r.missing ? `<span class="tag warn">缺價 ${r.missing}</span>` : fmt(r.cost)}</span><small>${mixTags(r.mix)}</small></div>
    <div class="num" data-l="單個售價" title="${tip}"><span class="val">${fmt(r.price)}</span><small>${priceSub}</small></div>
-   <div class="num" data-l="淨利"><div class="profit ${r.profit > 0 ? 'positive' : 'negative'}">${r.profit != null ? sgn(r.profit) + fmt(r.profit) : '—'}</div><small>ROI ${r.cost === 0 && r.profit > 0 ? '∞' : pct(r.roi)}</small></div>
+   <div class="num" data-l="淨利"><div class="profit ${r.profit > 0 ? 'positive' : 'negative'}">${r.profit != null ? sgn(r.profit) + fmt(r.profit) : '—'}</div>${r.gv > 0 && r.added != null ? `<small class="${r.added > 0 ? 'positive' : 'negative'}" title="自採材料直接賣：${fmt(r.matSell)} G（稅後）｜做成成品：${fmt(r.craftNet)} G">比單賣材料 ${sgn(r.added)}${fmt(r.added)}</small>` : `<small>ROI ${r.cost === 0 && r.profit > 0 ? '∞' : pct(r.roi)}</small>`}</div>
    <div class="num" data-l="每日售出"><span class="val">${fmt1(r.vel)}</span><small>件／日</small></div>
    <div class="sc" data-l="划算度"><span>${sc.toFixed(1)}</span><div class="track"><div class="scorebar" style="width:${Math.max(2, sc)}%"></div></div></div>
   </div>`;
@@ -877,8 +920,8 @@ $('rank-body').addEventListener('click', e => { const sb = e.target.closest('[da
 $('export-btn').addEventListener('click', () => {
   const rows = sortRows(filteredRows(), CFG.sort, CFG.desc); if (!rows.length) { toast('尚無排行資料'); return; }
   const maxScore = rows.reduce((m, r) => Math.max(m, r.score || 0), 0) || 1;
-  const head = ['物品ID', '物品', '分類', '職業', '等級', '產出數', '單個成本', '單個售價', '淨利', 'ROI%', '每日售出', '划算度', '最低掛單', '材料來源', '材料明細', '成交樣本', '剔除筆數', '原始均價', '行情更新時間'];
-  const lines = rows.map(r => [r.id, r.name, r.catName, JOBS[r.rec.job], r.rec.lvl, r.rec.yields, r.cost != null ? Math.round(r.cost) : '缺價', Math.round(r.price || 0), r.profit != null ? Math.round(r.profit) : '', r.roi != null ? (r.roi * 100).toFixed(1) : '', r.vel != null ? r.vel.toFixed(2) : '', ((r.score || 0) / maxScore * 100).toFixed(1), r.minL ?? '',
+  const head = ['物品ID', '物品', '分類', '職業', '等級', '產出數', '單個成本', '單個售價', '淨利', 'ROI%', '每日售出', '划算度', '自採材料市值', '單賣材料稅後', '加工增值', '最低掛單', '材料來源', '材料明細', '成交樣本', '剔除筆數', '原始均價', '行情更新時間'];
+  const lines = rows.map(r => [r.id, r.name, r.catName, JOBS[r.rec.job], r.rec.lvl, r.rec.yields, r.cost != null ? Math.round(r.cost) : '缺價', Math.round(r.price || 0), r.profit != null ? Math.round(r.profit) : '', r.roi != null ? (r.roi * 100).toFixed(1) : '', r.vel != null ? r.vel.toFixed(2) : '', ((r.score || 0) / maxScore * 100).toFixed(1), r.gv != null ? Math.round(r.gv) : '', r.matSell != null ? Math.round(r.matSell) : '', r.added != null ? Math.round(r.added) : '', r.minL ?? '',
     mixTags(r.mix), r.ings.map(x => `${DB.names[x.id] || x.id}×${x.amount}(${SRC[x.src] || '缺價'} ${fmt(x.unit)})`).join('；'),
     r.st ? r.st.n : 0, r.st ? r.st.dropped : '', r.rawAvg != null ? Math.round(r.rawAvg) : '', r.up ? new Date(r.up).toLocaleString('zh-TW') : '']);
   download(toCSV([head, ...lines]), 'text/csv;charset=utf-8', `craftwise_排行_${CFG.target}.csv`); toast('CSV 已匯出');
@@ -950,6 +993,11 @@ async function renderPlanner() {
      <div class="line"><span>行情更新</span><strong class="${ageCls(r.up)}">${ago(r.up)}</strong></div>
      <div id="detail-box"><div class="subtle">讀取在售掛單…</div></div>
      <div class="box" style="margin-top:12px"><div class="tiny">本批 ${made} 件佔市場每日售出量</div><div class="metric">${r.vel > 0 ? fmt1(made / r.vel * 100) + '%' : '—'}</div><div class="tiny">${r.vel > 0 ? (made / r.vel <= 0.2 ? '量很小，市場吃得下' : made / r.vel <= 1 ? '約一天內的市場成交量，建議分批上架' : `超過 ${fmt1(made / r.vel)} 天的市場成交量，小心滯銷`) : '近期沒有成交資料'}</div></div>
+     ${r.gv > 0 && r.added != null ? `<div class="box cmp" style="margin-top:12px"><div class="tiny">自採材料：單賣 vs 製成成品（${made} 件）</div>
+       <div class="line"><span>直接賣掉自採材料（稅後）</span><strong>${fmt(r.matSell * made)} G</strong></div>
+       <div class="line"><span>做成成品賣（稅後，扣掉買材料 ${fmt(r.cash * made)} G）</span><strong>${fmt(r.craftNet * made)} G</strong></div>
+       <div class="metric ${r.added > 0 ? 'positive' : 'negative'}">${sgn(r.added)}${fmt(r.added * made)} G</div>
+       <div class="tiny">${r.added > 0 ? `做成成品比較划算，加工增值 ${fmt(r.added)} G／件（${r.matSell > 0 ? '+' + fmt1(r.added / r.matSell * 100) + '%' : '材料本身賣不了錢'}）` : `直接賣材料比較划算，做成成品每件少賺 ${fmt(-r.added)} G`}</div></div>` : ''}
      <div class="divider"></div><button class="btn primary" style="width:100%" id="add-plan">＋ 加入採購清單（${made} 件）</button>
      <p class="subtle" style="margin-bottom:0">可加入多個商品，會合併同名材料與中間材需求。</p></div></div>`;
   $('plan-badge').textContent = Object.keys(ST.ov).length ? `已指定 ${Object.keys(ST.ov).length} 項材料來源` : '逐項最低成本';
@@ -975,9 +1023,12 @@ function mktNote(x) {
 function nodeHTML(x, need, memo, depth) {
   const name = DB.names[x.id] || ('#' + x.id);
   const optLabel = { mkt: '市場', npc: 'NPC', gather: '自採', craft: '自製' };
+  const gTag = g => g ? '・' + g.jobs.map(j => GJOB[j]).join('/') + ' Lv' + g.lvl + (g.why && g.why.length ? '（' + g.why.join('、') + '）' : '') : '';
   const opts = Object.keys(optLabel).filter(k => x.opts[k] != null).map(k =>
-    `<span class="opt ${k === x.best ? 'best' : ''} ${k === x.src ? 'chosen' : ''}">${optLabel[k]} ${fmt(x.opts[k])}${k === 'mkt' ? mktNote(x) : ''}${k === 'gather' && x.gi ? '・' + x.gi.jobs.map(j => GJOB[j]).join('/') + ' Lv' + x.gi.lvl : ''}${k === 'craft' && x.rec ? '・' + JOBS[x.rec.job] + ' Lv' + x.rec.lvl : ''}</span>`).join('');
-  const sel = `<select class="input" data-ov="${x.id}" aria-label="${esc(name)} 取得方式"><option value="">自動（最低）</option>${Object.keys(optLabel).filter(k => x.opts[k] != null).map(k => `<option value="${k}" ${ST.ov[x.id] === k ? 'selected' : ''}>${optLabel[k]}</option>`).join('')}</select>`;
+    `<span class="opt ${k === x.best ? 'best' : ''} ${k === x.src ? 'chosen' : ''}">${optLabel[k]} ${fmt(x.opts[k])}${k === 'mkt' ? mktNote(x) : ''}${k === 'gather' && x.gi ? gTag(x.gi) : ''}${k === 'gather' && x.mi && x.mi.value != null ? '・市價 ' + fmt(x.mi.value) : ''}${k === 'craft' && x.rec ? '・' + JOBS[x.rec.job] + ' Lv' + x.rec.lvl : ''}</span>`).join('');
+  const extraGather = CFG.src.gather && x.opts.gather == null && x.giAll;
+  const sel = `<select class="input" data-ov="${x.id}" aria-label="${esc(name)} 取得方式"><option value="">自動（最低）</option>${Object.keys(optLabel).filter(k => x.opts[k] != null || (k === 'gather' && extraGather)).map(k => `<option value="${k}" ${ST.ov[x.id] === k ? 'selected' : ''}>${optLabel[k]}${k === 'gather' && (extraGather || (x.gi && x.gi.why && x.gi.why.length)) ? '（' + (x.giAll.why.join('、') || '已排除') + '）' : ''}</option>`).join('')}</select>`;
+  const extraChip = extraGather ? `<span class="opt" title="進階設定中排除了這類節點，自動取最低時不使用；可在右側下拉選單手動指定自採">可自採${gTag(x.giAll)}・需手動指定</span>` : '';
   let kids = '';
   if (x.src === 'craft' && x.rec) {
     const crafts = Math.ceil(need / x.rec.yields);
@@ -985,7 +1036,7 @@ function nodeHTML(x, need, memo, depth) {
     const sub = x.rec.ing.map(c => ({ ...resolve(c.id, new Map(), depth + 1, new Set([x.id])), amount: c.amount }));
     kids = `<div class="children"><div class="tiny">製作 ${crafts} 次${x.rec.yields > 1 ? `（每次 ${x.rec.yields} 個）` : ''}</div>${sub.map(c => nodeHTML(c, c.amount * crafts, memo, depth + 1)).join('')}</div>`;
   }
-  return `<div class="node"><div class="head"><div><span class="name">${esc(name)}</span> <span class="tag">× ${fmt(need)}</span>${x.unit == null ? ' <span class="tag warn">缺價</span>' : ''}</div><strong>${x.unit != null ? fmt(x.unit * need) + ' G' : '—'}</strong>${sel}</div><div class="opts">${opts || '<span class="opt">沒有任何來源的價格</span>'}</div>${kids}</div>`;
+  return `<div class="node"><div class="head"><div><span class="name">${esc(name)}</span> <span class="tag">× ${fmt(need)}</span>${x.unit == null ? ' <span class="tag warn">缺價</span>' : ''}</div><strong>${x.unit != null ? fmt(x.unit * need) + ' G' : '—'}${x.src === 'gather' && x.gv > 0 ? `<small style="display:block;font-size:11px;color:var(--muted);font-weight:500">單賣值 ${fmt(x.gv * need)} G</small>` : ''}</strong>${sel}</div><div class="opts">${opts || (extraChip ? '' : '<span class="opt">沒有任何來源的價格</span>')}${extraChip}</div>${kids}</div>`;
 }
 $('planner-body').addEventListener('change', e => {
   const s = e.target.closest('select[data-ov]'); if (!s) return;
