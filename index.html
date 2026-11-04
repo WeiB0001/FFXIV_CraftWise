@@ -100,6 +100,9 @@ td strong{display:block;font-size:13px}td small{display:block;font-size:11px;col
 .rrow .sc{display:flex;flex-direction:column;gap:5px}.rrow .sc span{font-size:12px;font-weight:700}
 .rrow .sc .track{height:6px;border-radius:4px;background:#22344a;overflow:hidden}.rrow .sc .scorebar{margin:0;height:100%}
 .rrow .fa{display:flex;gap:6px;margin-top:6px}
+.chead,.crow{grid-template-columns:minmax(170px,2.2fr) minmax(96px,1fr) minmax(96px,1fr) minmax(80px,.8fr) minmax(120px,1.2fr) minmax(100px,1fr) minmax(110px,1fr)}
+.crow .profit{color:var(--gold)}
+
 .vtag{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:7px;white-space:nowrap}
 .vtag.sell{background:#4a2631;color:#ffb3bf;border:1px solid #8a4152}.vtag.craft{background:#173a33;color:#a6f0dc;border:1px solid #2f6f62}
 .rrow.sellmat{border-color:#5a3240;background:linear-gradient(160deg,#21202f,#171b29);box-shadow:inset 3px 0 0 #e0788a}
@@ -111,6 +114,10 @@ td strong{display:block;font-size:13px}td small{display:block;font-size:11px;col
  .rrow>:nth-child(4){grid-area:c1;text-align:left}.rrow>:nth-child(5){grid-area:c2}.rrow>:nth-child(6){grid-area:pf}.rrow>:nth-child(7){grid-area:c3;text-align:left}.rrow>:nth-child(8){grid-area:sc;min-width:90px}
  .rrow [data-l]::before{content:attr(data-l);display:block;font-size:10.5px;color:var(--muted);font-weight:600;margin-bottom:2px}
  .rrow .profit{font-size:21px}.scango{margin-left:0}}
+@media(max-width:900px){.rrow.crow{grid-template-columns:1fr 1fr;grid-template-areas:"nm nm" "pf c4" "c1 c2" "cr c3"}
+ .rrow.crow>:nth-child(1){grid-area:nm}.rrow.crow>:nth-child(2){grid-area:cr;text-align:left}.rrow.crow>:nth-child(3){grid-area:c1;text-align:left}.rrow.crow>:nth-child(4){grid-area:c2;text-align:right}
+ .rrow.crow>:nth-child(5){grid-area:pf;text-align:left}.rrow.crow>:nth-child(6){grid-area:c4;text-align:right}.rrow.crow>:nth-child(7){grid-area:c3;text-align:right}
+ .rrow.crow .nm small{white-space:normal}}
 .star{background:none;border:0;font-size:17px;line-height:1;color:#4f6378;padding:2px 4px}.star.on{color:var(--gold)}.star:hover{color:var(--gold)}
 .age{font-size:11px;color:var(--muted)}.age.old{color:var(--red)}
 .footer{font-size:12px;line-height:1.8;color:var(--muted);margin-top:20px}
@@ -132,6 +139,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
 <button data-tab="ranking" class="active"><span class="ico">▦</span> 商機排行榜</button>
 <button data-tab="planner"><span class="ico">◇</span> 生產規劃</button>
 <button data-tab="favorites"><span class="ico">★</span> 我的收藏 <span class="cnt" id="fav-cnt">0</span></button>
+<button data-tab="collect"><span class="ico">◈</span> 收藏品</button>
 <button data-tab="shopping"><span class="ico">▤</span> 採購清單 <span class="cnt" id="plan-cnt">0</span></button>
 <button data-tab="settings"><span class="ico">⚙</span> 資料與說明</button>
 </nav>
@@ -206,6 +214,23 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
 <div id="fav-content"></div></div>
 </section>
 
+<!-- ============ 收藏品 ============ -->
+<section id="collect" class="page hidden">
+<div class="panel">
+ <div class="panel-title"><h2>收藏品換票・最低成本排行 <span class="tiny" id="col-meta"></span></h2><div class="actions"><button class="btn small" id="col-refresh">↻ 更新行情</button></div></div>
+ <div class="controls" style="margin-bottom:12px">
+  <div class="field"><span class="flabel">兌換票種</span><div class="chips sm" id="col-cur"><button class="chip" data-cur="41784">巧手橙票</button><button class="chip" data-cur="33913">巧手紫票</button></div></div>
+  <div class="field"><label for="col-tier">收藏價值檔位</label><select class="input" id="col-tier"><option value="high">高（最多票）</option><option value="mid">中</option><option value="base">基本</option></select></div>
+  <div class="field"><label for="col-sort">排行依據</label><select class="input" id="col-sort"><option value="cps">每票成本（低→高）</option><option value="ops">每票成本・自採按市價（低→高）</option><option value="cost">單個成本（低→高）</option><option value="scrip">換得票數（多→少）</option></select></div>
+  <div class="field search"><label for="col-search">搜尋</label><input class="input" id="col-search" placeholder="名稱…"></div>
+ </div>
+ <div class="controls" style="margin-bottom:14px"><label class="switch"><input type="checkbox" id="col-myjobs" checked> 只看我的製作職業與等級</label><label class="switch"><input type="checkbox" id="col-hidemiss" checked> 隱藏材料缺價</label></div>
+ <div class="rlist" id="col-list"><div class="rhead chead"><span>名稱</span><span>製作</span><span class="sortable num" data-k="cost">單個成本</span><span class="sortable num" data-k="scrip">換得票數</span><span class="sortable num" data-k="cps">每票成本</span><span class="sortable num" data-k="ops">自採按市價</span><span class="num">換 1,000 票</span></div>
+  <div id="col-body"><div class="empty">資料庫載入中…</div></div></div>
+</div>
+<div class="note">每票成本 = 單個收藏品的材料成本 ÷ 該檔位可換得的票數，材料一樣逐項在市場、NPC、自採、自製中取最低（可到生產規劃逐項指定）。「自採按市價」把自採材料改用市價計算，代表放棄賣掉材料的機會成本。需要做到該檔位的收藏價值才能拿到對應票數；未計入製作失敗與時間成本。票種與票數來自 Teamcraft 的 collectables 資料。</div>
+</section>
+
 <!-- ============ 採購清單 ============ -->
 <section id="shopping" class="page hidden">
 <div class="panel"><div class="panel-title"><h2>待生產商品與材料合併清單</h2><div class="actions"><button class="btn small" id="copy-list">複製文字清單</button><button class="btn small" id="csv-list">匯出 CSV</button><button class="btn small" id="clear-list">清空清單</button></div></div>
@@ -252,6 +277,8 @@ const JOBS = { 8: '木工', 9: '鍛鐵', 10: '鑄甲', 11: '雕金', 12: '製革
 const GJOB = { MIN: '採礦', BTN: '園藝', FSH: '捕魚' };
 const SRC = { mkt: '市場', npc: 'NPC', gather: '自採', craft: '自製' };
 const MAXD = 4;
+const SCRIP = { 41784: '巧手橙票', 33913: '巧手紫票' };
+const TIER = { high: '高', mid: '中', base: '基本' };
 
 /* ================= 小工具 ================= */
 const $ = id => document.getElementById(id);
@@ -338,9 +365,10 @@ const ST = {
   ov: saved.ov && typeof saved.ov === 'object' ? saved.ov : {},          // 材料 id -> 指定來源
   plans: Array.isArray(saved.plans) ? saved.plans : [],                   // [{id, qty}]
   fav: Array.isArray(saved.fav) ? saved.fav.filter(Number.isInteger) : [], // 收藏的成品 id
+  col: Object.assign({ cur: 41784, tier: 'high', sort: 'cps', desc: false, myJobs: true, hideMiss: true }, saved.col || {}),
   rows: [], scanned: [], scanMeta: '', shown: 100, abort: null,
 };
-const save = () => { try { localStorage.setItem(STORE, JSON.stringify({ cfg: CFG, selected: ST.selected, batch: ST.batch, ov: ST.ov, plans: ST.plans, fav: ST.fav })); } catch { } };
+const save = () => { try { localStorage.setItem(STORE, JSON.stringify({ cfg: CFG, selected: ST.selected, batch: ST.batch, ov: ST.ov, plans: ST.plans, fav: ST.fav, col: ST.col })); } catch { } };
 
 const DB = { ready: false, names: {}, cat: {}, catNames: {}, marketable: null, recipes: {}, vendor: {}, gather: {}, dcs: [], worlds: {} };
 const P = {};       // 物品 id -> 市場資料 {vN,vH,aN,aH,mN,mH,wN,wH,t}
@@ -360,7 +388,7 @@ async function loadDB() {
       fetchRepoJSON(TCJ + '/nodes.json').catch(() => null),
     ]);
     // 釣魚點不在 nodes.json 裡，另外讀（失敗不影響其他功能）
-    const [fishSpots, bigFish] = await Promise.all([fetchRepoJSON(TCJ + '/fishing-spots.json').catch(() => null), fetchRepoJSON(TCJ + '/legendary-fish.json').catch(() => null)]);
+    const [fishSpots, bigFish, colls] = await Promise.all([fetchRepoJSON(TCJ + '/fishing-spots.json').catch(() => null), fetchRepoJSON(TCJ + '/legendary-fish.json').catch(() => null), fetchRepoJSON(TCJ + '/collectables.json').catch(() => null)]);
     // 伺服器
     if (srv && srv[0] && srv[1]) {
       srv[1].forEach(w => DB.worlds[w.id] = w.name);
@@ -416,6 +444,12 @@ async function loadDB() {
         g.nodes.push({ job: 'FSH', lvl: sp.level || 0, limited: false, legend: !!big[iid], fish: true });
       }
     }
+    // 收藏品：只收可製作、繁中服已實裝、換巧手橙票／紫票的
+    DB.coll = {};
+    for (const k in colls || {}) {
+      const c = colls[k]; if (!c || !SCRIP[c.reward] || !DB.recipes[k] || !c.high) continue;
+      DB.coll[k] = { id: +k, cur: c.reward, level: c.level, base: c.base, mid: c.mid, high: c.high };
+    }
     DB.ready = true;
     const nRec = Object.keys(DB.recipes).length;
     $('db-badge').textContent = `配方 ${nRec.toLocaleString()}｜NPC 商品 ${Object.keys(DB.vendor).length.toLocaleString()}｜採集品 ${Object.keys(DB.gather).length.toLocaleString()}`;
@@ -425,7 +459,7 @@ async function loadDB() {
     if (!nodes) setStatus('採集節點資料下載失敗，「自採」來源暫時無法使用。', true);
     fillCats();
     $('scan-btn').disabled = false;
-    if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites();
+    if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites(); if (ST.tab === 'collect') renderCollect();
   } catch (e) {
     $('db-badge').textContent = '資料庫載入失敗'; $('db-badge').className = 'badge err';
     $('db-state').textContent = '資料庫載入失敗。';
@@ -488,7 +522,7 @@ for (const k of ['wv', 'wa', 'wc']) $(k).addEventListener('input', () => { CFG[k
 $('search').addEventListener('input', () => { ST.shown = 100; renderRanking(); });
 $('cat').addEventListener('change', () => { ST.shown = 100; renderRanking(); });
 let rcTimer = null;
-function recompute() { clearTimeout(rcTimer); rcTimer = setTimeout(() => { if (ST.scanned.length) { ST.shown = 100; computeAll(); } renderRanking(); if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites(); }, 120); }
+function recompute() { clearTimeout(rcTimer); rcTimer = setTimeout(() => { if (ST.scanned.length) { ST.shown = 100; computeAll(); } renderRanking(); if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites(); if (ST.tab === 'collect') renderCollect(); }, 120); }
 
 /* ================= 市場資料 ================= */
 const H = {};              // 物品 id -> 近 HIST_DAYS 天成交 [{p,hq,t}]（已排除關服伺服器）
@@ -1001,7 +1035,14 @@ async function renderPlanner() {
      <div class="divider"></div><button class="btn primary" style="width:100%" id="add-plan">＋ 加入採購清單（${made} 件）</button>
      <p class="subtle" style="margin-bottom:0">可加入多個商品，會合併同名材料與中間材需求。</p></div></div>`;
   $('plan-badge').textContent = Object.keys(ST.ov).length ? `已指定 ${Object.keys(ST.ov).length} 項材料來源` : '逐項最低成本';
-  loadDetail(id).then(d => {
+  const coll = DB.coll && DB.coll[id];
+  if (coll || !DB.marketable.has(id)) {
+    const box = $('detail-box');
+    if (box) box.innerHTML = coll ? (() => {
+      const rows = ['base', 'mid', 'high'].map(t => `<div class="line"><span>${TIER[t]}檔：收藏價值 ≥ ${fmt(coll[t].rating)}</span><strong>${coll[t].scrip} 張${r.cost != null ? `・${fmt1(r.cost / coll[t].scrip)} G／張` : ''}</strong></div>`).join('');
+      return `<div class="box" style="margin-top:8px"><div class="tiny">收藏品：可換 ${SCRIP[coll.cur]}</div>${rows}</div>`;
+    })() : '<div class="subtle">這個物品無法在市場交易。</div>';
+  } else loadDetail(id).then(d => {
     if (tok !== planToken) return; const box = $('detail-box'); if (!box) return;
     if (!d) { box.innerHTML = '<div class="subtle">在售掛單讀取失敗。</div>'; return; }
     const days = r.vel > 0 ? d.units / r.vel : null;
@@ -1086,6 +1127,77 @@ $('fav-content').addEventListener('click', e => {
 $('fav-refresh').addEventListener('click', () => {
   ST.fav.forEach(id => [id, ...closure([id])].forEach(forget)); RB.clear(); renderFavorites(); toast('正在更新收藏行情');
 });
+
+/* ================= 收藏品 ================= */
+let colToken = 0;
+function collRows() {
+  const C = ST.col, memo = new Map(), q = $('col-search').value.trim().toLowerCase();
+  const out = [];
+  for (const k in DB.coll) {
+    const c = DB.coll[k]; if (c.cur !== +C.cur) continue;
+    const rec = DB.recipes[k];
+    if (C.myJobs && !craftable(rec)) continue;
+    const name = DB.names[k] || '#' + k; if (q && !name.toLowerCase().includes(q)) continue;
+    const ings = rec.ing.map(x => ({ ...resolve(x.id, memo, 1, new Set([+k])), amount: x.amount }));
+    const missing = ings.filter(x => x.unit == null).length;
+    if (C.hideMiss && missing) continue;
+    const cost = missing ? null : ings.reduce((a, x) => a + x.unit * x.amount, 0) / rec.yields;
+    const gv = missing ? null : ings.reduce((a, x) => a + (x.gv || 0) * x.amount, 0) / rec.yields;
+    const gc = missing ? 0 : ings.reduce((a, x) => a + (x.gc || 0) * x.amount, 0) / rec.yields;
+    const t = c[C.tier] || c.high, scrip = (t.scrip || 0) * (t.quantity || 1);
+    const mix = {}; ings.forEach(x => { if (x.src) mix[x.src] = (mix[x.src] || 0) + 1; });
+    const opp = cost != null ? cost - gc + gv : null;            // 自採材料改用市價
+    out.push({ id: +k, name, rec, c, t, scrip, ings, missing, cost, mix, gv,
+      cps: cost != null && scrip > 0 ? cost / scrip : null, ops: opp != null && scrip > 0 ? opp / scrip : null });
+  }
+  return out;
+}
+async function renderCollect() {
+  const C = ST.col;
+  [...$('col-cur').children].forEach(b => b.classList.toggle('on', +b.dataset.cur === +C.cur));
+  $('col-tier').value = C.tier; $('col-sort').value = C.sort; $('col-myjobs').checked = C.myJobs; $('col-hidemiss').checked = C.hideMiss;
+  const body = $('col-body');
+  if (!DB.ready) { body.innerHTML = '<div class="empty">資料庫載入中…</div>'; return; }
+  if (!Object.keys(DB.coll).length) { body.innerHTML = '<div class="empty">收藏品資料下載失敗，請重新整理。</div>'; return; }
+  const tok = ++colToken;
+  const ids = Object.keys(DB.coll).filter(k => DB.coll[k].cur === +C.cur).flatMap(k => closure([+k]));
+  if (ids.some(x => (!P[x] || !H[x]) && DB.marketable.has(+x)) || priceTarget !== CFG.target) {
+    body.innerHTML = '<div class="empty">抓取收藏品材料的即時行情中…</div>';
+    try { await fetchPrices(ids, { label: '收藏品材料' }); } catch { }
+    if (tok !== colToken) return;
+  }
+  // 同分時（例如材料全自採、每票成本都是 0）再依另一種成本排，讓真正便宜的排前面
+  const tie = C.sort === 'ops' ? 'cps' : 'ops';
+  const rows = sortRows(sortRows(collRows(), tie, false), C.sort, C.desc);
+  markHead(document.querySelector('#col-list .chead'), C.sort, C.desc);
+  $('col-meta').textContent = `｜${SCRIP[C.cur]}・${TIER[C.tier]}檔・${CFG.isDC ? CFG.target + '全服' : CFG.target}`;
+  if (!rows.length) { body.innerHTML = `<div class="empty">沒有符合條件的收藏品。${C.myJobs ? '可取消「只看我的製作職業與等級」或到排行榜調整職業／等級。' : ''}</div>`; return; }
+  body.innerHTML = rows.map((r, i) => {
+    const need = r.scrip > 0 ? Math.ceil(1000 / r.scrip) : null;
+    return `<div class="rrow crow" data-id="${r.id}">
+     <div class="nm"><span class="rk">#${i + 1}</span><b>${esc(r.name)}</b><small>收藏價值 ≥ ${fmt(r.t.rating)}（基本 ${fmt(r.c.base.rating)}／中 ${fmt(r.c.mid.rating)}／高 ${fmt(r.c.high.rating)}）</small></div>
+     <div class="cr" data-l="製作"><span class="tag craft">${JOBS[r.rec.job]} Lv${r.rec.lvl}${r.rec.stars ? ' ' + '★'.repeat(r.rec.stars) : ''}</span>${craftable(r.rec) ? '' : '<span class="tag warn">職業／等級不符</span>'}</div>
+     <div class="num" data-l="單個成本"><span class="val">${r.missing ? `<span class="tag warn">缺價 ${r.missing}</span>` : fmt(r.cost) + ' G'}</span><small>${mixTags(r.mix)}</small></div>
+     <div class="num" data-l="換得票數"><span class="val">${r.scrip}</span><small>${r.c.base.scrip}／${r.c.mid.scrip}／${r.c.high.scrip}</small></div>
+     <div class="num" data-l="每票成本"><div class="profit">${r.cps != null ? fmt1(r.cps) : '—'}</div><small>G／張</small></div>
+     <div class="num" data-l="自採按市價"><span class="val">${r.ops != null ? fmt1(r.ops) : '—'}</span><small>${r.gv > 0 ? `自採市值 ${fmt(r.gv)} G` : '無自採材料'}</small></div>
+     <div class="num" data-l="換 1,000 票"><span class="val">${need != null && r.cost != null ? fmt(need * r.cost) + ' G' : '—'}</span><small>${need != null ? `做 ${need} 個` : ''}</small></div>
+    </div>`;
+  }).join('');
+}
+$('col-cur').addEventListener('click', e => { const b = e.target.closest('[data-cur]'); if (!b) return; ST.col.cur = +b.dataset.cur; save(); renderCollect(); });
+$('col-tier').addEventListener('change', () => { ST.col.tier = $('col-tier').value; save(); renderCollect(); });
+$('col-sort').addEventListener('change', () => { ST.col.sort = $('col-sort').value; ST.col.desc = ST.col.sort === 'scrip'; save(); renderCollect(); });
+$('col-myjobs').addEventListener('change', () => { ST.col.myJobs = $('col-myjobs').checked; save(); renderCollect(); });
+$('col-hidemiss').addEventListener('change', () => { ST.col.hideMiss = $('col-hidemiss').checked; save(); renderCollect(); });
+$('col-search').addEventListener('input', () => renderCollect());
+document.querySelector('#col-list .chead').addEventListener('click', e => {
+  const th = e.target.closest('.sortable'); if (!th) return; const k = th.dataset.k;
+  if (ST.col.sort === k) ST.col.desc = !ST.col.desc; else { ST.col.sort = k; ST.col.desc = k === 'scrip'; }
+  save(); renderCollect();
+});
+$('col-body').addEventListener('click', e => { const r = e.target.closest('.rrow[data-id]'); if (r) { selectItem(+r.dataset.id); go('planner'); } });
+$('col-refresh').addEventListener('click', () => { Object.keys(DB.coll).forEach(k => closure([+k]).forEach(forget)); RB.clear(); renderCollect(); toast('正在更新收藏品材料行情'); });
 
 /* ================= 採購清單 ================= */
 function updateCount() { $('plan-cnt').textContent = ST.plans.length; }
@@ -1208,6 +1320,7 @@ const TITLES = {
   ranking: ['現在製作什麼最值得？', '每種材料自動在市場板、NPC 商店、自採、自製中挑最便宜的，再依銷量與利潤排行。'],
   planner: ['生產規劃工作台', '展開完整材料樹，比較每種材料的四種取得方式，評估真正能實現的利潤。'],
   favorites: ['我的收藏', '常做的商品集中在這裡，隨時更新行情、看利潤，一鍵加入採購清單。'],
+  collect: ['收藏品換票', '計算製作收藏品換巧手橙票／紫票的成本，找出每張票最便宜的做法。'],
   shopping: ['材料採購與生產清單', '合併多個商品的材料需求，依市場、NPC、自採分開列出。'],
   settings: ['資料與說明', '資料來源、計算方式與本機資料管理。'],
 };
@@ -1216,7 +1329,7 @@ function go(tab) {
   document.querySelectorAll('.page').forEach(p => p.classList.toggle('hidden', p.id !== tab));
   document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   $('page-title').textContent = TITLES[tab][0]; $('page-sub').textContent = TITLES[tab][1];
-  if (tab === 'ranking') renderRanking(); if (tab === 'planner') renderPlanner(); if (tab === 'shopping') renderShopping(); if (tab === 'favorites') renderFavorites();
+  if (tab === 'ranking') renderRanking(); if (tab === 'planner') renderPlanner(); if (tab === 'shopping') renderShopping(); if (tab === 'favorites') renderFavorites(); if (tab === 'collect') renderCollect();
   window.scrollTo({ top: 0 });
 }
 $('nav').addEventListener('click', e => { const b = e.target.closest('button[data-tab]'); if (b) go(b.dataset.tab); });
