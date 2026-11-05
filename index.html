@@ -310,14 +310,16 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
   <button class="btn ftoggle fbtn" data-toggle="venf" aria-expanded="false">⚲ 篩選 <span class="fcnt" id="venf-cnt"></span> <span class="chev">▾</span></button>
  </div>
  <div class="fbody fpanel">
-  <div class="controls"><div class="field"><label for="ven-lvl">雇員等級 ≤</label><input class="input" id="ven-lvl" type="number" min="1" max="100" value="100"></div><div class="field"><label for="ven-minvel">每日售出 ≥</label><input class="input" id="ven-minvel" type="number" min="0" step="1" value="1"></div></div>
+  <div class="field"><span class="flabel">我的雇員能力（打開雇員的「職業／能力」畫面照填，數量依此計算，也套用到排行榜的「雇員」材料來源）</span>
+  <div class="controls"><div class="field"><label for="ven-lvl">雇員等級</label><input class="input" id="ven-lvl" type="number" min="1" max="100" value="100"></div><div class="field"><label for="ven-g">獲得力</label><input class="input" id="ven-g" type="number" min="0" step="50" value="3277"></div><div class="field"><label for="ven-p">鑑別力</label><input class="input" id="ven-p" type="number" min="0" step="50" value="4965"></div><div class="field"><label for="ven-i" title="狩獵委託用">平均物品等級</label><input class="input" id="ven-i" type="number" min="0" step="5" value="710"></div></div></div>
+  <div class="controls"><div class="field"><label for="ven-minvel">每日售出 ≥</label><input class="input" id="ven-minvel" type="number" min="0" step="1" value="1"></div></div>
   <div class="tgls"><label class="tgl"><input type="checkbox" id="ven-nocrys" checked>排除碎晶／水晶</label><label class="tgl" title="只列出做成成品比直接賣更賺的"><input type="checkbox" id="ven-craftonly">只看加工更賺</label></div>
  </div>
  </div>
- <div class="rlist" id="ven-list"><div class="rhead vhead"><span>材料</span><span>委託</span><span class="num">每趟</span><span class="num">單價</span><span class="sortable num" data-k="trip">每趟直接賣</span><span class="num">每日售出</span><span class="sortable num" data-k="clear">清倉天數</span><span class="sortable" data-k="best">最佳用途</span></div>
+ <div class="rlist" id="ven-list"><div class="rhead vhead"><span>材料</span><span>委託</span><span class="num">每趟</span><span class="num">成交均價</span><span class="sortable num" data-k="trip">每趟直接賣</span><span class="num">每日售出</span><span class="sortable num" data-k="clear">清倉天數</span><span class="sortable" data-k="best">最佳用途</span></div>
   <div id="ven-body"><div class="empty">資料庫載入中…</div></div></div>
 </div>
-<details class="note"><summary>計算說明</summary>每趟直接賣 = 滿裝雇員一趟帶回的數量 × 剔除極端值後的單價 × (1−稅) − 探險幣計價。清倉天數 = 一趟的數量 ÷ 市場每日售出件數（只靠你一個人賣掉一趟要幾天）。平衡排序 = 每趟收益 ÷ max(1, 清倉天數)，兼顧賺得多與賣得快。最佳用途：在已掃描的配方裡，找出用到這個材料、做成成品後「每個材料換算價值」最高的一個（其他自採／雇員材料以市價計算機會成本），和直接賣比較。需要先在商機排行榜掃描才會顯示加工用途。</details>
+<details class="note"><summary>計算說明</summary>每趟直接賣 = 滿裝雇員一趟帶回的數量 × 成交均價 × (1−稅) − 探險幣計價。成交均價 = 實際成交（剔除極端成交後）的總金額 ÷ 總件數，依成交數量加權，買 1 個的零星高價不會拉高均價。優先用近 7 天的成交；若近 3 天的成交均價更低（價格正在跌），改用近 3 天，避免用舊的高價高估收益。沒有近期成交的材料不列入。每趟數量依你填的雇員能力計算：採集與捕魚委託看鑑別力、狩獵看平均物品等級，取達到的最高數量階；雇員等級或獲得力不足的委託不會列出。門檻來自遊戲資料（Teamcraft 與繁中客戶端資料一致），例如 Lv100 採礦委託最高階需鑑別力約 5,958～6,102。清倉天數 = 一趟的數量 ÷ 市場每日售出件數（只靠你一個人賣掉一趟要幾天）。平衡排序 = 每趟收益 ÷ max(1, 清倉天數)，兼顧賺得多與賣得快。最佳用途：在已掃描的配方裡，找出用到這個材料、做成成品後「每個材料換算價值」最高的一個（其他自採／雇員材料以市價計算機會成本），和直接賣比較。需要先在商機排行榜掃描才會顯示加工用途。</details>
 </section>
 
 <!-- ============ 收藏品 ============ -->
@@ -395,7 +397,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
  <b>剔除極端值</b>：每個成品與材料都抓近 14 天最多 80 筆成交，用中位數 ± 3 × 1.4826 × MAD（約 3σ）剔除極端成交後取平均（樣本少於 4 筆不剔除；近 14 天沒有成交就不採用舊均價）。最低掛單（NQ、HQ 各自對照同品質成交）若低於中位數 60% 或高於 180% 且超出 3σ 範圍（異常低的釣魚價、異常高的亂掛），或該筆掛單超過設定時數沒有被重新確認，就不採用，改抓前 20 筆掛單找最便宜的合理掛單；都不合理時改用剔除後的成交均價。可在掃描設定關閉。<br>
  <b>時效</b>：每列顯示行情最後上傳時間；超過「掛單資料過期」時數會標紅，預設從排行隱藏。行情來自 Universalis 的玩家上傳，只有有人開啟市場板的物品才會更新。<br>
  <b>掛單深度</b>：材料市價不是只看最低一筆，而是抓前 50 筆掛單，依要買的數量由便宜到貴「整組」購買（遊戲裡一次要買整筆掛單），略過極端值與過期掛單，算出需要的數量平均單價；多買的部分不算進單價，但採購清單會列出要付的整組金額與多買數量。掛單不夠時，不足的部分用剔除後的成交均價估算。排行榜以「估算採購量」（預設 10 件成品）計算，生產規劃用你填的製作數量，收藏品用換 1,000 票所需的數量。<br>
- <b>雇員</b>：有雇員委託的材料可選「雇員」來源，每個成本 = 探險幣數 × 雇員計價 ÷ 滿裝雇員每趟數量（預設計價 0）。成本相同時優先用雇員（比自己採省事）。<br>
+ <b>雇員</b>：有雇員委託的材料可選「雇員」來源，每個成本 = 探險幣數 × 雇員計價 ÷ 每趟數量（預設計價 0）。每趟數量依「雇員委託」分頁填的雇員等級、獲得力、鑑別力計算，派不了的委託不會當作來源。成本相同時優先用雇員（比自己採省事）。<br>
  <b>行情快取</b>：行情存在瀏覽器（IndexedDB），重新整理不必重掃；超過設定分鐘數的物品在用到時會自動重抓，按「開始掃描」一律抓最新。<br>
  <b>單賣材料 vs 製成成品</b>：自採材料雖然成本算 0（或自採計價 %），仍會用它的市價（同樣剔除極端值）估算「直接拿去賣」能拿多少。加工增值 = 成品售價 ×(1−稅) − 實際要買的材料 − 自採材料市值 ×(1−稅)；大於 0 代表做成成品比單賣材料划算。自製中間材裡用到的自採材料也會一起算進去。<br>
  <b>划算度</b>：淨利<sup>w₂</sup> × 每日售出<sup>w₁</sup> ÷ 成本基準<sup>w₃</sup>（預設 1、0.5、0.5），在單個成本與每日售出數量之間取平衡；成本基準至少取售價 10%。虧錢的配方 0 分。<br>
@@ -501,14 +503,16 @@ const DEF = {
   src: { mkt: true, npc: true, venture: true, gather: true, craft: true }, gLvl: 100, gPct: 0, matBasis: 'min', noLimited: false, noLegend: false,
   quality: 'all', sellBasis: 'avg', tax: 5, minVel: 1, wv: 0.5, wa: 1, wc: 0.5,
   sort: 'score', desc: true, onlyProfit: true, hideMissing: true, noGatherOnly: false, maxCost: 0, minROI: 0,
-  robust: true, staleH: 48, patchDate: '', estQty: 10, ventureG: 0, cacheMin: 30, hideStale: true, favOnly: false, worthCraft: false, catRule: {},
+  robust: true, staleH: 48, patchDate: '', retLv: 100, retG: 3277, retP: 4965, retI: 710, estQty: 10, ventureG: 0, cacheMin: 30, hideStale: true, favOnly: false, worthCraft: false, catRule: {},
 };
 const STORE = 'craftwise-live-v1';
 let saved = {}; try { saved = JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch { saved = {}; }
 const CFG = Object.assign({}, DEF, saved.cfg || {}); CFG.src = Object.assign({}, DEF.src, (saved.cfg || {}).src || {});
 if (!('wc' in (saved.cfg || {}))) CFG.wv = DEF.wv;
 if (!CFG.catRule || typeof CFG.catRule !== 'object') CFG.catRule = {};
-CFG.quality = 'all';   // 首頁一律綜合；NQ／HQ 改在物品頁比較
+CFG.quality = 'all';
+// 舊版預設的雇員能力（3600／4000）是估計值，換成目前版本滿級雇員的實際數值；使用者自己改過的保留
+if (CFG.retG === 3600 && CFG.retP === 4000) { CFG.retG = 3277; CFG.retP = 4965; }   // 首頁一律綜合；NQ／HQ 改在物品頁比較
 const COL_BANDS = [[1, 100, '全部'], [50, 59, '50–59'], [60, 69, '60–69'], [70, 79, '70–79'], [80, 89, '80–89'], [90, 99, '90–99'], [100, 100, '100']];   // 舊版設定：划算度公式已改
 if (!['score', 'profit', 'added', 'velocity', 'cost', 'price', 'roi'].includes(CFG.sort)) { CFG.sort = 'score'; CFG.desc = true; }
 const ST = {
@@ -516,7 +520,7 @@ const ST = {
   ov: saved.ov && typeof saved.ov === 'object' ? saved.ov : {},          // 材料 id -> 指定來源
   plans: Array.isArray(saved.plans) ? saved.plans : [],
   pq: ['all', 'nq', 'hq'].includes(saved.pq) ? saved.pq : 'all',
-  ven: Object.assign({ cat: 'all', sort: 'bal', desc: true, lvl: 100, minVel: 1, noCrys: true, craftOnly: false }, saved.ven || {}),
+  ven: Object.assign({ cat: 'all', sort: 'bal', desc: true, lvl: 100, minVel: 1, noCrys: true, craftOnly: false, mid: false }, saved.ven || {}),
   weekly: saved.weekly && typeof saved.weekly === 'object' ? saved.weekly : null,                   // [{id, qty}]
   fav: Array.isArray(saved.fav) ? saved.fav.filter(Number.isInteger) : [], // 收藏的成品 id
   ui: Object.assign({ scan: false, filt: true, colf: true, venf: true }, saved.ui || {}),   // true = 收合
@@ -616,12 +620,13 @@ async function loadDB() {
     // 雇員委託可取得的物品
     DB.venture = new Set((vtasks || []).map(t => t && t.item).filter(Boolean));
     // 每種物品取「每張探險幣帶回最多」的委託（滿裝雇員的最高數量階）
+    // 每個委託保留各數量階與門檻（採集／捕魚看鑑別力，狩獵看平均物品等級），實際數量依雇員能力計算
     DB.vent = {};
     for (const t of vtasks || []) {
       if (!t || !t.item || !Array.isArray(t.quantities) || !t.quantities.length) continue;
-      const qty = Math.max(...t.quantities.map(q => q.quantity || 0)); if (!qty) continue;
-      const cost = t.cost || 1, cur = DB.vent[t.item];
-      if (!cur || qty / cost > cur.qty / cur.cost) DB.vent[t.item] = { qty, cost, lvl: t.lvl || 1, cat: t.category };
+      const tiers = t.quantities.map(q => ({ q: q.quantity || 0, v: q.value || 0, stat: q.stat })).filter(x => x.q).sort((a, b) => a.v - b.v);
+      if (!tiers.length) continue;
+      (DB.vent[t.item] = DB.vent[t.item] || []).push({ lvl: t.lvl || 1, cat: t.category, cost: t.cost || 1, reqG: t.reqGathering || 0, reqI: t.reqIlvl || 0, tiers });
     }
     DB.matSet = new Set();
     // 配方用到的材料，依遊戲分類整理（設定頁的「依類別固定來源」用）
@@ -689,7 +694,7 @@ $('src-chips').addEventListener('click', e => {
   CFG.src[s] = !CFG.src[s]; if (!Object.values(CFG.src).some(Boolean)) CFG.src.mkt = true;
   renderStaticChips(); save(); recompute();
 });
-const NUMS = { 'est-qty': 'estQty', 'v-g': 'ventureG', 'cache-min': 'cacheMin', 'stale-h': 'staleH', 'c-lvl': 'cLvl', 'c-minlvl': 'cMinLvl', 'g-lvl': 'gLvl', 'g-pct': 'gPct', tax: 'tax', 'min-vel': 'minVel', 'max-cost': 'maxCost' };
+const NUMS = { 'ven-lvl': 'retLv', 'ven-g': 'retG', 'ven-p': 'retP', 'ven-i': 'retI', 'est-qty': 'estQty', 'v-g': 'ventureG', 'cache-min': 'cacheMin', 'stale-h': 'staleH', 'c-lvl': 'cLvl', 'c-minlvl': 'cMinLvl', 'g-lvl': 'gLvl', 'g-pct': 'gPct', tax: 'tax', 'min-vel': 'minVel', 'max-cost': 'maxCost' };
 const SELS = { 'mat-basis': 'matBasis', 'sell-basis': 'sellBasis', sort: 'sort' };
 const CHKS = { 'g-nolimited': 'noLimited', 'g-nolegend': 'noLegend', 'only-profit': 'onlyProfit', 'hide-missing': 'hideMissing', 'no-gather-only': 'noGatherOnly', robust: 'robust', 'hide-stale': 'hideStale', 'fav-only': 'favOnly', 'worth-craft': 'worthCraft' };
 function syncInputs() {
@@ -785,7 +790,7 @@ async function fetchHist(ids, signal, conc, onProg) {
         b.forEach(id => { H[id] = []; });
         for (const it of normItems(d)) H[it.itemID] = (it.entries || [])
           .filter(e => e && e.pricePerUnit > 0 && !EXCL.has(e.worldID))
-          .map(e => ({ p: e.pricePerUnit, hq: !!e.hq, t: e.timestamp * 1000 }));
+          .map(e => ({ p: e.pricePerUnit, q: e.quantity || 1, hq: !!e.hq, t: e.timestamp * 1000 }));
       } catch (e) { if (e.name === 'AbortError') return; failed++; }
       done++; onProg && onProg(done, batches.length, failed);
     }
@@ -857,7 +862,7 @@ async function fetchPrices(ids, { signal, label = '抓價', conc = 6, onBatch, h
 /* ================= 行情快取（IndexedDB）=================
    重新整理頁面時沿用上次的行情與掃描結果；超過「行情快取」分鐘數的物品在用到時會重新抓。
    瀏覽器不支援或被封鎖時就略過，不影響其他功能。 */
-const IDB_NAME = 'craftwise', IDB_STORE = 'kv', CACHE_KEY = 'market-v1';
+const IDB_NAME = 'craftwise', IDB_STORE = 'kv', CACHE_KEY = 'market-v2';
 function idbOpen() { return new Promise((res, rej) => { const r = indexedDB.open(IDB_NAME, 1); r.onupgradeneeded = () => r.result.createObjectStore(IDB_STORE); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
 async function idbDo(mode, fn) {
   try { const db = await idbOpen(); return await new Promise((res, rej) => { const tx = db.transaction(IDB_STORE, mode); const out = fn(tx.objectStore(IDB_STORE)); tx.oncomplete = () => { db.close(); res(out && out.result); }; tx.onerror = () => { db.close(); rej(tx.error); }; }); }
@@ -954,6 +959,27 @@ function matInfo(id) {
   const value = basisPick(CFG.matBasis, listing, avg);
   return { value, listing, world: lp.good ? lp.good.w : null, bad: lp.bad, avg, rawAvg, st, usedAvg: value != null && value !== listing };
 }
+/* 依雇員能力算一趟帶回幾個：等級、獲得力（或狩獵的平均物品等級）不夠的委託不能派；
+   數量 = 鑑別力（狩獵為物品等級）達到的最高數量階。同一物品有多個委託時取每張探險幣帶回最多的。 */
+const VCACHE = new Map();
+function ventInfo(id) {
+  const tasks = DB.vent && DB.vent[id]; if (!tasks) return null;
+  const key = id + '|' + CFG.retLv + '|' + CFG.retG + '|' + CFG.retP + '|' + CFG.retI;
+  if (VCACHE.has(key)) return VCACHE.get(key);
+  let best = null;
+  for (const t of tasks) {
+    if (t.lvl > CFG.retLv) continue;
+    const hunt = t.tiers[0].stat === 'ilvl';
+    if (hunt ? CFG.retI < t.reqI : CFG.retG < t.reqG) continue;
+    const stat = hunt ? CFG.retI : CFG.retP;
+    let ti = 0; t.tiers.forEach((x, i) => { if (stat >= x.v) ti = i; });
+    const qty = t.tiers[ti].q, next = t.tiers[ti + 1] || null;
+    const cand = { qty, cost: t.cost, lvl: t.lvl, cat: t.cat, tier: ti + 1, tiers: t.tiers.length, next, hunt, top: t.tiers[t.tiers.length - 1].q };
+    if (!best || qty / cand.cost > best.qty / best.cost) best = cand;
+  }
+  VCACHE.set(key, best);
+  return best;
+}
 /* 依掛單深度試算買 qty 個：由便宜到貴整組買（FF14 一次要買整筆掛單），略過極端值與過期掛單。
    avg = 實際需要的 qty 個平均單價（多買的部分不算進單價，但會記在 surplus / total）。掛單不夠時，不足的部分用剔除後的成交均價補。 */
 function buyPlan(id, qty) {
@@ -1004,7 +1030,7 @@ function resolve(id, memo, depth = 0, stack = new Set(), need = 1) {
   }
   if (CFG.src.npc && DB.vendor[id] > 0) opts.npc = DB.vendor[id];
   // 雇員委託：每個 = 探險幣數 × 計價 ÷ 每趟數量（同分時排在自採前面，派雇員比自己採省事）
-  const vi = DB.vent && DB.vent[id];
+  const vi = ventInfo(id);
   if (CFG.src.venture && vi) opts.venture = CFG.ventureG * vi.cost / vi.qty;
   let gi = null;
   // 被設定排除的採集品（傳說／限時／等級不足）不參與自動取最低，但手動指定「自採」時仍可使用
@@ -1479,7 +1505,7 @@ function collRows() {
     if (C.jobs.length && !C.jobs.includes(rec.job)) continue;
     if (rec.lvl < (C.lvMin || 1) || rec.lvl > (C.lvMax || 100)) continue;
     const name = DB.names[k] || '#' + k; if (q && !name.toLowerCase().includes(q)) continue;
-    const ventureOnly = rec.ing.every(x => DB.venture.has(x.id) && !DB.recipes[x.id]);
+    const ventureOnly = rec.ing.every(x => ventInfo(x.id) && !DB.recipes[x.id]);   // 依你的雇員能力派得動
     if (C.noInt && !ventureOnly) continue;
     const t = c[C.tier] || c.high, scrip = (t.scrip || 0) * (t.quantity || 1);
     const times = Math.ceil((scrip > 0 ? Math.ceil(1000 / scrip) : 1) / rec.yields);   // 以「換 1,000 票」的量估算掛單深度
@@ -1739,6 +1765,23 @@ $('po-list').addEventListener('click', e => { const b = e.target.closest('[data-
 $('po-clear').addEventListener('click', () => { if (!Object.keys(ST.ov).length || !confirm('確定清除所有個別材料設定？')) return; ST.ov = {}; rulesChanged('個別設定已清除'); });
 
 /* ================= 雇員委託收益 ================= */
+/* 成交均價（依成交數量加權）：剔除極端成交後，總成交金額 ÷ 總成交件數。
+   買 1 個的高價零售不會像 99 個一組的大宗成交一樣有分量，比單純平均每筆價格保守。 */
+function tradeAvg(id) {
+  const e = H[id]; if (!e || !e.length) return null;
+  const nq = e.filter(x => !x.hq);
+  let list = nq.length >= 4 ? nq : e;
+  const rs = robustStats(list.map(x => x.p));
+  if (rs && rs.lo != null) list = list.filter(x => x.p >= rs.lo && x.p <= rs.hi);
+  const vw = l => { const u = l.reduce((a, x) => a + (x.q || 1), 0); return u ? { avg: l.reduce((a, x) => a + x.p * (x.q || 1), 0) / u, n: l.length, units: u } : null; };
+  const now = Date.now();
+  const d14 = vw(list), d7 = vw(list.filter(x => now - x.t < 7 * 864e5)), d3 = vw(list.filter(x => now - x.t < 3 * 864e5));
+  // 優先用近 7 天；近 3 天更低（正在跌）就改用近 3 天，避免用舊的高價估算
+  let pick = d7 && d7.n >= 5 ? { ...d7, win: 7 } : d14 ? { ...d14, win: 14 } : null;
+  if (pick && d3 && d3.n >= 3 && d3.avg < pick.avg) pick = { ...d3, win: 3 };
+  if (pick) pick.avg14 = d14 ? d14.avg : null;
+  return pick;
+}
 /* 從已掃描的配方找出每種雇員材料「做成成品後每個值多少」。
    加工倍率 = 成品稅後收入 ÷ 所有材料的市值（自採／雇員材料以市價計）；這個材料做成成品後每個值 = 自己的市值 × 加工倍率。
    也就是把加工增值依市值比例分攤給每種材料，不會把整個成品的利潤都算在單一材料上。 */
@@ -1752,8 +1795,9 @@ function ventureUses() {
     if (!(tot > 0)) continue;
     const mult = rev / tot;
     for (const x of r.ings) {
-      if (!DB.vent[x.id] || !(x.amount > 0)) continue;
-      const base = (x.mi && x.mi.value) || mv(x); if (!(base > 0)) continue;
+      if (!ventInfo(x.id) || !(x.amount > 0)) continue;
+      const ta = tradeAvg(x.id);
+      const base = (ta && ta.avg) || (x.mi && x.mi.value) || mv(x); if (!(base > 0)) continue;
       const perX = base * mult;
       const cur = best.get(x.id);
       if (!cur || perX > cur.perX) best.set(x.id, { pid: r.id, perX, mult, vel: r.vel, amount: x.amount, yields: r.rec.yields });
@@ -1764,25 +1808,27 @@ function ventureUses() {
 function venRows() {
   const V = ST.ven, q = $('ven-search').value.trim().toLowerCase(), uses = ventureUses(), tax = 1 - CFG.tax / 100, out = [];
   for (const k in DB.vent) {
-    const id = +k, vi = DB.vent[k], name = DB.names[k];
+    const id = +k, vi = ventInfo(id), name = DB.names[k];
+    if (!vi) continue;                          // 雇員等級／獲得力不夠，派不了
     if (!name || !DB.marketable.has(id)) continue;
     if (V.cat !== 'all' && String(vi.cat) !== String(V.cat)) continue;
-    if (vi.lvl > V.lvl) continue;
     if (V.noCrys && id >= 2 && id <= 19) continue;
     if (q && !name.toLowerCase().includes(q)) continue;
     const s = sellInfo(id, 'nq') || {};
-    const price = s.price, vel = s.vel;
+    const ta = tradeAvg(id);                     // 只用實際成交的數量加權均價；沒有近期成交就不列入
+    const price = ta ? ta.avg : null, vel = s.vel;
     if (!(price > 0) || (vel || 0) < V.minVel) continue;
+    const vq = vi.qty;                            // 依鑑別力（狩獵為物品等級）達到的數量階
     const vcost = CFG.ventureG * vi.cost;
-    const trip = vi.qty * price * tax - vcost;
-    const clear = vel > 0 ? vi.qty / vel : null;
+    const trip = vq * price * tax - vcost;
+    const clear = vel > 0 ? vq / vel : null;
     const u = uses.get(id);
-    const craftTrip = u ? u.perX * vi.qty - vcost : null;
-    const prods = u ? Math.floor(vi.qty / u.amount) * u.yields : 0;            // 一趟能做出幾個成品
+    const craftTrip = u ? u.perX * vq - vcost : null;
+    const prods = u ? Math.floor(vq / u.amount) * u.yields : 0;            // 一趟能做出幾個成品
     const prodDays = u && u.vel > 0 ? prods / u.vel : null;                     // 這些成品要賣幾天
     const gain = u ? u.perX - price * tax : null;
     if (V.craftOnly && !(gain > 0)) continue;
-    out.push({ id, name, vi, price, vel, trip, clear, u, craftTrip, gain, prods, prodDays, trend: trendFor(id, 'nq'), st: s.st,
+    out.push({ id, name, vi, vq, price, vel, trip, clear, u, craftTrip, gain, prods, prodDays, trend: trendFor(id, 'nq'), st: s.st, ta,
       bal: clear != null ? trip / Math.max(1, clear) : 0, best: Math.max(trip, craftTrip ?? -Infinity) });
   }
   return out;
@@ -1791,7 +1837,8 @@ let venToken = 0;
 async function renderVenture() {
   const V = ST.ven; updateSummary();
   [...$('ven-cat').children].forEach(b => b.classList.toggle('on', b.dataset.vc === String(V.cat)));
-  $('ven-sort').value = V.sort; $('ven-lvl').value = V.lvl; $('ven-minvel').value = V.minVel; $('ven-nocrys').checked = V.noCrys; $('ven-craftonly').checked = V.craftOnly;
+  $('ven-sort').value = V.sort; $('ven-minvel').value = V.minVel; $('ven-nocrys').checked = V.noCrys; $('ven-craftonly').checked = V.craftOnly;
+  for (const [id, k] of [['ven-lvl', 'retLv'], ['ven-g', 'retG'], ['ven-p', 'retP'], ['ven-i', 'retI']]) if (document.activeElement !== $(id)) $(id).value = CFG[k];
   const body = $('ven-body');
   if (!DB.ready) { body.innerHTML = '<div class="empty">資料庫載入中…</div>'; return; }
   const tok = ++venToken;
@@ -1814,10 +1861,10 @@ async function renderVenture() {
       : !u ? '<small>已掃描的配方沒有用到，直接賣</small>'
       : `<b class="${better ? 'positive' : ''}">${better ? '做成' : '直接賣較好・'}${esc(DB.names[u.pid] || '')}</b><small>${better ? `加工倍率 ×${u.mult.toFixed(2)}，每個材料值 ${fmt(u.perX)} G（直接賣 ${fmt(r.price * (1 - CFG.tax / 100))}），每趟約 ${fmt(r.craftTrip)} G。一趟可做 ${fmt(r.prods)} 個成品${r.prodDays != null ? `，約 ${fmt1(r.prodDays)} 天賣完` : ''}${r.prodDays > 7 ? '<span class="negative">（市場吃不下，實際收益會打折）</span>' : ''}` : `加工倍率 ×${u.mult.toFixed(2)}，做成後每個材料只值 ${fmt(u.perX)} G`}</small>`;
     return `<div class="rrow vrow" data-vid="${r.id}">
-     <div class="nm"><span class="rk">#${i + 1}</span><b>${esc(r.name)}</b><small>${esc(DB.catNames[DB.cat[r.id]] || '')}${r.st ? `・${r.st.n} 筆成交` : ''}${trendTag(r.trend)}</small></div>
+     <div class="nm"><span class="rk">#${i + 1}</span><b>${esc(r.name)}</b><small>${esc(DB.catNames[DB.cat[r.id]] || '')}・近 ${r.ta.win} 天 ${r.ta.n} 筆／${fmt(r.ta.units)} 件成交${trendTag(r.trend)}</small></div>
      <div data-l="委託"><span class="tag venture">${VEN_CAT[r.vi.cat] || '委託'} Lv${r.vi.lvl}</span></div>
-     <div class="num" data-l="每趟"><span class="val">${r.vi.qty}</span><small>個${r.vi.cost > 1 ? `・${r.vi.cost} 張幣` : ''}</small></div>
-     <div class="num" data-l="單價"><span class="val">${fmt(r.price)}</span><small>G</small></div>
+     <div class="num" data-l="每趟" title="${r.vi.next ? `下一階 ${r.vi.next.q} 個需要${r.vi.hunt ? '平均物品等級' : '鑑別力'} ${fmt(r.vi.next.v)}` : '已達最高數量階'}"><span class="val">${r.vq}</span><small>${r.vi.next ? `第 ${r.vi.tier}/${r.vi.tiers} 階・下階需 ${fmt(r.vi.next.v)}` : '最高階'}${r.vi.cost > 1 ? `・${r.vi.cost} 張幣` : ''}</small></div>
+     <div class="num" data-l="成交均價" title="依成交數量加權的實際成交均價（已剔除極端成交）${r.st ? `｜每筆平均 ${fmt(r.st.avg)} G` : ''}"><span class="val">${fmt(r.price)}</span><small>G${r.ta.avg14 && r.ta.avg14 > r.price * 1.05 ? `・14 天 ${fmt(r.ta.avg14)}` : ''}</small></div>
      <div class="num" data-l="每趟直接賣"><div class="profit positive">${fmt(r.trip)}</div><small>G／趟</small></div>
      <div class="num" data-l="每日售出"><span class="val">${fmt1(r.vel)}</span><small>件／日</small></div>
      <div class="num" data-l="清倉天數"><span class="val ${r.clear > 3 ? 'negative' : r.clear <= 1 ? 'positive' : ''}">${r.clear != null ? fmt1(r.clear) : '—'}</span><small>天／趟</small></div>
@@ -1828,7 +1875,7 @@ async function renderVenture() {
 $('ven-cat').addEventListener('click', e => { const b = e.target.closest('[data-vc]'); if (!b) return; ST.ven.cat = b.dataset.vc; save(); renderVenture(); });
 $('ven-sort').addEventListener('change', () => { ST.ven.sort = $('ven-sort').value; save(); renderVenture(); });
 $('ven-search').addEventListener('input', () => renderVenture());
-for (const [id, key] of [['ven-lvl', 'lvl'], ['ven-minvel', 'minVel']]) $(id).addEventListener('change', () => { ST.ven[key] = Math.max(0, +$(id).value || 0) || (key === 'lvl' ? 100 : 0); save(); renderVenture(); });
+for (const [id, key] of [['ven-minvel', 'minVel']]) $(id).addEventListener('change', () => { ST.ven[key] = Math.max(0, +$(id).value || 0) || (key === 'lvl' ? 100 : 0); save(); renderVenture(); });
 for (const [id, key] of [['ven-nocrys', 'noCrys'], ['ven-craftonly', 'craftOnly']]) $(id).addEventListener('change', () => { ST.ven[key] = $(id).checked; save(); renderVenture(); });
 document.querySelector('#ven-list .vhead').addEventListener('click', e => { const th = e.target.closest('.sortable'); if (!th) return; ST.ven.sort = th.dataset.k; save(); renderVenture(); });
 $('ven-body').addEventListener('click', e => { const r = e.target.closest('[data-vid]'); if (!r) return; const id = +r.dataset.vid; const v = venRows().find(x => x.id === id); if (v && v.u) { selectItem(v.u.pid); go('planner'); } else window.open(`${SITE}/item/${id}`, '_blank', 'noopener'); });
@@ -2033,7 +2080,7 @@ function updateSummary() {
   $('filt-cnt').textContent = n || '';
   let m = 0; const C = ST.col; if (C.tier !== 'high') m++; if (C.sort !== 'cps') m++; if (!C.myJobs) m++; if (!C.hideMiss) m++; if (C.noInt) m++; if (C.lvMin !== 1 || C.lvMax !== 100) m++; if (C.jobs.length) m++;
   $('colf-cnt').textContent = m || '';
-  let v = 0; const V = ST.ven; if (V.lvl !== 100) v++; if (V.minVel !== 1) v++; if (!V.noCrys) v++; if (V.craftOnly) v++;
+  let v = 0; const V = ST.ven; if (V.minVel !== 1) v++; if (!V.noCrys) v++; if (V.craftOnly) v++;
   $('venf-cnt').textContent = v || '';
 }
 $('filt-reset').addEventListener('click', () => {
