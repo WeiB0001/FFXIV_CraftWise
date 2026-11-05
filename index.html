@@ -306,7 +306,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
  <div class="fbar">
   <div class="chips seg" id="ven-cat"><button class="chip" data-vc="all">全部</button><button class="chip" data-vc="17">採礦</button><button class="chip" data-vc="18">園藝</button><button class="chip" data-vc="19">捕魚</button><button class="chip" data-vc="34">狩獵</button></div>
   <input class="input fsearch" id="ven-search" placeholder="🔍 搜尋材料…" aria-label="搜尋雇員委託">
-  <select class="input" id="ven-sort" aria-label="排行依據"><option value="bal">排序：平衡（收益÷清倉天數）</option><option value="trip">排序：每趟直接賣</option><option value="clear">排序：清倉最快</option><option value="best">排序：每趟最高收益（含加工）</option></select>
+  <select class="input" id="ven-sort" aria-label="排行依據"><option value="bal">排序：平衡（收益÷清倉天數）</option><option value="trip">排序：每趟直接賣</option><option value="clear">排序：清倉最快</option><option value="vel">排序：每日售出</option><option value="price">排序：成交均價</option><option value="vq">排序：每趟數量</option><option value="best">排序：每趟最高收益（含加工）</option></select>
   <button class="btn ftoggle fbtn" data-toggle="venf" aria-expanded="false">⚲ 篩選 <span class="fcnt" id="venf-cnt"></span> <span class="chev">▾</span></button>
  </div>
  <div class="fbody fpanel">
@@ -316,7 +316,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
   <div class="tgls"><label class="tgl"><input type="checkbox" id="ven-nocrys" checked>排除碎晶／水晶</label><label class="tgl" title="只列出做成成品比直接賣更賺的"><input type="checkbox" id="ven-craftonly">只看加工更賺</label></div>
  </div>
  </div>
- <div class="rlist" id="ven-list"><div class="rhead vhead"><span>材料</span><span>委託</span><span class="num">每趟</span><span class="num">成交均價</span><span class="sortable num" data-k="trip">每趟直接賣</span><span class="num">每日售出</span><span class="sortable num" data-k="clear">清倉天數</span><span class="sortable" data-k="best">最佳用途</span></div>
+ <div class="rlist" id="ven-list"><div class="rhead vhead"><span>材料</span><span>委託</span><span class="sortable num" data-k="vq">每趟</span><span class="sortable num" data-k="price">成交均價</span><span class="sortable num" data-k="trip">每趟直接賣</span><span class="sortable num" data-k="vel">每日售出</span><span class="sortable num" data-k="clear">清倉天數</span><span class="sortable" data-k="best">最佳用途</span></div>
   <div id="ven-body"><div class="empty">資料庫載入中…</div></div></div>
 </div>
 <details class="note"><summary>計算說明</summary>每趟直接賣 = 滿裝雇員一趟帶回的數量 × 成交均價 × (1−稅) − 探險幣計價。成交均價 = 實際成交（剔除極端成交後）的總金額 ÷ 總件數，依成交數量加權，買 1 個的零星高價不會拉高均價。優先用近 7 天的成交；若近 3 天的成交均價更低（價格正在跌），改用近 3 天，避免用舊的高價高估收益。沒有近期成交的材料不列入。每趟數量依你填的雇員能力計算：採集與捕魚委託看鑑別力、狩獵看平均物品等級，取達到的最高數量階；雇員等級或獲得力不足的委託不會列出。門檻來自遊戲資料（Teamcraft 與繁中客戶端資料一致），例如 Lv100 採礦委託最高階需鑑別力約 5,958～6,102。清倉天數 = 一趟的數量 ÷ 市場每日售出件數（只靠你一個人賣掉一趟要幾天）。平衡排序 = 每趟收益 ÷ max(1, 清倉天數)，兼顧賺得多與賣得快。最佳用途：在已掃描的配方裡，找出用到這個材料、做成成品後「每個材料換算價值」最高的一個（其他自採／雇員材料以市價計算機會成本），和直接賣比較。需要先在商機排行榜掃描才會顯示加工用途。</details>
@@ -1849,9 +1849,9 @@ async function renderVenture() {
     if (tok !== venToken) return;
   }
   let rows = venRows();
-  const k = V.sort === 'clear' ? 'clear' : V.sort;
-  rows = sortRows(rows, k, k !== 'clear');
-  markHead(document.querySelector('#ven-list .vhead'), k, k !== 'clear');
+  const k = V.sort, desc = V.desc !== false;
+  rows = sortRows(rows, k, desc);
+  markHead(document.querySelector('#ven-list .vhead'), k, desc);
   $('ven-meta').textContent = `｜${CFG.isDC ? CFG.target + '全服' : CFG.target}・${rows.length} 種${ST.rows.length ? '' : '・掃描排行後才會顯示加工用途'}`;
   if (!rows.length) { body.innerHTML = '<div class="empty">沒有符合條件的委託，放寬篩選試試。</div>'; return; }
   const max = rows.reduce((m, r) => Math.max(m, r.trip), 0) || 1;
@@ -1873,11 +1873,17 @@ async function renderVenture() {
   }).join('') + (rows.length > 200 ? `<div class="subtle" style="padding:8px">只顯示前 200 筆，共 ${rows.length} 筆。</div>` : '');
 }
 $('ven-cat').addEventListener('click', e => { const b = e.target.closest('[data-vc]'); if (!b) return; ST.ven.cat = b.dataset.vc; save(); renderVenture(); });
-$('ven-sort').addEventListener('change', () => { ST.ven.sort = $('ven-sort').value; save(); renderVenture(); });
+$('ven-sort').addEventListener('change', () => { ST.ven.sort = $('ven-sort').value; ST.ven.desc = ST.ven.sort !== 'clear'; save(); renderVenture(); });
 $('ven-search').addEventListener('input', () => renderVenture());
 for (const [id, key] of [['ven-minvel', 'minVel']]) $(id).addEventListener('change', () => { ST.ven[key] = Math.max(0, +$(id).value || 0) || (key === 'lvl' ? 100 : 0); save(); renderVenture(); });
 for (const [id, key] of [['ven-nocrys', 'noCrys'], ['ven-craftonly', 'craftOnly']]) $(id).addEventListener('change', () => { ST.ven[key] = $(id).checked; save(); renderVenture(); });
-document.querySelector('#ven-list .vhead').addEventListener('click', e => { const th = e.target.closest('.sortable'); if (!th) return; ST.ven.sort = th.dataset.k; save(); renderVenture(); });
+document.querySelector('#ven-list .vhead').addEventListener('click', e => {
+  const th = e.target.closest('.sortable'); if (!th) return; const k = th.dataset.k;
+  // 同一欄再點一次就反向；清倉天數預設由少到多，其他由大到小
+  if (ST.ven.sort === k) ST.ven.desc = !(ST.ven.desc !== false); else { ST.ven.sort = k; ST.ven.desc = k !== 'clear'; }
+  if ($('ven-sort').querySelector(`option[value="${k}"]`)) $('ven-sort').value = k;
+  save(); renderVenture();
+});
 $('ven-body').addEventListener('click', e => { const r = e.target.closest('[data-vid]'); if (!r) return; const id = +r.dataset.vid; const v = venRows().find(x => x.id === id); if (v && v.u) { selectItem(v.u.pid); go('planner'); } else window.open(`${SITE}/item/${id}`, '_blank', 'noopener'); });
 $('ven-refresh').addEventListener('click', () => { Object.keys(DB.vent).forEach(k => forget(+k)); RB.clear(); renderVenture(); toast('正在更新雇員材料行情'); });
 
