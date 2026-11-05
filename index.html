@@ -292,6 +292,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
   <button class="btn ftoggle fbtn" data-toggle="colf" aria-expanded="false">⚲ 篩選 <span class="fcnt" id="colf-cnt"></span> <span class="chev">▾</span></button>
  </div>
  <div class="fbody fpanel">
+  <div class="field"><span class="flabel">製作職業（可多選）</span><div class="chips sm" id="col-jobs"></div></div>
   <div class="field"><span class="flabel">製品等級</span>
    <div class="lvrow"><div class="chips sm" id="col-band"></div>
     <div class="lvin"><input class="input" id="col-lvmin" type="number" min="1" max="100" aria-label="最低等級"><span>～</span><input class="input" id="col-lvmax" type="number" min="1" max="100" aria-label="最高等級"></div></div></div>
@@ -467,9 +468,10 @@ const ST = {
   plans: Array.isArray(saved.plans) ? saved.plans : [],                   // [{id, qty}]
   fav: Array.isArray(saved.fav) ? saved.fav.filter(Number.isInteger) : [], // 收藏的成品 id
   ui: Object.assign({ scan: false, filt: true, colf: true }, saved.ui || {}),   // true = 收合
-  col: Object.assign({ cur: 41784, tier: 'high', sort: 'cps', desc: false, myJobs: true, hideMiss: true, noInt: false, lvMin: 1, lvMax: 100 }, saved.col || {}),
+  col: Object.assign({ cur: 41784, tier: 'high', sort: 'cps', desc: false, myJobs: true, hideMiss: true, noInt: false, lvMin: 1, lvMax: 100, jobs: [] }, saved.col || {}),
   rows: [], scanned: [], scanMeta: '', shown: 100, abort: null,
 };
+if (!Array.isArray(ST.col.jobs)) ST.col.jobs = [];
 if (saved.col && !saved.col.v2) { ST.col.tier = 'high'; ST.col.v2 = true; }   // 收藏價值一律預設最高檔（舊設定重設一次）
 ST.col.v2 = true;
 const save = () => { try { localStorage.setItem(STORE, JSON.stringify({ cfg: CFG, selected: ST.selected, batch: ST.batch, ov: ST.ov, plans: ST.plans, fav: ST.fav, col: ST.col, ui: ST.ui })); } catch { } };
@@ -1059,8 +1061,8 @@ function rowHTML(r, i, maxScore, opts = {}) {
   const tip = st ? `中位數 ${fmt(st.med)}｜原始均價 ${fmt(r.rawAvg)}｜最低掛單 ${fmt(r.minL)}｜最近成交 ${ago(st.last)}` : '';
   const sellMat = r.gv > 0 && r.added != null && r.added <= 0;   // 直接賣自採材料比較划算
   const craftWin = r.gv > 0 && r.added != null && r.added > 0;
-  const verdict = sellMat ? `<span class="vtag sell" title="自採材料直接賣：${fmt(r.matSell)} G／件（稅後）｜做成成品：${fmt(r.craftNet)} G／件">⚠ 直接賣材料較划算・多 ${fmt(-r.added)} G／件${r.topLeaf ? `・主因 ${esc(DB.names[r.topLeaf.id] || '')}${r.topLeaf.rise > 0.1 ? ` ↑${Math.round(r.topLeaf.rise * 100)}%` : ''}` : ''}</span>`
-    : craftWin ? `<span class="vtag craft" title="自採材料直接賣：${fmt(r.matSell)} G／件（稅後）｜做成成品：${fmt(r.craftNet)} G／件">✓ 製成成品較划算・多 ${fmt(r.added)} G／件</span>` : '';
+  const verdict = sellMat ? `<span class="vtag sell" title="直接賣材料較划算｜自採材料直接賣：${fmt(r.matSell)} G／件（稅後）｜做成成品：${fmt(r.craftNet)} G／件">⚠ -${fmt(-r.added)} G／件${r.topLeaf ? `・主因 ${esc(DB.names[r.topLeaf.id] || '')}${r.topLeaf.rise > 0.1 ? ` ↑${Math.round(r.topLeaf.rise * 100)}%` : ''}` : ''}</span>`
+    : craftWin ? `<span class="vtag craft" title="製成成品較划算｜自採材料直接賣：${fmt(r.matSell)} G／件（稅後）｜做成成品：${fmt(r.craftNet)} G／件">✓ +${fmt(r.added)} G／件</span>` : '';
   return `<div class="rrow${sellMat ? ' sellmat' : ''}" data-id="${r.id}">
    <div>${starBtn(r.id)}</div>
    <div class="nm">${opts.rank === false ? '' : `<span class="rk">#${i + 1}</span>`}<b>${esc(r.name)}</b><small>${esc(r.catName)} · <span class="${ageCls(r.up)}">更新 ${ago(r.up)}</span></small>${verdict}${opts.actions ? `<div class="fa"><button class="btn small" data-open="${r.id}">規劃</button><button class="btn small" data-addfav="${r.id}">＋清單</button></div>` : ''}</div>
@@ -1291,6 +1293,7 @@ function collRows() {
     const c = DB.coll[k]; if (c.cur !== +C.cur) continue;
     const rec = DB.recipes[k];
     if (C.myJobs && !craftable(rec)) continue;
+    if (C.jobs.length && !C.jobs.includes(rec.job)) continue;
     if (rec.lvl < (C.lvMin || 1) || rec.lvl > (C.lvMax || 100)) continue;
     const name = DB.names[k] || '#' + k; if (q && !name.toLowerCase().includes(q)) continue;
     const ventureOnly = rec.ing.every(x => DB.venture.has(x.id) && !DB.recipes[x.id]);
@@ -1314,6 +1317,7 @@ async function renderCollect() {
   [...$('col-cur').children].forEach(b => b.classList.toggle('on', +b.dataset.cur === +C.cur));
   $('col-tier').value = C.tier; $('col-sort').value = C.sort; $('col-myjobs').checked = C.myJobs; $('col-hidemiss').checked = C.hideMiss; $('col-noint').checked = !!C.noInt;
   $('col-lvmin').value = C.lvMin; $('col-lvmax').value = C.lvMax;
+  $('col-jobs').innerHTML = `<button class="chip ${C.jobs.length ? '' : 'on'}" data-cj="all">全部</button>` + Object.entries(JOBS).map(([k, v]) => `<button class="chip ${C.jobs.includes(+k) ? 'on' : ''}" data-cj="${k}">${v}</button>`).join('');
   $('col-band').innerHTML = COL_BANDS.map(([a, b, l]) => `<button class="chip ${C.lvMin === a && C.lvMax === b ? 'on' : ''}" data-band="${a}-${b}">${l}</button>`).join('');
   const body = $('col-body');
   if (!DB.ready) { body.innerHTML = '<div class="empty">資料庫載入中…</div>'; return; }
@@ -1329,8 +1333,8 @@ async function renderCollect() {
   const tie = C.sort === 'ops' ? 'cps' : 'ops';
   const rows = sortRows(sortRows(collRows(), tie, false), C.sort, C.desc);
   markHead(document.querySelector('#col-list .chead'), C.sort, C.desc);
-  $('col-meta').textContent = `｜${SCRIP[C.cur]}・${TIER[C.tier]}檔${C.lvMin !== 1 || C.lvMax !== 100 ? `・Lv${C.lvMin}${C.lvMax !== C.lvMin ? '–' + C.lvMax : ''}` : ''}・${CFG.isDC ? CFG.target + '全服' : CFG.target}`;
-  if (!rows.length) { body.innerHTML = `<div class="empty">沒有符合條件的收藏品。${C.lvMin !== 1 || C.lvMax !== 100 ? '可放寬製品等級範圍；' : ''}${C.myJobs ? '可取消「只看我的職業與等級」或到排行榜調整職業／等級。' : ''}</div>`; return; }
+  $('col-meta').textContent = `｜${SCRIP[C.cur]}・${TIER[C.tier]}檔${C.jobs.length ? '・' + C.jobs.map(j => JOBS[j]).join('、') : ''}${C.lvMin !== 1 || C.lvMax !== 100 ? `・Lv${C.lvMin}${C.lvMax !== C.lvMin ? '–' + C.lvMax : ''}` : ''}・${CFG.isDC ? CFG.target + '全服' : CFG.target}`;
+  if (!rows.length) { body.innerHTML = `<div class="empty">沒有符合條件的收藏品。${C.jobs.length ? '可增加職業；' : ''}${C.lvMin !== 1 || C.lvMax !== 100 ? '可放寬製品等級範圍；' : ''}${C.myJobs ? '可取消「只看我的職業與等級」或到排行榜調整職業／等級。' : ''}</div>`; return; }
   body.innerHTML = rows.map((r, i) => {
     const need = r.scrip > 0 ? Math.ceil(1000 / r.scrip) : null;
     return `<div class="rrow crow" data-id="${r.id}">
@@ -1350,6 +1354,12 @@ $('col-sort').addEventListener('change', () => { ST.col.sort = $('col-sort').val
 $('col-myjobs').addEventListener('change', () => { ST.col.myJobs = $('col-myjobs').checked; save(); renderCollect(); });
 $('col-hidemiss').addEventListener('change', () => { ST.col.hideMiss = $('col-hidemiss').checked; save(); renderCollect(); });
 $('col-noint').addEventListener('change', () => { ST.col.noInt = $('col-noint').checked; save(); renderCollect(); });
+$('col-jobs').addEventListener('click', e => {
+  const b = e.target.closest('[data-cj]'); if (!b) return;
+  if (b.dataset.cj === 'all') ST.col.jobs = [];
+  else { const j = +b.dataset.cj; ST.col.jobs = ST.col.jobs.includes(j) ? ST.col.jobs.filter(x => x !== j) : [...ST.col.jobs, j]; if (ST.col.jobs.length === 8) ST.col.jobs = []; }
+  save(); renderCollect();
+});
 $('col-band').addEventListener('click', e => { const b = e.target.closest('[data-band]'); if (!b) return; const [a, z] = b.dataset.band.split('-').map(Number); ST.col.lvMin = a; ST.col.lvMax = z; save(); renderCollect(); });
 let lvTimer = null;
 for (const id of ['col-lvmin', 'col-lvmax']) $(id).addEventListener('input', () => {
@@ -1545,7 +1555,7 @@ function updateSummary() {
   for (const k of ['onlyProfit', 'hideMissing', 'hideStale']) if (!CFG[k]) n++;
   if (CFG.wv !== DEF.wv || CFG.wa !== DEF.wa || CFG.wc !== DEF.wc) n++;
   $('filt-cnt').textContent = n || '';
-  let m = 0; const C = ST.col; if (C.tier !== 'high') m++; if (C.sort !== 'cps') m++; if (!C.myJobs) m++; if (!C.hideMiss) m++; if (C.noInt) m++; if (C.lvMin !== 1 || C.lvMax !== 100) m++;
+  let m = 0; const C = ST.col; if (C.tier !== 'high') m++; if (C.sort !== 'cps') m++; if (!C.myJobs) m++; if (!C.hideMiss) m++; if (C.noInt) m++; if (C.lvMin !== 1 || C.lvMax !== 100) m++; if (C.jobs.length) m++;
   $('colf-cnt').textContent = m || '';
 }
 $('filt-reset').addEventListener('click', () => {
