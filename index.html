@@ -62,7 +62,7 @@ tr:last-child td{border:0}#rank-body tr{cursor:pointer}#rank-body tr:hover{backg
 td strong{display:block;font-size:13px}td small{display:block;font-size:11px;color:var(--muted);margin-top:3px}
 .rank{color:var(--muted);font-size:12px}
 .tag{display:inline-block;padding:3px 6px;background:#27374b;color:#bdd3eb;border-radius:6px;font-size:11px;margin:1px 3px 1px 0}
-.tag.mkt{background:#22344d;color:#a9c9f5}.tag.npc{background:#3a3220;color:#f1d595}.tag.gather{background:#1f3b2c;color:#a7e6bf}.tag.craft{background:#33284a;color:#d4bdf7}.tag.warn{background:#4d2633;color:#ffabb7}
+.tag.mkt{background:#22344d;color:#a9c9f5}.tag.npc{background:#3a3220;color:#f1d595}.tag.gather{background:#1f3b2c;color:#a7e6bf}.tag.venture{background:#243a1f;color:#cde79f}.tag.craft{background:#33284a;color:#d4bdf7}.tag.warn{background:#4d2633;color:#ffabb7}
 .scorebar{height:6px;border-radius:4px;background:linear-gradient(90deg,#459e9e,#96e5c3);margin-top:4px}
 .two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);gap:18px}
 .box{background:#0d1927;border:1px solid #263a50;border-radius:12px;padding:14px}
@@ -132,9 +132,9 @@ details.note{margin-top:4px}details.note summary{cursor:pointer;font-weight:700;
 .chead,.crow{grid-template-columns:minmax(170px,2.2fr) minmax(96px,1fr) minmax(96px,1fr) minmax(80px,.8fr) minmax(120px,1.2fr) minmax(100px,1fr) minmax(110px,1fr)}
 .crow .profit{color:var(--gold)}
 
-.leafbox table.mini{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px;white-space:nowrap}
-.leafbox .mini th{background:none;position:static;padding:5px 4px;color:var(--muted);font-weight:600;border-bottom:1px solid #263a50}
-.leafbox .mini td{padding:6px 4px;border-bottom:1px solid #1d2d40}.leafbox .mini tr.hot td{background:#3a2230}.leafbox .mini a{color:var(--text)}
+.qbox table.mini,.leafbox table.mini{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px;white-space:nowrap}
+.qbox .mini th,.leafbox .mini th{background:none;position:static;padding:5px 4px;color:var(--muted);font-weight:600;border-bottom:1px solid #263a50}
+.qbox .mini td,.leafbox .mini td{padding:6px 4px;border-bottom:1px solid #1d2d40}.qbox .mini tr.hot2 td{background:#173a33}.leafbox .mini tr.hot td{background:#3a2230}.leafbox .mini a{color:var(--text)}
 .leafbox .advice{margin-top:10px;font-size:12px;line-height:1.7;color:#f3cdd4;background:#331d27;border:1px solid #6b3445;border-radius:9px;padding:9px 11px}
 .leafbox{overflow-x:auto}
 .lvrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.lvin{display:flex;gap:6px;align-items:center;color:var(--muted)}
@@ -147,6 +147,21 @@ details.note{margin-top:4px}details.note summary{cursor:pointer;font-weight:700;
 .ovrow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid #1f3043}
 .ovrow small{color:var(--muted);font-size:11px;margin-left:6px}.ovrow select{height:32px;width:110px}
 #po-results .ovrow{background:#0e1a29}
+.route{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-bottom:18px}
+.rstop{border:1px solid #263a50;border-radius:11px;background:#0e1a29;padding:10px 12px}.rhd{display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px}.rhd span{color:var(--gold);font-weight:700}
+.ritem{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);padding:3px 0;border-top:1px dashed #1f3043}.ritem span:first-child{color:var(--text)}
+.vhead,.vrow{grid-template-columns:minmax(150px,1.8fr) minmax(80px,.9fr) minmax(56px,.6fr) minmax(70px,.8fr) minmax(110px,1.1fr) minmax(76px,.8fr) minmax(70px,.7fr) minmax(170px,1.7fr)}
+.vrow .best b{font-size:13px}.vrow .best small{white-space:normal}
+@media(max-width:900px){.rrow.vrow{grid-template-columns:1fr 1fr;grid-template-areas:"nm nm" "pf c4" "c1 c2" "c3 c5" "bs bs"}
+ .rrow.vrow>:nth-child(1){grid-area:nm}.rrow.vrow>:nth-child(2){grid-area:c1;text-align:left}.rrow.vrow>:nth-child(3){grid-area:c2;text-align:right}.rrow.vrow>:nth-child(4){grid-area:c3;text-align:left}
+ .rrow.vrow>:nth-child(5){grid-area:pf;text-align:left}.rrow.vrow>:nth-child(6){grid-area:c4;text-align:right}.rrow.vrow>:nth-child(7){grid-area:c5;text-align:right}.rrow.vrow>:nth-child(8){grid-area:bs}}
+.trend{font-size:11px;font-weight:700;margin-left:4px}.trend.up{color:var(--a)}.trend.down{color:var(--red)}
+.tchart{width:100%;height:auto;display:block}.tchart text{fill:var(--muted);font-size:11px}.tread{font-size:12px;color:var(--muted);min-height:18px;margin:4px 0 2px}.tread b{color:var(--text)}
+.wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:8px}
+.wkd{border:1px solid #23364a;border-radius:9px;padding:8px 6px;text-align:center;background:#0e1a29;font-size:12px;position:relative}.wkd b{display:block;font-size:14px;margin:3px 0}.wkd small{color:var(--muted);font-size:10.5px;display:block}
+.wkd.best{border-color:#65c4ad;background:#173a33}.wkd.vbest{box-shadow:inset 0 -3px 0 var(--gold)}.wkd.reset::after{content:'重置';position:absolute;top:3px;right:4px;font-size:9px;color:var(--gold)}
+.tadvice{margin-top:12px;font-size:12.5px;line-height:1.8;background:#0d1826;border:1px solid #23364a;border-radius:10px;padding:10px 13px}.tadvice ul{margin:0;padding-left:18px}
+
 .vtag{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:7px;white-space:nowrap}
 .vtag.sell{background:#4a2631;color:#ffb3bf;border:1px solid #8a4152}.vtag.craft{background:#173a33;color:#a6f0dc;border:1px solid #2f6f62}
 .rrow.sellmat{border-color:#5a3240;background:linear-gradient(160deg,#21202f,#171b29);box-shadow:inset 3px 0 0 #e0788a}
@@ -184,6 +199,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
 <button data-tab="planner"><span class="ico">◇</span> 生產規劃</button>
 <button data-tab="favorites"><span class="ico">★</span> 我的收藏 <span class="cnt" id="fav-cnt">0</span></button>
 <button data-tab="collect"><span class="ico">◈</span> 收藏品</button>
+<button data-tab="venture"><span class="ico">⛏</span> 雇員委託</button>
 <button data-tab="shopping"><span class="ico">▤</span> 採購清單 <span class="cnt" id="plan-cnt">0</span></button>
 <button data-tab="prefs"><span class="ico">⚙</span> 設定</button>
 <button data-tab="settings"><span class="ico">ⓘ</span> 資料與說明</button>
@@ -214,13 +230,12 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
   <div class="group"><span class="flabel">等級</span>
    <div class="controls"><div class="field"><label for="c-lvl">製作等級 ≤</label><input class="input" id="c-lvl" type="number" min="1" max="100" value="100"></div><div class="field"><label for="c-minlvl">成品等級 ≥</label><input class="input" id="c-minlvl" type="number" min="1" max="100" value="1"></div><div class="field"><label for="g-lvl">採集等級 ≤</label><input class="input" id="g-lvl" type="number" min="1" max="100" value="100"></div></div></div>
   <div class="group"><span class="flabel">材料成本來源（逐項取最低）</span><div class="chips sm" id="src-chips"></div>
-   <div class="controls"><div class="field"><label for="g-pct">自採計價（市價 %）</label><input class="input" id="g-pct" type="number" min="0" max="100" step="5" value="0"></div><div class="field"><label for="mat-basis">市場材料價</label><select class="input" id="mat-basis"><option value="min">目前最低掛單</option><option value="avg">近期成交均價</option><option value="low">兩者取低</option></select></div></div>
+   <div class="controls"><div class="field"><label for="g-pct">自採計價（市價 %）</label><input class="input" id="g-pct" type="number" min="0" max="100" step="5" value="0"></div><div class="field"><label for="est-qty" title="排行榜用這個數量估算要買多少材料，依掛單深度算實際平均單價">估算採購量（成品件數）</label><input class="input" id="est-qty" type="number" min="1" max="999" step="5" value="10"></div><div class="field"><label for="v-g" title="每張雇員探險幣（Venture）折算多少 G，0 = 不計">雇員計價（G／探險幣）</label><input class="input" id="v-g" type="number" min="0" step="50" value="0"></div><div class="field"><label for="mat-basis">市場材料價</label><select class="input" id="mat-basis"><option value="min">依掛單深度（實際買得到的價）</option><option value="avg">近期成交均價</option><option value="low">兩者取低</option></select></div></div>
    <div class="controls"><label class="switch"><input type="checkbox" id="g-nolimited"> 自採排除限時節點</label><label class="switch"><input type="checkbox" id="g-nolegend"> 自採排除傳說節點</label></div></div>
-  <div class="group"><span class="flabel">成品售價</span><div class="chips sm" id="qual-chips"><button class="chip on" data-q="all">綜合</button><button class="chip" data-q="nq">只算 NQ</button><button class="chip" data-q="hq">只算 HQ</button></div>
-   <div class="controls"><div class="field"><label for="sell-basis">售價基準</label><select class="input" id="sell-basis"><option value="avg">近期成交均價</option><option value="min">目前最低掛單</option><option value="low">兩者取低（保守）</option></select></div><div class="field"><label for="tax">市場稅 (%)</label><input class="input" id="tax" type="number" min="0" max="20" step="1" value="5"></div><div class="field"><label for="min-vel">每日售出 ≥</label><input class="input" id="min-vel" type="number" min="0" step="0.5" value="1"></div></div></div>
+  <div class="group"><span class="flabel">成品售價</span>   <div class="controls"><div class="field"><label for="sell-basis">售價基準</label><select class="input" id="sell-basis"><option value="avg">近期成交均價</option><option value="min">目前最低掛單</option><option value="low">兩者取低（保守）</option></select></div><div class="field"><label for="tax">市場稅 (%)</label><input class="input" id="tax" type="number" min="0" max="20" step="1" value="5"></div><div class="field"><label for="min-vel">每日售出 ≥</label><input class="input" id="min-vel" type="number" min="0" step="0.5" value="1"></div></div></div>
   <div class="group"><span class="flabel">資料品質</span>
    <label class="switch"><input type="checkbox" id="robust" checked> 剔除極端值（近 14 天成交，中位數 ± 3σ）</label>
-   <div class="controls"><div class="field"><label for="stale-h">掛單過期（小時）</label><input class="input" id="stale-h" type="number" min="0" max="720" step="12" value="48" title="0 = 不檢查"></div></div></div>
+   <div class="controls"><div class="field"><label for="cache-min" title="重新整理時沿用上次掃描的行情；超過這個時間的資料會在用到時重新抓">行情快取（分鐘）</label><input class="input" id="cache-min" type="number" min="0" max="1440" step="10" value="30"></div><div class="field"><label for="stale-h">掛單過期（小時）</label><input class="input" id="stale-h" type="number" min="0" max="720" step="12" value="48" title="0 = 不檢查"></div></div></div>
  </div></details>
   <div class="tiny" style="margin-top:8px"><span class="badge" id="db-badge">載入資料庫…</span></div>
  </div>
@@ -238,7 +253,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
   <div class="tgls">
    <label class="tgl"><input type="checkbox" id="only-profit" checked>只看有利潤</label>
    <label class="tgl" title="自採材料直接拿去賣，不如做成成品賣的才顯示"><input type="checkbox" id="worth-craft">比單賣材料划算</label>
-   <label class="tgl"><input type="checkbox" id="no-gather-only">不需自採</label>
+   <label class="tgl"><input type="checkbox" id="no-gather-only">不需自採／雇員</label>
    <label class="tgl"><input type="checkbox" id="fav-only">只看收藏 ★</label>
    <label class="tgl"><input type="checkbox" id="hide-missing" checked>隱藏缺價</label>
    <label class="tgl"><input type="checkbox" id="hide-stale" checked>隱藏過期行情</label>
@@ -270,6 +285,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
  <div class="controls">
   <div class="field picker"><label for="item-search">商品（可搜尋任何可製作物品）</label><input class="input" id="item-search" placeholder="輸入名稱…" autocomplete="off"><div class="suggest hidden" id="suggest"></div></div>
   <div class="field"><label for="batch">製作數量（成品）</label><input class="input" id="batch" type="number" min="1" max="9999" value="5"></div>
+  <div class="field"><span class="flabel">成品品質</span><div class="chips seg" id="pq"><button class="chip" data-pq="all">綜合</button><button class="chip" data-pq="nq">NQ</button><button class="chip" data-pq="hq">HQ</button></div></div>
   <button class="btn" id="refresh-item">↻ 重新抓價</button>
  </div></div>
 <div id="planner-body"><div class="panel empty">從排行榜點一列，或在上方搜尋商品。</div></div>
@@ -279,6 +295,29 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
 <section id="favorites" class="page hidden">
 <div class="panel"><div class="panel-title"><h2>收藏的商品 <span class="tiny" id="fav-meta"></span></h2><div class="actions"><button class="btn small" id="fav-refresh">↻ 更新收藏行情</button></div></div>
 <div id="fav-content"></div></div>
+<div class="panel"><div class="panel-title"><h2>每週上架時機統計 <span class="tiny">每週日自動統計收藏商品</span></h2><button class="btn small" id="weekly-btn">立即統計</button></div><div id="weekly-box"></div></div>
+</section>
+
+<!-- ============ 雇員委託 ============ -->
+<section id="venture" class="page hidden">
+<div class="panel">
+ <div class="panel-title"><h2>雇員委託收益排行 <span class="tiny" id="ven-meta"></span></h2><div class="actions"><button class="btn small" id="ven-refresh">↻ 更新行情</button></div></div>
+ <div class="fold folded" data-fold="venf">
+ <div class="fbar">
+  <div class="chips seg" id="ven-cat"><button class="chip" data-vc="all">全部</button><button class="chip" data-vc="17">採礦</button><button class="chip" data-vc="18">園藝</button><button class="chip" data-vc="19">捕魚</button><button class="chip" data-vc="34">狩獵</button></div>
+  <input class="input fsearch" id="ven-search" placeholder="🔍 搜尋材料…" aria-label="搜尋雇員委託">
+  <select class="input" id="ven-sort" aria-label="排行依據"><option value="bal">排序：平衡（收益÷清倉天數）</option><option value="trip">排序：每趟直接賣</option><option value="clear">排序：清倉最快</option><option value="best">排序：每趟最高收益（含加工）</option></select>
+  <button class="btn ftoggle fbtn" data-toggle="venf" aria-expanded="false">⚲ 篩選 <span class="fcnt" id="venf-cnt"></span> <span class="chev">▾</span></button>
+ </div>
+ <div class="fbody fpanel">
+  <div class="controls"><div class="field"><label for="ven-lvl">雇員等級 ≤</label><input class="input" id="ven-lvl" type="number" min="1" max="100" value="100"></div><div class="field"><label for="ven-minvel">每日售出 ≥</label><input class="input" id="ven-minvel" type="number" min="0" step="1" value="1"></div></div>
+  <div class="tgls"><label class="tgl"><input type="checkbox" id="ven-nocrys" checked>排除碎晶／水晶</label><label class="tgl" title="只列出做成成品比直接賣更賺的"><input type="checkbox" id="ven-craftonly">只看加工更賺</label></div>
+ </div>
+ </div>
+ <div class="rlist" id="ven-list"><div class="rhead vhead"><span>材料</span><span>委託</span><span class="num">每趟</span><span class="num">單價</span><span class="sortable num" data-k="trip">每趟直接賣</span><span class="num">每日售出</span><span class="sortable num" data-k="clear">清倉天數</span><span class="sortable" data-k="best">最佳用途</span></div>
+  <div id="ven-body"><div class="empty">資料庫載入中…</div></div></div>
+</div>
+<details class="note"><summary>計算說明</summary>每趟直接賣 = 滿裝雇員一趟帶回的數量 × 剔除極端值後的單價 × (1−稅) − 探險幣計價。清倉天數 = 一趟的數量 ÷ 市場每日售出件數（只靠你一個人賣掉一趟要幾天）。平衡排序 = 每趟收益 ÷ max(1, 清倉天數)，兼顧賺得多與賣得快。最佳用途：在已掃描的配方裡，找出用到這個材料、做成成品後「每個材料換算價值」最高的一個（其他自採／雇員材料以市價計算機會成本），和直接賣比較。需要先在商機排行榜掃描才會顯示加工用途。</details>
 </section>
 
 <!-- ============ 收藏品 ============ -->
@@ -321,13 +360,17 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
  <div class="panel-title"><h2>依材料類別固定來源</h2><span class="tiny">優先順序：個別物品 ＞ 類別 ＞ 自動取最低。指定的來源沒有價格時，會自動改回取最低。</span></div>
  <div class="fbar" style="margin-bottom:12px">
   <input class="input fsearch" id="pc-search" placeholder="🔍 搜尋類別或材料名稱…" aria-label="搜尋類別">
-  <select class="input" id="pc-bulk-src" style="min-width:130px" aria-label="批量套用來源"><option value="">自動（最低）</option><option value="mkt">市場</option><option value="npc">NPC</option><option value="gather">自採</option><option value="craft">自製</option></select>
+  <select class="input" id="pc-bulk-src" style="min-width:130px" aria-label="批量套用來源"><option value="">自動（最低）</option><option value="mkt">市場</option><option value="npc">NPC</option><option value="venture">雇員</option><option value="gather">自採</option><option value="craft">自製</option></select>
   <button class="btn" id="pc-bulk">套用到勾選的類別</button>
   <button class="btn small" id="pc-all">全選顯示中</button>
   <button class="btn small" id="pc-clear">全部改回自動</button>
  </div>
  <div class="catlist" id="pc-list"><div class="empty">資料庫載入中…</div></div>
  <div style="margin-top:10px"><button class="btn small" id="pc-more"></button></div>
+</div>
+<div class="panel">
+ <div class="panel-title"><h2>上架時機</h2></div>
+ <div class="controls"><div class="field"><label for="patch-date">下次版本更新日</label><input class="input" id="patch-date" type="date" style="width:170px"></div><button class="btn small" id="patch-clear" style="align-self:flex-end">清除</button><span class="tiny" style="align-self:flex-end;max-width:520px">填入繁中服公告的下個版本日期，物品頁的上架建議會提醒更新前出清、更新後注意價格波動。每週重置固定以週二計算。</span></div>
 </div>
 <div class="panel">
  <div class="panel-title"><h2>個別材料固定來源 <span class="tiny" id="po-meta"></span></h2><button class="btn small" id="po-clear">清除全部</button></div>
@@ -351,13 +394,16 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
  <b>材料逐項取最低</b>：每種材料比較 ① 市場（最低掛單或成交均價）② NPC 吉爾商店 ③ 自採（市價 × 自採計價 %）④ 自製（遞迴計算它自己的材料，最多 4 層，並除以產出數），自動挑最便宜的；在「生產規劃」可逐項改成指定來源，偏好會套用到所有用到該材料的配方。<br>
  <b>剔除極端值</b>：每個成品與材料都抓近 14 天最多 80 筆成交，用中位數 ± 3 × 1.4826 × MAD（約 3σ）剔除極端成交後取平均（樣本少於 4 筆不剔除；近 14 天沒有成交就不採用舊均價）。最低掛單（NQ、HQ 各自對照同品質成交）若低於中位數 60% 或高於 180% 且超出 3σ 範圍（異常低的釣魚價、異常高的亂掛），或該筆掛單超過設定時數沒有被重新確認，就不採用，改抓前 20 筆掛單找最便宜的合理掛單；都不合理時改用剔除後的成交均價。可在掃描設定關閉。<br>
  <b>時效</b>：每列顯示行情最後上傳時間；超過「掛單資料過期」時數會標紅，預設從排行隱藏。行情來自 Universalis 的玩家上傳，只有有人開啟市場板的物品才會更新。<br>
+ <b>掛單深度</b>：材料市價不是只看最低一筆，而是抓前 50 筆掛單，依要買的數量由便宜到貴「整組」購買（遊戲裡一次要買整筆掛單），略過極端值與過期掛單，算出需要的數量平均單價；多買的部分不算進單價，但採購清單會列出要付的整組金額與多買數量。掛單不夠時，不足的部分用剔除後的成交均價估算。排行榜以「估算採購量」（預設 10 件成品）計算，生產規劃用你填的製作數量，收藏品用換 1,000 票所需的數量。<br>
+ <b>雇員</b>：有雇員委託的材料可選「雇員」來源，每個成本 = 探險幣數 × 雇員計價 ÷ 滿裝雇員每趟數量（預設計價 0）。成本相同時優先用雇員（比自己採省事）。<br>
+ <b>行情快取</b>：行情存在瀏覽器（IndexedDB），重新整理不必重掃；超過設定分鐘數的物品在用到時會自動重抓，按「開始掃描」一律抓最新。<br>
  <b>單賣材料 vs 製成成品</b>：自採材料雖然成本算 0（或自採計價 %），仍會用它的市價（同樣剔除極端值）估算「直接拿去賣」能拿多少。加工增值 = 成品售價 ×(1−稅) − 實際要買的材料 − 自採材料市值 ×(1−稅)；大於 0 代表做成成品比單賣材料划算。自製中間材裡用到的自採材料也會一起算進去。<br>
  <b>划算度</b>：淨利<sup>w₂</sup> × 每日售出<sup>w₁</sup> ÷ 成本基準<sup>w₃</sup>（預設 1、0.5、0.5），在單個成本與每日售出數量之間取平衡；成本基準至少取售價 10%。虧錢的配方 0 分。<br>
  <b>缺價</b>：任何材料四種來源都抓不到價格時整筆標成「材料缺價」，不會當成 0 元。<br>
  <b>品質</b>：材料以 NQ／HQ 中較便宜的掛單計價；成品可選綜合、只算 NQ 或只算 HQ 的售價（HQ 需自行確保做得出 HQ）。
  </div>
  <div class="divider"></div>
- <div class="controls"><button class="btn" id="reset-all">清除本機設定與清單</button><button class="btn" id="download-json">下載計畫 JSON</button><label class="btn" style="display:inline-flex;align-items:center;cursor:pointer">匯入計畫 JSON <input id="upload-json" type="file" accept="application/json,.json" class="hidden"></label></div>
+ <div class="controls"><button class="btn" id="clear-cache">清除行情快取</button><button class="btn" id="reset-all">清除本機設定與清單</button><button class="btn" id="download-json">下載計畫 JSON</button><label class="btn" style="display:inline-flex;align-items:center;cursor:pointer">匯入計畫 JSON <input id="upload-json" type="file" accept="application/json,.json" class="hidden"></label></div>
 </div>
 </section>
 <footer class="footer">CraftWise · 非官方 FFXIV 粉絲工具 · 不隸屬於 Square Enix。市場資料：<a href="https://universalis.app/" target="_blank" rel="noopener noreferrer">Universalis</a>；物品與配方資料：<a href="https://beherw.github.io/FFXIV_Market/" target="_blank" rel="noopener noreferrer">貝爾的FFXIV市場小屋</a>（Teamcraft 資料）；排行方式參考：<a href="https://weib0001.github.io/ffxiv_tw_sell_ranking_v7/" target="_blank" rel="noopener noreferrer">繁中服賣出划算度排行</a>。</footer>
@@ -375,7 +421,9 @@ const FALLBACK_DCS = [{ name: '陸行鳥', region: '繁中服', worlds: [4028, 4
 const FALLBACK_WORLDS = { 4028: '伊弗利特', 4029: '迦樓羅', 4030: '利維坦', 4031: '鳳凰', 4032: '奧汀', 4033: '巴哈姆特', 4034: '拉姆', 4035: '泰坦' };
 const JOBS = { 8: '木工', 9: '鍛鐵', 10: '鑄甲', 11: '雕金', 12: '製革', 13: '裁衣', 14: '煉金', 15: '烹調' };
 const GJOB = { MIN: '採礦', BTN: '園藝', FSH: '捕魚' };
-const SRC = { mkt: '市場', npc: 'NPC', gather: '自採', craft: '自製' };
+const SRC = { mkt: '市場', npc: 'NPC', venture: '雇員', gather: '自採', craft: '自製' };
+const VEN_CAT = { 17: '採礦', 18: '園藝', 19: '捕魚', 34: '狩獵' };
+const SELF = s => s === 'gather' || s === 'venture';   // 自己取得（不花錢買）的來源
 const MAXD = 4;
 const SCRIP = { 41784: '巧手橙票', 33913: '巧手紫票' };
 const TIER = { high: '高', mid: '中', base: '基本' };
@@ -450,31 +498,35 @@ async function fetchRepoJSON(path) {
 /* ================= 狀態 ================= */
 const DEF = {
   dc: '陸行鳥', target: '陸行鳥', isDC: true, jobs: [8, 9, 10, 11, 12, 13, 14, 15], cLvl: 100, cMinLvl: 1,
-  src: { mkt: true, npc: true, gather: true, craft: true }, gLvl: 100, gPct: 0, matBasis: 'min', noLimited: false, noLegend: false,
+  src: { mkt: true, npc: true, venture: true, gather: true, craft: true }, gLvl: 100, gPct: 0, matBasis: 'min', noLimited: false, noLegend: false,
   quality: 'all', sellBasis: 'avg', tax: 5, minVel: 1, wv: 0.5, wa: 1, wc: 0.5,
   sort: 'score', desc: true, onlyProfit: true, hideMissing: true, noGatherOnly: false, maxCost: 0, minROI: 0,
-  robust: true, staleH: 48, hideStale: true, favOnly: false, worthCraft: false, catRule: {},
+  robust: true, staleH: 48, patchDate: '', estQty: 10, ventureG: 0, cacheMin: 30, hideStale: true, favOnly: false, worthCraft: false, catRule: {},
 };
 const STORE = 'craftwise-live-v1';
 let saved = {}; try { saved = JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch { saved = {}; }
 const CFG = Object.assign({}, DEF, saved.cfg || {}); CFG.src = Object.assign({}, DEF.src, (saved.cfg || {}).src || {});
 if (!('wc' in (saved.cfg || {}))) CFG.wv = DEF.wv;
 if (!CFG.catRule || typeof CFG.catRule !== 'object') CFG.catRule = {};
+CFG.quality = 'all';   // 首頁一律綜合；NQ／HQ 改在物品頁比較
 const COL_BANDS = [[1, 100, '全部'], [50, 59, '50–59'], [60, 69, '60–69'], [70, 79, '70–79'], [80, 89, '80–89'], [90, 99, '90–99'], [100, 100, '100']];   // 舊版設定：划算度公式已改
 if (!['score', 'profit', 'added', 'velocity', 'cost', 'price', 'roi'].includes(CFG.sort)) { CFG.sort = 'score'; CFG.desc = true; }
 const ST = {
   tab: 'ranking', selected: saved.selected || null, batch: saved.batch || 5,
   ov: saved.ov && typeof saved.ov === 'object' ? saved.ov : {},          // 材料 id -> 指定來源
-  plans: Array.isArray(saved.plans) ? saved.plans : [],                   // [{id, qty}]
+  plans: Array.isArray(saved.plans) ? saved.plans : [],
+  pq: ['all', 'nq', 'hq'].includes(saved.pq) ? saved.pq : 'all',
+  ven: Object.assign({ cat: 'all', sort: 'bal', desc: true, lvl: 100, minVel: 1, noCrys: true, craftOnly: false }, saved.ven || {}),
+  weekly: saved.weekly && typeof saved.weekly === 'object' ? saved.weekly : null,                   // [{id, qty}]
   fav: Array.isArray(saved.fav) ? saved.fav.filter(Number.isInteger) : [], // 收藏的成品 id
-  ui: Object.assign({ scan: false, filt: true, colf: true }, saved.ui || {}),   // true = 收合
+  ui: Object.assign({ scan: false, filt: true, colf: true, venf: true }, saved.ui || {}),   // true = 收合
   col: Object.assign({ cur: 41784, tier: 'high', sort: 'cps', desc: false, myJobs: true, hideMiss: true, noInt: false, lvMin: 1, lvMax: 100, jobs: [] }, saved.col || {}),
   rows: [], scanned: [], scanMeta: '', shown: 100, abort: null,
 };
 if (!Array.isArray(ST.col.jobs)) ST.col.jobs = [];
 if (saved.col && !saved.col.v2) { ST.col.tier = 'high'; ST.col.v2 = true; }   // 收藏價值一律預設最高檔（舊設定重設一次）
 ST.col.v2 = true;
-const save = () => { try { localStorage.setItem(STORE, JSON.stringify({ cfg: CFG, selected: ST.selected, batch: ST.batch, ov: ST.ov, plans: ST.plans, fav: ST.fav, col: ST.col, ui: ST.ui })); } catch { } };
+const save = () => { try { localStorage.setItem(STORE, JSON.stringify({ cfg: CFG, selected: ST.selected, batch: ST.batch, ov: ST.ov, plans: ST.plans, fav: ST.fav, col: ST.col, ui: ST.ui, pq: ST.pq, weekly: ST.weekly, ven: ST.ven })); } catch { } };
 
 const DB = { ready: false, names: {}, cat: {}, catNames: {}, marketable: null, recipes: {}, vendor: {}, gather: {}, dcs: [], worlds: {} };
 const P = {};       // 物品 id -> 市場資料 {vN,vH,aN,aH,mN,mH,wN,wH,t}
@@ -490,7 +542,7 @@ async function loadDB() {
       fetchBuf([SITE + '/data/ui_categories.msgpack', REPO[0] + '/public/data/ui_categories.msgpack']),
       fetchBuf([SITE + '/data/recipes.msgpack', REPO[0] + '/public/data/recipes.msgpack']),
       fetchBuf([SITE + '/data/shops.msgpack', REPO[0] + '/public/data/shops.msgpack']),
-      fetchJSON(UNI + '/marketable'),
+      fetchJSON(UNI + '/marketable').catch(() => null),
       fetchRepoJSON(TCJ + '/nodes.json').catch(() => null),
     ]);
     // 釣魚點不在 nodes.json 裡，另外讀（失敗不影響其他功能）
@@ -510,14 +562,19 @@ async function loadDB() {
     DB.cat = cat.itemIdToCategory || {};
     const tc = cat.twItemUICategories || {};
     for (const k in tc) DB.catNames[k] = (tc[k] && tc[k].tw) || ('分類' + k);
-    DB.marketable = new Set(mkt || []);
+    // 可交易清單：抓不到時改用上次存下來的版本
+    let mk = Array.isArray(mkt) && mkt.length ? mkt : null;
+    if (mk) idbDo('readwrite', st => st.put(mk, 'marketable'));
+    else { mk = await idbDo('readonly', st => st.get('marketable')); if (mk) setStatus('Universalis 可交易清單暫時抓不到，已改用上次儲存的版本。'); }
+    if (!mk) throw new Error('Universalis 可交易物品清單下載失敗');
+    DB.marketable = new Set(mk);
     // 配方：同一成品取等級最低者；排除島嶼／設備
     const rec = decodeMsgpack(recBuf);
     for (const r of (rec && rec.recipes) || []) {
       if (!r.result || !JOBS[r.job] || !DB.names[r.result]) continue;
       const ing = (r.ingredients || []).filter(x => x && x.id > 0).map(x => ({ id: x.id, amount: x.amount || 1 }));
       if (!ing.length) continue;
-      const c = { id: r.result, job: r.job, lvl: r.lvl || 1, yields: r.yields || 1, stars: r.stars || 0, ing };
+      const c = { id: r.result, job: r.job, lvl: r.lvl || 1, yields: r.yields || 1, stars: r.stars || 0, hq: r.hq !== false, ing };
       const cur = DB.recipes[r.result];
       if (!cur || c.lvl < cur.lvl) DB.recipes[r.result] = c;
     }
@@ -558,9 +615,18 @@ async function loadDB() {
     }
     // 雇員委託可取得的物品
     DB.venture = new Set((vtasks || []).map(t => t && t.item).filter(Boolean));
+    // 每種物品取「每張探險幣帶回最多」的委託（滿裝雇員的最高數量階）
+    DB.vent = {};
+    for (const t of vtasks || []) {
+      if (!t || !t.item || !Array.isArray(t.quantities) || !t.quantities.length) continue;
+      const qty = Math.max(...t.quantities.map(q => q.quantity || 0)); if (!qty) continue;
+      const cost = t.cost || 1, cur = DB.vent[t.item];
+      if (!cur || qty / cost > cur.qty / cur.cost) DB.vent[t.item] = { qty, cost, lvl: t.lvl || 1, cat: t.category };
+    }
+    DB.matSet = new Set();
     // 配方用到的材料，依遊戲分類整理（設定頁的「依類別固定來源」用）
     const matIds = new Set(); for (const k in DB.recipes) for (const x of DB.recipes[k].ing) matIds.add(x.id);
-    DB.matIds = [...matIds].filter(id => DB.names[id]);
+    DB.matIds = [...matIds].filter(id => DB.names[id]); DB.matSet = matIds;
     const byCat = {};
     for (const id of DB.matIds) { const c = DB.cat[id]; if (c == null || !DB.catNames[c]) continue; (byCat[c] = byCat[c] || []).push(id); }
     // 依「被多少配方用到」排序，水晶這種每個配方都要的會排最前面
@@ -576,6 +642,7 @@ async function loadDB() {
     fillCats();
     $('scan-btn').disabled = false;
     renderRanking(); if (ST.tab === 'prefs') renderPrefs();
+    await restoreCache();
     if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites(); if (ST.tab === 'collect') renderCollect();
   } catch (e) {
     $('db-badge').textContent = '資料庫載入失敗'; $('db-badge').className = 'badge err';
@@ -593,7 +660,7 @@ function fillCats() {
 /* ================= 設定 UI ================= */
 function targetChanged() {
   renderServerChips(); save();
-  if (ST.scanned.length) { ST.scanned = []; ST.rows = []; ST.scanMeta = ''; renderRanking(); setStatus('已切換伺服器，請重新掃描。'); }
+  if (ST.scanned.length) { ST.scanned = []; ST.rows = []; ST.scanTs = null; renderRanking(); setStatus('已切換伺服器，請重新掃描。'); }
 }
 function renderServerChips() {
   const dcBox = $('dc-chips'), wBox = $('world-chips');
@@ -610,7 +677,7 @@ $('world-chips').addEventListener('click', e => { const b = e.target.closest('[d
 function renderStaticChips() {
   $('job-chips').innerHTML = Object.entries(JOBS).map(([k, v]) => `<button class="chip ${CFG.jobs.includes(+k) ? 'on' : ''}" data-j="${k}">${v}</button>`).join('');
   $('src-chips').innerHTML = Object.entries(SRC).map(([k, v]) => `<button class="chip ${CFG.src[k] ? 'on' : ''}" data-s="${k}">${v}</button>`).join('');
-  [...$('qual-chips').children].forEach(b => b.classList.toggle('on', b.dataset.q === CFG.quality));
+
 }
 $('job-chips').addEventListener('click', e => {
   const b = e.target.closest('[data-j]'); if (!b) return; const j = +b.dataset.j;
@@ -622,8 +689,7 @@ $('src-chips').addEventListener('click', e => {
   CFG.src[s] = !CFG.src[s]; if (!Object.values(CFG.src).some(Boolean)) CFG.src.mkt = true;
   renderStaticChips(); save(); recompute();
 });
-$('qual-chips').addEventListener('click', e => { const b = e.target.closest('[data-q]'); if (!b) return; CFG.quality = b.dataset.q; renderStaticChips(); save(); recompute(); });
-const NUMS = { 'stale-h': 'staleH', 'c-lvl': 'cLvl', 'c-minlvl': 'cMinLvl', 'g-lvl': 'gLvl', 'g-pct': 'gPct', tax: 'tax', 'min-vel': 'minVel', 'max-cost': 'maxCost' };
+const NUMS = { 'est-qty': 'estQty', 'v-g': 'ventureG', 'cache-min': 'cacheMin', 'stale-h': 'staleH', 'c-lvl': 'cLvl', 'c-minlvl': 'cMinLvl', 'g-lvl': 'gLvl', 'g-pct': 'gPct', tax: 'tax', 'min-vel': 'minVel', 'max-cost': 'maxCost' };
 const SELS = { 'mat-basis': 'matBasis', 'sell-basis': 'sellBasis', sort: 'sort' };
 const CHKS = { 'g-nolimited': 'noLimited', 'g-nolegend': 'noLegend', 'only-profit': 'onlyProfit', 'hide-missing': 'hideMissing', 'no-gather-only': 'noGatherOnly', robust: 'robust', 'hide-stale': 'hideStale', 'fav-only': 'favOnly', 'worth-craft': 'worthCraft' };
 function syncInputs() {
@@ -640,7 +706,7 @@ for (const k of ['wv', 'wa', 'wc']) $(k).addEventListener('input', () => { CFG[k
 $('search').addEventListener('input', () => { ST.shown = 100; renderRanking(); });
 $('cat').addEventListener('change', () => { ST.shown = 100; updateSummary(); renderRanking(); });
 let rcTimer = null;
-function recompute() { updateSummary(); clearTimeout(rcTimer); rcTimer = setTimeout(() => { if (ST.scanned.length) { ST.shown = 100; computeAll(); } renderRanking(); if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites(); if (ST.tab === 'collect') renderCollect(); if (ST.tab === 'prefs') renderPrefs(); }, 120); }
+function recompute() { updateSummary(); clearTimeout(rcTimer); rcTimer = setTimeout(() => { if (ST.scanned.length) { ST.shown = 100; computeAll(); } renderRanking(); if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites(); if (ST.tab === 'collect') renderCollect(); if (ST.tab === 'prefs') renderPrefs(); if (ST.tab === 'venture') renderVenture(); }, 120); }
 
 /* ================= 市場資料 ================= */
 const H = {};              // 物品 id -> 近 HIST_DAYS 天成交 [{p,hq,t}]（已排除關服伺服器）
@@ -741,7 +807,7 @@ async function fetchListings(ids, signal, conc, onProg) {
       if (signal && signal.aborted) return;
       const b = batches[next++];
       try {
-        const d = await fetchJSON(`${UNI}/${t}/${b.join(',')}?listings=20&entries=0&fields=${f}`, { signal });
+        const d = await fetchJSON(`${UNI}/${t}/${b.join(',')}?listings=50&entries=0&fields=${f}`, { signal });
         // 單一物品時 Universalis 直接回本體；多物品時以 id 為鍵
         const map = b.length === 1 ? { [b[0]]: d } : ((d && d.items) || {});
         for (const id of b) {
@@ -762,6 +828,8 @@ function needsListings(id) {
 async function fetchPrices(ids, { signal, label = '抓價', conc = 6, onBatch, hist = true } = {}) {
   if (priceTarget !== CFG.target) resetMarket();
   const uniq = [...new Set(ids)].filter(id => DB.marketable.has(+id));
+  // 快取超過有效時間的物品重新抓（行情、成交、掛單一起更新）
+  if (CFG.cacheMin > 0) { const lim = Date.now() - CFG.cacheMin * 60e3; let n = 0; uniq.forEach(id => { if (P[id] && P[id].t < lim) { forget(id); n++; } }); if (n) RB.clear(); }
   const need = uniq.filter(id => !P[id]);
   const batches = []; for (let i = 0; i < need.length; i += 100) batches.push(need.slice(i, i + 100));
   let next = 0, done = 0, failed = 0; const affected = [];
@@ -778,11 +846,44 @@ async function fetchPrices(ids, { signal, label = '抓價', conc = 6, onBatch, h
   if (hist && !(signal && signal.aborted)) {
     const hn = uniq.filter(id => !H[id] && P[id]);
     if (hn.length) failed += await fetchHist(hn, signal, conc, (d, t, f) => onBatch && onBatch(d, t, f, label + '・成交明細'));
-    const ln = uniq.filter(needsListings);
-    if (ln.length && !(signal && signal.aborted)) await fetchListings(ln, signal, conc, (d, t) => onBatch && onBatch(d, t, 0, `補抓被排除的掛單 ${ln.length} 項`));
+    // 材料：抓前 50 筆掛單，依實際要買的數量算平均單價；成品：只有最低掛單被排除時才抓
+    const ln = uniq.filter(id => !L[id] && P[id] && (DB.matSet.has(+id) || needsListings(id)));
+    if (ln.length && !(signal && signal.aborted)) await fetchListings(ln, signal, conc, (d, t) => onBatch && onBatch(d, t, 0, label + '・在售掛單'));
   }
+  if (need.length) saveCache();
   return { total: batches.length, failed, count: need.length };
 }
+
+/* ================= 行情快取（IndexedDB）=================
+   重新整理頁面時沿用上次的行情與掃描結果；超過「行情快取」分鐘數的物品在用到時會重新抓。
+   瀏覽器不支援或被封鎖時就略過，不影響其他功能。 */
+const IDB_NAME = 'craftwise', IDB_STORE = 'kv', CACHE_KEY = 'market-v1';
+function idbOpen() { return new Promise((res, rej) => { const r = indexedDB.open(IDB_NAME, 1); r.onupgradeneeded = () => r.result.createObjectStore(IDB_STORE); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
+async function idbDo(mode, fn) {
+  try { const db = await idbOpen(); return await new Promise((res, rej) => { const tx = db.transaction(IDB_STORE, mode); const out = fn(tx.objectStore(IDB_STORE)); tx.oncomplete = () => { db.close(); res(out && out.result); }; tx.onerror = () => { db.close(); rej(tx.error); }; }); }
+  catch { return null; }
+}
+let cacheTimer = null;
+function saveCache(now) {
+  clearTimeout(cacheTimer);
+  const run = () => idbDo('readwrite', st => st.put({ v: 1, target: CFG.target, isDC: CFG.isDC, ts: ST.scanTs || null, scanned: ST.scanned, P, H, L, saved: Date.now() }, CACHE_KEY));
+  if (now) run(); else cacheTimer = setTimeout(run, 1500);
+}
+async function restoreCache() {
+  const c = await idbDo('readonly', st => st.get(CACHE_KEY));
+  if (!c || c.v !== 1 || c.target !== CFG.target || c.isDC !== CFG.isDC) return false;
+  resetMarket(); Object.assign(P, c.P || {}); Object.assign(H, c.H || {}); Object.assign(L, c.L || {});
+  if (Array.isArray(c.scanned) && c.scanned.length && c.ts) {
+    ST.scanned = c.scanned; ST.scanTs = c.ts; computeAll(); ST.shown = 100; renderRanking();
+    const age = (Date.now() - c.ts) / 60000, old = CFG.cacheMin > 0 && age > CFG.cacheMin;
+    setStatus(`已載入 ${ago(c.ts)}的掃描結果（快取，${ST.scanned.length.toLocaleString()} 個成品）。${old ? `資料已超過 ${CFG.cacheMin} 分鐘，建議按「開始掃描」更新。` : '按「開始掃描」可抓最新行情。'}`, old);
+    $('scanbar').classList.add('idle');
+  }
+  return true;
+}
+const clearCache = () => idbDo('readwrite', st => st.delete(CACHE_KEY));
+function metaText() { return ST.scanTs ? `｜${CFG.isDC ? CFG.target + '全服' : CFG.target}・${ago(ST.scanTs)}掃描` : ''; }
+setInterval(() => { if ($('scan-meta')) $('scan-meta').textContent = metaText(); }, 60000);
 
 /* ================= 剔除極端值 ================= */
 const median = s => { const n = s.length; return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2; };
@@ -853,6 +954,22 @@ function matInfo(id) {
   const value = basisPick(CFG.matBasis, listing, avg);
   return { value, listing, world: lp.good ? lp.good.w : null, bad: lp.bad, avg, rawAvg, st, usedAvg: value != null && value !== listing };
 }
+/* 依掛單深度試算買 qty 個：由便宜到貴整組買（FF14 一次要買整筆掛單），略過極端值與過期掛單。
+   avg = 實際需要的 qty 個平均單價（多買的部分不算進單價，但會記在 surplus / total）。掛單不夠時，不足的部分用剔除後的成交均價補。 */
+function buyPlan(id, qty) {
+  const lst = L[id]; if (!lst || !lst.length || !(qty > 0)) return null;
+  const valid = lst.filter(l => checkListing(l.p, l.t, listBand(id, l.hq)).ok).sort((a, b) => a.p - b.p);
+  if (!valid.length) return null;
+  let left = qty, paid = 0, total = 0; const take = [];
+  for (const l of valid) {
+    if (left <= 0) break;
+    const q = l.q || 1, use = Math.min(left, q);
+    take.push({ w: l.w, q, p: l.p, hq: l.hq }); paid += use * l.p; total += q * l.p; left -= q;
+  }
+  const short = Math.max(0, left), surplus = Math.max(0, -left);
+  if (short) { const mi = matInfo(id); const fb = Math.max(take.length ? take[take.length - 1].p : 0, (mi && mi.avg) || 0); paid += short * fb; total += short * fb; }
+  return { qty, avg: paid / qty, total, surplus, short, take, worlds: [...new Set(take.map(t => t.w))] };
+}
 const marketMat = id => { const m = matInfo(id); return m ? m.value : null; };
 function marketWorld(id) { const m = matInfo(id); if (!m || m.usedAvg) return ''; return m.world ? (DB.worlds[m.world] || '') : (CFG.isDC ? '' : CFG.target); }
 /* strict = 依設定（採集等級、排除限時／傳說）過濾；false = 只要遊戲裡採得到就算，用於手動指定「自採」 */
@@ -871,14 +988,24 @@ function gatherInfo(id, strict = true) {
 }
 function craftable(rec) { return rec && CFG.jobs.includes(rec.job) && rec.lvl <= CFG.cLvl; }
 /* 單一材料：比較所有允許的來源，取最低（或使用者指定的來源） */
-function resolve(id, memo, depth = 0, stack = new Set()) {
-  // 可自製的物品在不同深度可能有不同結果（深度上限），所以快取鍵帶深度
-  const key = CFG.src.craft && craftable(DB.recipes[id]) ? id + '|' + depth : id;
+function resolve(id, memo, depth = 0, stack = new Set(), need = 1) {
+  need = Math.max(1, Math.ceil(need));
+  // 快取鍵帶「需要數量」（掛單深度單價隨數量變）；可自製的另帶深度（深度上限會改變結果）
+  const key = (CFG.src.craft && craftable(DB.recipes[id]) ? id + '|' + depth : id) + '#' + need;
   if (memo.has(key)) return memo.get(key);
   const opts = {};
   const mi = matInfo(id);
-  if (CFG.src.mkt && mi && mi.value != null) opts.mkt = mi.value;
+  let bp = null;
+  if (CFG.src.mkt && mi && mi.value != null) {
+    bp = CFG.matBasis !== 'avg' ? buyPlan(id, need) : null;
+    let v = bp ? bp.avg : mi.value;
+    if (CFG.matBasis === 'low' && mi.avg != null) v = Math.min(v, mi.avg);
+    opts.mkt = v;
+  }
   if (CFG.src.npc && DB.vendor[id] > 0) opts.npc = DB.vendor[id];
+  // 雇員委託：每個 = 探險幣數 × 計價 ÷ 每趟數量（同分時排在自採前面，派雇員比自己採省事）
+  const vi = DB.vent && DB.vent[id];
+  if (CFG.src.venture && vi) opts.venture = CFG.ventureG * vi.cost / vi.qty;
   let gi = null;
   // 被設定排除的採集品（傳說／限時／等級不足）不參與自動取最低，但手動指定「自採」時仍可使用
   const giAll = DB.gather[id] ? gatherInfo(id, false) : null;
@@ -891,7 +1018,8 @@ function resolve(id, memo, depth = 0, stack = new Set()) {
   if (CFG.src.craft && depth < MAXD && craftable(rec) && !stack.has(id)) {
     stack.add(id);
     let sum = 0, ok = true; kids = [];
-    for (const x of rec.ing) { const r = resolve(x.id, memo, depth + 1, stack); kids.push(r); if (r.unit == null) ok = false; else sum += r.unit * x.amount; }
+    const times = Math.ceil(need / rec.yields);
+    for (const x of rec.ing) { const r = resolve(x.id, memo, depth + 1, stack, x.amount * times); kids.push(r); if (r.unit == null) ok = false; else sum += r.unit * x.amount; }
     stack.delete(id);
     if (ok) opts.craft = sum / rec.yields;
   }
@@ -901,15 +1029,15 @@ function resolve(id, memo, depth = 0, stack = new Set()) {
   if (want && opts[want] != null) { src = want; unit = opts[want]; }
   // gv：這 1 個材料裡「自己採集的部分」拿去市場賣的市值；gc：其中自採計價的成本（用來和現金成本分開）
   let gv = 0, gc = 0;
-  if (src === 'gather') { gv = (mi && mi.value) || 0; gc = unit || 0; }
+  if (SELF(src)) { gv = (mi && mi.value) || 0; gc = unit || 0; }
   else if (src === 'craft' && kids) { rec.ing.forEach((x, i) => { gv += (kids[i].gv || 0) * x.amount; gc += (kids[i].gc || 0) * x.amount; }); gv /= rec.yields; gc /= rec.yields; }
-  const out = { id, unit, src, best, opts, gi, giAll, mi, gv, gc, rec: opts.craft != null ? rec : null, kids: opts.craft != null ? kids : null };
+  const out = { id, need, unit, src, best, opts, gi, giAll, mi, bp, vi, gv, gc, rec: opts.craft != null ? rec : null, kids: opts.craft != null ? kids : null };
   memo.set(key, out);
   return out;
 }
-function sellInfo(id) {
+function sellInfo(id, q = 'all') {
   const p = P[id]; if (!p) return null;
-  const q = CFG.quality, useN = q !== 'hq', useH = q !== 'nq';
+  const useN = q !== 'hq', useH = q !== 'nq';
   const vN = useN ? p.vN : undefined, vH = useH ? p.vH : undefined;
   const vel = vN == null && vH == null ? null : (vN || 0) + (vH || 0);
   const aN = useN ? p.aN : undefined, aH = useH ? p.aH : undefined;
@@ -931,10 +1059,11 @@ function sellInfo(id) {
   return { vel, avg, rawAvg, minL, minRaw: lp.raw ? lp.raw.price : null, bad: lp.bad, st, price: basisPick(CFG.sellBasis, minL, avg), up: p.up };
 }
 /* 一個成品的完整試算 */
-function evalItem(id, memo) {
+function evalItem(id, memo, batch = CFG.estQty, q = 'all') {
   const rec = DB.recipes[id]; if (!rec) return null;
-  const s = sellInfo(id) || {};
-  const ings = rec.ing.map(x => ({ ...resolve(x.id, memo, 1, new Set([id])), amount: x.amount }));
+  const s = sellInfo(id, q) || {};
+  const times = Math.ceil(Math.max(1, batch) / rec.yields);
+  const ings = rec.ing.map(x => ({ ...resolve(x.id, memo, 1, new Set([id]), x.amount * times), amount: x.amount }));
   const missing = ings.filter(x => x.unit == null).length;
   const cost = missing ? null : ings.reduce((a, x) => a + x.unit * x.amount, 0) / rec.yields; // 每件成品
   const mix = {}; ings.forEach(x => { if (x.src) mix[x.src] = (mix[x.src] || 0) + 1; });
@@ -959,16 +1088,30 @@ function evalItem(id, memo) {
     out.leaves = gatherLeaves(ings, rec.yields);
     out.topLeaf = out.leaves[0] || null;
   }
+  out.trend = trendFor(id, q);
   out.stale = CFG.staleH > 0 && (s.up == null || Date.now() - s.up > CFG.staleH * 3600e3);
   return out;
 }
+/* 近 3 天成交中位數 vs 更早的成交（同一份 14 天明細）；樣本不夠或時間跨度太短就不判斷 */
+function trendFor(id, q = 'all') {
+  const e = H[id]; if (!e || e.length < 6) return null;
+  let list = q === 'nq' ? e.filter(x => !x.hq) : q === 'hq' ? e.filter(x => x.hq) : null;
+  if (!list) { const n = e.filter(x => !x.hq), h = e.filter(x => x.hq); list = n.length >= h.length ? n : h; }
+  const cut = Date.now() - 3 * 864e5;
+  const rec = list.filter(x => x.t >= cut).map(x => x.p).sort((a, b) => a - b), old = list.filter(x => x.t < cut).map(x => x.p).sort((a, b) => a - b);
+  if (rec.length < 3 || old.length < 3) return null;
+  const mr = median(rec), mo = median(old);
+  return mo > 0 ? { chg: mr / mo - 1, mr, mo } : null;
+}
+const trendTag = t => t && Math.abs(t.chg) >= 0.05 ? ` <span class="trend ${t.chg > 0 ? 'up' : 'down'}" title="近 3 天成交中位數 ${fmt(t.mr)} G，之前 ${fmt(t.mo)} G">${t.chg > 0 ? '↑' : '↓'}${Math.round(Math.abs(t.chg) * 100)}%</span>` : '';
+
 /* 把自採材料（含自製中間材裡用到的）攤平成每件成品的用量與市值，並和 14 天中位數比較漲幅 */
 function gatherLeaves(ings, yields) {
   const acc = new Map();
   const walk = (pairs, mult) => {
     for (const [x, amt] of pairs) {
       const m = mult * amt;
-      if (x.src === 'gather') {
+      if (SELF(x.src)) {
         const o = acc.get(x.id) || { id: x.id, qty: 0, unit: (x.mi && x.mi.value) || 0, mi: x.mi };
         o.qty += m; acc.set(x.id, o);
       } else if (x.src === 'craft' && x.rec && x.kids) walk(x.kids.map((k, i) => [k, x.rec.ing[i].amount]), m / x.rec.yields);
@@ -1015,6 +1158,7 @@ async function startScan() {
   $('scan-btn').disabled = true; $('cancel-btn').classList.remove('hidden'); $('scanbar').classList.remove('idle');
   ST.abort = new AbortController(); const signal = ST.abort.signal;
   const t0 = Date.now();
+  resetMarket();   // 手動掃描一律抓最新行情，不沿用快取
   try {
     const cands = candidates();
     if (!cands.length) { setStatus('這組條件下沒有可製作且可交易的物品。', true); return; }
@@ -1031,7 +1175,7 @@ async function startScan() {
     ST.scanned = hot;
     computeAll();
     const failed = r1.failed + r2.failed;
-    ST.scanMeta = `｜${CFG.isDC ? CFG.target + '全服' : CFG.target}・${new Date().toLocaleTimeString('zh-TW')}`;
+    ST.scanTs = Date.now(); saveCache(true);
     setProg(1, 1, `完成，用時 ${((Date.now() - t0) / 1000).toFixed(0)} 秒`);
     setStatus(failed ? `掃描完成，但有 ${failed} 批請求失敗（Universalis 忙碌），相關物品可能缺價；可再按一次補齊。` : `掃描完成：${cands.length.toLocaleString()} 個可製作成品，${hot.length.toLocaleString()} 個達銷量門檻，${mats.length.toLocaleString()} 種材料已比價。`, !!failed);
     ST.shown = 100; renderRanking();
@@ -1050,14 +1194,14 @@ function filteredRows() {
     r.vel != null && r.vel >= CFG.minVel &&
     !(CFG.hideMissing && r.missing) && !(CFG.onlyProfit && !(r.profit > 0)) &&
     !(CFG.maxCost > 0 && r.cost != null && r.cost > CFG.maxCost) &&
-    !(CFG.noGatherOnly && r.mix.gather) && !(CFG.hideStale && r.stale) && !(CFG.worthCraft && !(r.added > 0)) && !(CFG.favOnly && !isFav(r.id)));
+    !(CFG.noGatherOnly && (r.mix.gather || r.mix.venture)) && !(CFG.hideStale && r.stale) && !(CFG.worthCraft && !(r.added > 0)) && !(CFG.favOnly && !isFav(r.id)));
 }
 const mixTags = mix => Object.keys(SRC).filter(k => mix[k]).map(k => `${SRC[k]}×${mix[k]}`).join(' ');
 /* 一列「卡片化」排行：名稱／製作／單個成本／單個售價／淨利／每日售出／划算度 */
 function rowHTML(r, i, maxScore, opts = {}) {
   const sc = (r.score || 0) / maxScore * 100;
   const st = r.st;
-  const priceSub = st ? `${st.n} 筆成交${st.dropped ? `・剔除 ${st.dropped}` : ''}` : (CFG.robust ? `<span class="negative">近 ${HIST_DAYS} 天無成交</span>` : '未剔除');
+  const priceSub = (st ? `${st.n} 筆成交${st.dropped ? `・剔除 ${st.dropped}` : ''}` : (CFG.robust ? `<span class="negative">近 ${HIST_DAYS} 天無成交</span>` : '未剔除')) + trendTag(r.trend);
   const tip = st ? `中位數 ${fmt(st.med)}｜原始均價 ${fmt(r.rawAvg)}｜最低掛單 ${fmt(r.minL)}｜最近成交 ${ago(st.last)}` : '';
   const sellMat = r.gv > 0 && r.added != null && r.added <= 0;   // 直接賣自採材料比較划算
   const craftWin = r.gv > 0 && r.added != null && r.added > 0;
@@ -1080,7 +1224,7 @@ function markHead(head, k, desc) { head.querySelectorAll('.sortable').forEach(th
 function renderRanking() {
   const rows = sortRows(filteredRows(), CFG.sort, CFG.desc);
   const maxScore = rows.reduce((m, r) => Math.max(m, r.score || 0), 0) || 1;
-  $('scan-meta').textContent = ST.scanMeta;
+  $('scan-meta').textContent = metaText();
   markHead(document.querySelector('#rank-list .rhead'), CFG.sort, CFG.desc);
   const body = $('rank-body');
   if (!rows.length) { body.innerHTML = `<div class="empty">${ST.rows.length ? '沒有符合條件的配方，放寬篩選試試。' : DB.ready ? '按「開始掃描」抓取即時行情。' : '資料庫載入中…'}</div>`; $('count').textContent = ''; $('more-btn').classList.add('hidden'); return; }
@@ -1117,6 +1261,7 @@ $('item-search').addEventListener('input', () => {
 });
 $('suggest').addEventListener('click', e => { const b = e.target.closest('button[data-id]'); if (!b) return; $('suggest').classList.add('hidden'); selectItem(+b.dataset.id); renderPlanner(); });
 document.addEventListener('click', e => { if (!e.target.closest('.picker')) $('suggest').classList.add('hidden'); });
+$('pq').addEventListener('click', e => { const b = e.target.closest('[data-pq]'); if (!b) return; ST.pq = b.dataset.pq; save(); renderPlanner(); });
 $('batch').addEventListener('input', () => { ST.batch = Math.min(9999, Math.max(1, Math.floor(+$('batch').value) || 1)); save(); renderPlanner(); });
 $('refresh-item').addEventListener('click', async () => {
   if (!ST.selected) return; const ids = [ST.selected, ...closure([ST.selected])]; ids.forEach(forget); RB.clear();
@@ -1149,7 +1294,9 @@ async function renderPlanner() {
     try { await fetchPrices(ids, { label: '配方行情' }); } catch (e) { }
     if (tok !== planToken) return;
   }
-  const memo = new Map(); const r = evalItem(id, memo);
+  [...$('pq').children].forEach(b => b.classList.toggle('on', b.dataset.pq === ST.pq));
+  const memo = new Map(); const r = evalItem(id, memo, ST.batch, ST.pq);
+  const rN = evalItem(id, new Map(), ST.batch, 'nq'), rH = evalItem(id, new Map(), ST.batch, 'hq');
   const crafts = Math.ceil(ST.batch / rec.yields), made = crafts * rec.yields;
   const totalCost = r.cost != null ? r.cost * rec.yields * crafts : null;
   const gross = (r.price || 0) * made, fee = gross * CFG.tax / 100, net = totalCost != null ? gross - fee - totalCost : null;
@@ -1162,13 +1309,14 @@ async function renderPlanner() {
      <div class="tree">${r.ings.map(x => nodeHTML(x, x.amount * crafts, memo, 1)).join('')}</div>
      <div class="divider"></div><div class="subtle">每種材料列出所有可用來源的單價，<b style="color:#bff3e4">框線</b>為最低、<b style="color:#a6f4de">底色</b>為目前採用。下拉選單可指定來源（套用到所有用到這個材料的配方）。選「自製」時會展開它的材料。</div></div>
     <div class="panel"><div class="panel-title"><h2>市場行情</h2><a class="tiny" href="${SITE}/item/${id}" target="_blank" rel="noopener">在市場小屋查看 ↗</a></div>
-     <div class="line"><span>每日售出（${CFG.quality === 'all' ? '綜合' : CFG.quality.toUpperCase()}）</span><strong>${fmt1(r.vel)} 件</strong></div>
+     <div class="line"><span>每日售出（${ST.pq === 'all' ? '綜合' : ST.pq.toUpperCase()}）</span><strong>${fmt1(r.vel)} 件</strong></div>
      <div class="line"><span>近 ${HIST_DAYS} 天成交均價${CFG.robust ? '（剔除後）' : ''}</span><strong>${fmt(r.avg)} G</strong></div>
      <div class="line"><span>成交樣本${r.st && r.st.split ? '（NQ/HQ 分開剔除）' : ''}</span><strong>${r.st ? `${r.st.n} 筆${r.st.dropped ? `，剔除 ${r.st.dropped} 筆極端值` : ''}` : '近期無成交'}</strong></div>
      ${r.st ? `<div class="line"><span>中位數／原始均價</span><strong>${fmt(r.st.med)} / ${fmt(r.rawAvg)} G</strong></div><div class="line"><span>最近一筆成交</span><strong>${ago(r.st.last)}</strong></div>` : ''}
      <div class="line"><span>目前最低掛單（已採用）</span><strong>${fmt(r.minL)} G</strong></div>
      ${r.bad.length ? `<div class="line"><span>未採用的掛單</span><strong class="negative">${r.bad.slice(0, 6).map(b => fmt(b.price) + (b.hq ? ' HQ' : '') + ' ' + b.chk.why).join('、')}${r.bad.length > 6 ? ` 等 ${r.bad.length} 筆` : ''}</strong></div>` : ''}
      <div class="line"><span>行情更新</span><strong class="${ageCls(r.up)}">${ago(r.up)}</strong></div>
+     ${qualBox(rec, rN, rH)}
      <div id="detail-box"><div class="subtle">讀取在售掛單…</div></div>
      <div class="box" style="margin-top:12px"><div class="tiny">本批 ${made} 件佔市場每日售出量</div><div class="metric">${r.vel > 0 ? fmt1(made / r.vel * 100) + '%' : '—'}</div><div class="tiny">${r.vel > 0 ? (made / r.vel <= 0.2 ? '量很小，市場吃得下' : made / r.vel <= 1 ? '約一天內的市場成交量，建議分批上架' : `超過 ${fmt1(made / r.vel)} 天的市場成交量，小心滯銷`) : '近期沒有成交資料'}</div></div>
      ${r.gv > 0 && r.added != null ? `<div class="box cmp" style="margin-top:12px"><div class="tiny">自採材料：單賣 vs 製成成品（${made} 件）</div>
@@ -1178,7 +1326,9 @@ async function renderPlanner() {
        <div class="tiny">${r.added > 0 ? `做成成品比較划算，加工增值 ${fmt(r.added)} G／件（${r.matSell > 0 ? '+' + fmt1(r.added / r.matSell * 100) + '%' : '材料本身賣不了錢'}）` : `直接賣材料比較划算，做成成品每件少賺 ${fmt(-r.added)} G`}</div></div>
      ${leafTable(r, made)}` : ''}
      <div class="divider"></div><button class="btn primary" style="width:100%" id="add-plan">＋ 加入採購清單（${made} 件）</button>
-     <p class="subtle" style="margin-bottom:0">可加入多個商品，會合併同名材料與中間材需求。</p></div></div>`;
+     <p class="subtle" style="margin-bottom:0">可加入多個商品，會合併同名材料與中間材需求。</p></div></div>
+   <div class="panel"><div class="panel-title"><h2>價格趨勢與上架時機</h2><span class="tiny">最多近 28 天成交・${ST.pq === 'all' ? '綜合（取成交較多的品質）' : ST.pq.toUpperCase()}</span></div><div id="trend-box"><div class="subtle">讀取近 28 天成交紀錄…</div></div></div>`;
+  renderTrend(id, r);
   const nRule = Object.keys(CFG.catRule).length;
   $('plan-badge').textContent = Object.keys(ST.ov).length || nRule ? `個別指定 ${Object.keys(ST.ov).length} 項・類別規則 ${nRule} 個` : '逐項最低成本';
   const coll = DB.coll && DB.coll[id];
@@ -1199,6 +1349,26 @@ async function renderPlanner() {
       ${top.length ? `<div class="tiny" style="margin:6px 0">最便宜的掛單</div>` + top.map(l => `<div class="line" style="margin:4px 0;font-size:12px"><span>${esc(l.worldName || CFG.target)}${l.hq ? ' <span class="tag">HQ</span>' : ''} ×${l.quantity}${(b => b && (l.pricePerUnit < b.lo || l.pricePerUnit > b.hi))(bandOf(l.hq)) ? ' <span class="tag warn">極端值</span>' : ''}</span><strong>${fmt(l.pricePerUnit)} G</strong></div>`).join('') : ''}`;
   });
 }
+/* NQ／HQ 對照：兩種品質各自剔除極端值後的售價、銷量、淨利 */
+function qualBox(rec, rN, rH) {
+  if (!rN || !rH) return '';
+  const row = (lab, r, on) => `<tr class="${on ? 'hot2' : ''}"><td><b>${lab}</b></td><td class="num">${fmt(r.price)}</td><td class="num">${fmt1(r.vel)}</td><td class="num ${r.profit > 0 ? 'positive' : 'negative'}">${r.profit != null ? sgn(r.profit) + fmt(r.profit) : '—'}</td><td class="num">${r.st ? r.st.n : 0}</td></tr>`;
+  const ok = rN.profit != null && rH.profit != null && rN.price > 0 && rH.price > 0;
+  const prem = ok ? rH.price / rN.price - 1 : null;
+  // 以「淨利 × 每日售出」比較誰一天賺得多（受銷量限制）
+  const flow = r => (r.profit || 0) * Math.min(r.vel || 0, Math.max(ST.batch, 1));
+  let advice = '';
+  if (!rec.hq) advice = '這個配方無法製作 HQ，只能賣 NQ。';
+  else if (!ok) advice = rH.price > 0 ? (rN.price > 0 ? '其中一種品質缺材料價格，無法比較。' : '近期只有 HQ 成交，NQ 不好賣。') : '近期只有 NQ 成交，HQ 沒有行情。';
+  else {
+    const hqWin = rH.profit > rN.profit, flowWin = flow(rH) >= flow(rN) ? 'HQ' : 'NQ';
+    advice = `HQ 溢價 <b>${prem >= 0 ? '+' : ''}${Math.round(prem * 100)}%</b>，每件${hqWin ? '多' : '少'}賺 ${fmt(Math.abs(rH.profit - rN.profit))} G。` +
+      (flowWin === 'HQ' ? (hqWin ? '建議做 HQ。' : '') : `但 HQ 每日只賣 ${fmt1(rH.vel)} 件，量大時賣 NQ 一天賺得較多。`) + ' 這裡用 NQ 材料成本計算，做 HQ 可能需要較高的製作數值或 HQ 材料。';
+  }
+  return `<div class="box qbox" style="margin:10px 0"><div class="tiny">NQ／HQ 比較（已剔除極端值）</div>
+   <table class="mini"><thead><tr><th>品質</th><th class="num">售價</th><th class="num">每日售出</th><th class="num">淨利/件</th><th class="num">樣本</th></tr></thead><tbody>${row('NQ', rN, ST.pq === 'nq')}${row('HQ', rH, ST.pq === 'hq')}</tbody></table>
+   <div class="tiny" style="margin-top:8px;line-height:1.7">${advice}</div></div>`;
+}
 function leafTable(r, made) {
   if (!r.leaves || !r.leaves.length) return '';
   const lose = r.added <= 0, top = r.leaves[0];
@@ -1209,20 +1379,29 @@ function leafTable(r, made) {
    ${r.leaves.map((x, i) => `<tr class="${lose && i === 0 ? 'hot' : ''}"><td><a href="${SITE}/item/${x.id}" target="_blank" rel="noopener" title="到市場小屋看這個材料的行情">${esc(DB.names[x.id] || '#' + x.id)}</a></td><td class="num">${fmt1(x.qty)}</td><td class="num">${fmt(x.unit)}</td><td class="num">${fmt(x.med)}</td><td class="num">${riseTxt(x)}</td><td class="num">${Math.round(x.share * 100)}%</td></tr>`).join('')}
    </tbody></table>${advice}</div>`;
 }
+const wName = w => DB.worlds[w] || (CFG.isDC ? '' : CFG.target);
+/* 掛單深度摘要：買 N 個要跨哪幾台、最貴買到多少 */
+function bpNote(bp) {
+  if (!bp) return '';
+  const ws = bp.worlds.map(wName).filter(Boolean);
+  const hi = bp.take.length ? bp.take[bp.take.length - 1].p : null;
+  return `買 ${fmt(bp.qty)} 個均價${ws.length ? '・' + esc(ws.slice(0, 3).join('/')) + (ws.length > 3 ? '…' : '') : ''}${bp.take.length > 1 ? `・最高 ${fmt(hi)}` : ''}${bp.short ? `・<span class="negative">掛單不足 ${fmt(bp.short)}</span>` : ''}`;
+}
 function mktNote(x) {
   const m = x.mi; if (!m) return '';
   const parts = [];
-  if (m.usedAvg) parts.push(CFG.robust ? '剔除後均價' : '均價'); else if (marketWorld(x.id)) parts.push(esc(marketWorld(x.id)));
+  if (x.bp) parts.push(bpNote(x.bp));
+  else if (m.usedAvg) parts.push(CFG.robust ? '剔除後均價' : '均價'); else if (marketWorld(x.id)) parts.push(esc(marketWorld(x.id)));
   const bad = m.bad.filter(b => m.listing == null || b.price < m.listing).sort((a, b) => a.price - b.price)[0];
   if (bad) parts.push(`<span class="negative">排除 ${fmt(bad.price)} ${bad.chk.why}</span>`);
   return parts.length ? '・' + parts.join('・') : '';
 }
 function nodeHTML(x, need, memo, depth) {
   const name = DB.names[x.id] || ('#' + x.id);
-  const optLabel = { mkt: '市場', npc: 'NPC', gather: '自採', craft: '自製' };
+  const optLabel = { mkt: '市場', npc: 'NPC', venture: '雇員', gather: '自採', craft: '自製' };
   const gTag = g => g ? '・' + g.jobs.map(j => GJOB[j]).join('/') + ' Lv' + g.lvl + (g.why && g.why.length ? '（' + g.why.join('、') + '）' : '') : '';
   const opts = Object.keys(optLabel).filter(k => x.opts[k] != null).map(k =>
-    `<span class="opt ${k === x.best ? 'best' : ''} ${k === x.src ? 'chosen' : ''}">${optLabel[k]} ${fmt(x.opts[k])}${k === 'mkt' ? mktNote(x) : ''}${k === 'gather' && x.gi ? gTag(x.gi) : ''}${k === 'gather' && x.mi && x.mi.value != null ? '・市價 ' + fmt(x.mi.value) : ''}${k === 'craft' && x.rec ? '・' + JOBS[x.rec.job] + ' Lv' + x.rec.lvl : ''}</span>`).join('');
+    `<span class="opt ${k === x.best ? 'best' : ''} ${k === x.src ? 'chosen' : ''}">${optLabel[k]} ${fmt(x.opts[k])}${k === 'mkt' ? mktNote(x) : ''}${k === 'gather' && x.gi ? gTag(x.gi) : ''}${k === 'gather' && x.mi && x.mi.value != null ? '・市價 ' + fmt(x.mi.value) : ''}${k === 'craft' && x.rec ? '・' + JOBS[x.rec.job] + ' Lv' + x.rec.lvl : ''}${k === 'venture' && x.vi ? `・${VEN_CAT[x.vi.cat] || ''}委託 每趟 ${x.vi.qty} 個${x.vi.cost > 1 ? `／${x.vi.cost} 張` : ''}` : ''}</span>`).join('');
   const extraGather = CFG.src.gather && x.opts.gather == null && x.giAll;
   const sel = `<select class="input" data-ov="${x.id}" aria-label="${esc(name)} 取得方式"><option value="">${CFG.catRule[DB.cat[x.id]] ? '類別規則：' + SRC[CFG.catRule[DB.cat[x.id]]] : '自動（最低）'}</option>${Object.keys(optLabel).filter(k => x.opts[k] != null || (k === 'gather' && extraGather)).map(k => `<option value="${k}" ${ST.ov[x.id] === k ? 'selected' : ''}>${optLabel[k]}${k === 'gather' && (extraGather || (x.gi && x.gi.why && x.gi.why.length)) ? '（' + (x.giAll.why.join('、') || '已排除') + '）' : ''}</option>`).join('')}</select>`;
   const extraChip = extraGather ? `<span class="opt" title="進階設定中排除了這類節點，自動取最低時不使用；可在右側下拉選單手動指定自採">可自採${gTag(x.giAll)}・需手動指定</span>` : '';
@@ -1230,10 +1409,10 @@ function nodeHTML(x, need, memo, depth) {
   if (x.src === 'craft' && x.rec) {
     const crafts = Math.ceil(need / x.rec.yields);
     // 子材料要用這個深度重新解析，確保與成本計算一致
-    const sub = x.rec.ing.map(c => ({ ...resolve(c.id, new Map(), depth + 1, new Set([x.id])), amount: c.amount }));
+    const sub = x.rec.ing.map(c => ({ ...resolve(c.id, new Map(), depth + 1, new Set([x.id]), c.amount * crafts), amount: c.amount }));
     kids = `<div class="children"><div class="tiny">製作 ${crafts} 次${x.rec.yields > 1 ? `（每次 ${x.rec.yields} 個）` : ''}</div>${sub.map(c => nodeHTML(c, c.amount * crafts, memo, depth + 1)).join('')}</div>`;
   }
-  return `<div class="node"><div class="head"><div><span class="name">${esc(name)}</span> <span class="tag">× ${fmt(need)}</span>${x.unit == null ? ' <span class="tag warn">缺價</span>' : ''}</div><strong>${x.unit != null ? fmt(x.unit * need) + ' G' : '—'}${x.src === 'gather' && x.gv > 0 ? `<small style="display:block;font-size:11px;color:var(--muted);font-weight:500">單賣值 ${fmt(x.gv * need)} G</small>` : ''}</strong>${sel}</div><div class="opts">${opts || (extraChip ? '' : '<span class="opt">沒有任何來源的價格</span>')}${extraChip}</div>${kids}</div>`;
+  return `<div class="node"><div class="head"><div><span class="name">${esc(name)}</span> <span class="tag">× ${fmt(need)}</span>${x.unit == null ? ' <span class="tag warn">缺價</span>' : ''}</div><strong>${x.unit != null ? fmt(x.unit * need) + ' G' : '—'}${SELF(x.src) && x.gv > 0 ? `<small style="display:block;font-size:11px;color:var(--muted);font-weight:500">單賣值 ${fmt(x.gv * need)} G</small>` : ''}</strong>${sel}</div><div class="opts">${opts || (extraChip ? '' : '<span class="opt">沒有任何來源的價格</span>')}${extraChip}</div>${kids}</div>`;
 }
 $('planner-body').addEventListener('change', e => {
   const s = e.target.closest('select[data-ov]'); if (!s) return;
@@ -1254,6 +1433,9 @@ $('planner-body').addEventListener('click', e => {
 let favToken = 0;
 async function renderFavorites() {
   $('fav-cnt').textContent = ST.fav.length;
+  renderWeekly();
+  // 週日自動統計（每週一次）
+  if (DB.ready && new Date().getDay() === 0 && ST.fav.length && (!ST.weekly || ST.weekly.week !== weekKey() || ST.weekly.target !== CFG.target)) buildWeekly();
   const box = $('fav-content');
   if (!ST.fav.length) { box.innerHTML = '<div class="empty">還沒有收藏。在排行榜或生產規劃按 ☆ 收藏商品。</div>'; $('fav-meta').textContent = ''; return; }
   if (!DB.ready) { box.innerHTML = '<div class="empty">資料庫載入中…</div>'; return; }
@@ -1280,6 +1462,7 @@ $('fav-content').addEventListener('click', e => {
   const ad = e.target.closest('[data-addfav]'); if (ad) { const id = +ad.dataset.addfav, y = DB.recipes[id].yields; const ex = ST.plans.find(p => p.id === id); if (ex) ex.qty += y; else ST.plans.push({ id, qty: y }); save(); updateCount(); toast(`已加入採購清單（${DB.names[id]} ×${y}）`); return; }
   const op = e.target.closest('.rrow[data-id]'); if (op) { selectItem(+op.dataset.id); go('planner'); }
 });
+$('weekly-btn').addEventListener('click', () => { if (!ST.fav.length) return toast('請先收藏商品'); buildWeekly(); });
 $('fav-refresh').addEventListener('click', () => {
   ST.fav.forEach(id => [id, ...closure([id])].forEach(forget)); RB.clear(); renderFavorites(); toast('正在更新收藏行情');
 });
@@ -1298,13 +1481,14 @@ function collRows() {
     const name = DB.names[k] || '#' + k; if (q && !name.toLowerCase().includes(q)) continue;
     const ventureOnly = rec.ing.every(x => DB.venture.has(x.id) && !DB.recipes[x.id]);
     if (C.noInt && !ventureOnly) continue;
-    const ings = rec.ing.map(x => ({ ...resolve(x.id, memo, 1, new Set([+k])), amount: x.amount }));
+    const t = c[C.tier] || c.high, scrip = (t.scrip || 0) * (t.quantity || 1);
+    const times = Math.ceil((scrip > 0 ? Math.ceil(1000 / scrip) : 1) / rec.yields);   // 以「換 1,000 票」的量估算掛單深度
+    const ings = rec.ing.map(x => ({ ...resolve(x.id, memo, 1, new Set([+k]), x.amount * times), amount: x.amount }));
     const missing = ings.filter(x => x.unit == null).length;
     if (C.hideMiss && missing) continue;
     const cost = missing ? null : ings.reduce((a, x) => a + x.unit * x.amount, 0) / rec.yields;
     const gv = missing ? null : ings.reduce((a, x) => a + (x.gv || 0) * x.amount, 0) / rec.yields;
     const gc = missing ? 0 : ings.reduce((a, x) => a + (x.gc || 0) * x.amount, 0) / rec.yields;
-    const t = c[C.tier] || c.high, scrip = (t.scrip || 0) * (t.quantity || 1);
     const mix = {}; ings.forEach(x => { if (x.src) mix[x.src] = (mix[x.src] || 0) + 1; });
     const opp = cost != null ? cost - gc + gv : null;            // 自採材料改用市價
     out.push({ id: +k, name, rec, c, t, scrip, ings, missing, cost, mix, gv, ventureOnly,
@@ -1405,10 +1589,24 @@ function expandPlans() {
       crafts.push({ id, need, times: n, rec, top: tops.has(id) });
       for (const x of rec.ing) demand[x.id] = (demand[x.id] || 0) + x.amount * n;
     } else {
-      leaves[id] = { id, qty: need, src: c ? c.src : null, unit: c ? c.unit : null, gi: c ? c.gi : null };
+      // 葉節點以實際總需求重新試算（掛單深度依數量變化），來源沿用結構判斷時的選擇
+      const r = resolve(id, new Map(), 1, new Set(), need);
+      const src = c ? (c.src === 'craft' ? r.src : c.src) : null;
+      const unit = src && r.opts[src] != null ? r.opts[src] : (c ? c.unit : null);
+      leaves[id] = { id, qty: need, src, unit, gi: r.gi || (c && c.gi), vi: r.vi, bp: src === 'mkt' ? r.bp : null };
     }
   }
   return { crafts, leaves: Object.values(leaves) };
+}
+/* 跨服購買路線：依伺服器整理要買的掛單，花最多錢的伺服器排前面 */
+function routeHTML(list) {
+  const by = new Map();
+  for (const l of list) if (l.bp) for (const t of l.bp.take) {
+    const w = by.get(t.w) || { w: t.w, items: [], sum: 0 }; w.items.push({ id: l.id, q: t.q, p: t.p, hq: t.hq }); w.sum += t.q * t.p; by.set(t.w, w);
+  }
+  if (!by.size) return '';
+  const ws = [...by.values()].sort((a, b) => b.sum - a.sum);
+  return `<h3 class="rowtitle">跨服購買路線（${ws.length} 台伺服器）</h3><div class="route">${ws.map((w, i) => `<div class="rstop"><div class="rhd"><b>${i + 1}. ${esc(wName(w.w) || '—')}</b><span>${fmt(w.sum)} G</span></div>${w.items.map(it => `<div class="ritem"><span>${esc(DB.names[it.id] || '#' + it.id)}${it.hq ? ' <span class="tag">HQ</span>' : ''}</span><span>${it.q} 個 × ${fmt(it.p)}</span></div>`).join('')}</div>`).join('')}</div>`;
 }
 async function renderShopping() {
   updateCount();
@@ -1420,14 +1618,16 @@ async function renderShopping() {
   const memo = new Map();
   const evals = ST.plans.map(p => ({ p, r: DB.recipes[p.id] ? evalItem(p.id, memo) : null }));
   const { crafts, leaves } = expandPlans();
-  const totalBuy = leaves.reduce((a, l) => a + (l.unit != null && l.src !== 'gather' ? l.unit * l.qty : 0), 0);
+  const payOf = l => l.src === 'mkt' && l.bp ? l.bp.total : (l.unit || 0) * l.qty;   // 市場要整組買，付的是整組金額
+  const totalBuy = leaves.reduce((a, l) => a + (l.unit != null && !SELF(l.src) ? payOf(l) : 0), 0);
   const revenue = evals.reduce((a, { p, r }) => a + (r && r.price ? r.price * p.qty * (1 - CFG.tax / 100) : 0), 0);
-  const gatherVal = leaves.reduce((a, l) => a + (l.src === 'gather' && l.unit ? l.unit * l.qty : 0), 0);
-  const groups = { mkt: [], npc: [], gather: [], none: [] };
+  const gatherVal = leaves.reduce((a, l) => a + (SELF(l.src) && l.unit ? l.unit * l.qty : 0), 0);
+  const groups = { mkt: [], npc: [], venture: [], gather: [], none: [] };
   leaves.forEach(l => (groups[l.src] || groups.none).push(l));
   const nm = id => esc(DB.names[id] || '#' + id);
   const section = (key, title, cols) => groups[key].length ? `<h3 class="rowtitle">${title}（${groups[key].length} 種）</h3><div class="table-wrap" style="margin-bottom:18px;max-height:none"><table><thead><tr>${cols.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${groups[key].sort((a, b) => (DB.names[a.id] || '').localeCompare(DB.names[b.id] || '', 'zh-Hant')).map(l => rowFor(key, l)).join('')}</tbody></table></div>` : '';
-  const rowFor = (key, l) => key === 'mkt' ? `<tr><td><strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td class="num">${fmt(l.unit)}</td><td class="num">${fmt(l.unit * l.qty)}</td><td>${esc(marketWorld(l.id) || '—')}</td></tr>`
+  const rowFor = (key, l) => key === 'mkt' ? `<tr><td><strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td class="num">${fmt(l.unit)}</td><td class="num">${fmt(payOf(l))}${l.bp && l.bp.surplus ? `<small>多買 ${fmt(l.bp.surplus)} 個</small>` : ''}</td><td>${l.bp ? `${l.bp.worlds.length} 台伺服器・${l.bp.take.length} 筆掛單・${fmt(l.bp.take[0].p)}～${fmt(l.bp.take[l.bp.take.length - 1].p)} G<small>${esc(l.bp.worlds.map(wName).join('、'))}</small>` + (l.bp.short ? `<small class="negative">掛單不足 ${fmt(l.bp.short)} 個，已用均價估算</small>` : '') : esc(marketWorld(l.id) || '—')}</td></tr>`
+    : key === 'venture' ? `<tr><td><strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td>${l.vi ? `${VEN_CAT[l.vi.cat] || ''}委託 Lv${l.vi.lvl}` : '—'}</td><td class="num">${l.vi ? l.vi.qty : '—'}</td><td class="num">${l.vi ? Math.ceil(l.qty / l.vi.qty) * l.vi.cost : '—'}</td></tr>`
     : key === 'npc' ? `<tr><td><strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td class="num">${fmt(l.unit)}</td><td class="num">${fmt(l.unit * l.qty)}</td></tr>`
     : key === 'gather' ? `<tr><td><strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td>${l.gi ? l.gi.jobs.map(j => GJOB[j]).join(' / ') + ' Lv' + l.gi.lvl : '—'}</td><td class="num">${fmt(marketMat(l.id))}</td></tr>`
     : `<tr><td><strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td><span class="tag warn">四種來源都沒有價格</span></td></tr>`;
@@ -1440,11 +1640,13 @@ async function renderShopping() {
    ${evals.map(({ p, r }, i) => `<tr><td><strong>${nm(p.id)}</strong>${r ? `<small>${JOBS[r.rec.job]} Lv${r.rec.lvl}</small>` : ''}</td><td class="num"><input class="input" type="number" min="1" max="9999" value="${p.qty}" data-qty="${i}" style="width:84px;height:30px"></td><td class="num ${r && r.profit > 0 ? 'positive' : 'negative'}">${r && r.profit != null ? sgn(r.profit) + fmt(r.profit) : '—'}</td><td class="num">${fmt(r && r.price)}</td><td><button class="btn small" data-open="${p.id}">規劃</button> <button class="btn small" data-rm="${i}">移除</button></td></tr>`).join('')}
    </tbody></table></div>
    ${crafts.filter(c => !c.top).length ? `<h3 class="rowtitle">需先自製的中間材</h3><div class="table-wrap" style="margin-bottom:18px;max-height:none"><table><thead><tr><th>中間材</th><th class="num">需要</th><th class="num">製作次數</th><th>職業</th></tr></thead><tbody>${crafts.filter(c => !c.top).map(c => `<tr><td><strong>${nm(c.id)}</strong></td><td class="num">${fmt(c.need)}</td><td class="num">${c.times}</td><td>${JOBS[c.rec.job]} Lv${c.rec.lvl}</td></tr>`).join('')}</tbody></table></div>` : ''}
-   ${section('mkt', '市場板購買', ['材料', '數量', '單價', '小計', '最便宜伺服器'])}
+   ${routeHTML(groups.mkt)}
+   ${section('mkt', '市場板購買', ['材料', '數量', '平均單價', '需付（整組）', '掛單（詳見上方購買路線）'])}
    ${section('npc', 'NPC 商店購買', ['材料', '數量', '單價', '小計'])}
+   ${section('venture', '派雇員採集', ['材料', '數量', '委託', '每趟數量', '需探險幣'])}
    ${section('gather', '自行採集', ['材料', '數量', '採集職業', '市價參考'])}
    ${section('none', '缺價材料', ['材料', '數量', '備註'])}
-   <p class="subtle">市場價是掃描當下的最低掛單（或你選的基準），實際購買時數量多可能會買到更高價的掛單。清單存在這個瀏覽器。</p>`;
+   <p class="subtle">市場價依掃描當下的掛單深度試算：由便宜到貴整組購買，略過極端值與過期掛單；實際購買前掛單可能已變動。清單存在這個瀏覽器。</p>`;
 }
 $('plans-content').addEventListener('click', e => {
   if (e.target.id === 'go-plan') return go('planner');
@@ -1461,9 +1663,9 @@ function listText() {
   const { crafts, leaves } = expandPlans(); const nm = id => DB.names[id] || '#' + id;
   const L = [`CraftWise 生產清單（${CFG.target}）`, '', '【成品】', ...ST.plans.map(p => `${nm(p.id)} × ${p.qty}`)];
   const mid = crafts.filter(c => !c.top); if (mid.length) L.push('', '【先自製】', ...mid.map(c => `${nm(c.id)} × ${c.need}（${JOBS[c.rec.job]} 製作 ${c.times} 次）`));
-  for (const [k, t] of [['mkt', '市場購買'], ['npc', 'NPC 購買'], ['gather', '自行採集']]) {
+  for (const [k, t] of [['mkt', '市場購買'], ['npc', 'NPC 購買'], ['venture', '派雇員'], ['gather', '自行採集']]) {
     const g = leaves.filter(l => l.src === k); if (!g.length) continue;
-    L.push('', `【${t}】`, ...g.map(l => `${nm(l.id)} × ${l.qty}` + (k === 'mkt' ? `（約 ${fmt(l.unit)} G${marketWorld(l.id) ? '・' + marketWorld(l.id) : ''}）` : k === 'npc' ? `（${fmt(l.unit)} G）` : l.gi ? `（${l.gi.jobs.map(j => GJOB[j]).join('/')}）` : '')));
+    L.push('', `【${t}】`, ...g.map(l => `${nm(l.id)} × ${l.qty}` + (k === 'mkt' ? `（均 ${fmt(l.unit)} G${l.bp ? '・' + l.bp.take.map(t => wName(t.w) + ' ' + t.q + '×' + fmt(t.p)).join('、') : marketWorld(l.id) ? '・' + marketWorld(l.id) : ''}）` : k === 'venture' ? (l.vi ? `（${VEN_CAT[l.vi.cat] || ''}委託 ${Math.ceil(l.qty / l.vi.qty)} 趟）` : '') : k === 'npc' ? `（${fmt(l.unit)} G）` : l.gi ? `（${l.gi.jobs.map(j => GJOB[j]).join('/')}）` : '')));
   }
   return L.join('\n');
 }
@@ -1474,14 +1676,15 @@ $('csv-list').addEventListener('click', () => {
   const rows = [['類型', '物品ID', '物品', '數量', '來源', '單價', '小計', '備註']];
   ST.plans.forEach(p => rows.push(['成品', p.id, nm(p.id), p.qty, '製作', '', '', '']));
   crafts.filter(c => !c.top).forEach(c => rows.push(['中間材', c.id, nm(c.id), c.need, '自製', '', '', `${JOBS[c.rec.job]} ${c.times} 次`]));
-  leaves.forEach(l => rows.push(['材料', l.id, nm(l.id), l.qty, SRC[l.src] || '缺價', l.unit != null ? Math.round(l.unit) : '', l.unit != null ? Math.round(l.unit * l.qty) : '', l.src === 'mkt' ? marketWorld(l.id) : l.gi ? l.gi.jobs.map(j => GJOB[j]).join('/') : '']));
+  leaves.forEach(l => rows.push(['材料', l.id, nm(l.id), l.qty, SRC[l.src] || '缺價', l.unit != null ? Math.round(l.unit) : '', l.unit != null ? Math.round(l.unit * l.qty) : '', l.src === 'mkt' ? (l.bp ? l.bp.take.map(t => wName(t.w) + ' ' + t.q + '×' + Math.round(t.p)).join('；') : marketWorld(l.id)) : l.src === 'venture' && l.vi ? `${VEN_CAT[l.vi.cat] || ''}委託 ${Math.ceil(l.qty / l.vi.qty)} 趟` : l.gi ? l.gi.jobs.map(j => GJOB[j]).join('/') : '']));
   download(toCSV(rows), 'text/csv;charset=utf-8', 'craftwise_採購清單.csv'); toast('CSV 已匯出');
 });
 
 /* ================= 設定：類別與個別材料來源 ================= */
-const SRC_OPTS = [['', '自動（最低）'], ['mkt', '市場'], ['npc', 'NPC'], ['gather', '自採'], ['craft', '自製']];
+const SRC_OPTS = [['', '自動（最低）'], ['mkt', '市場'], ['npc', 'NPC'], ['venture', '雇員'], ['gather', '自採'], ['craft', '自製']];
 const srcSelect = (attr, val) => `<select class="input" ${attr}>${SRC_OPTS.map(([v, l]) => `<option value="${v}" ${v === (val || '') ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
 function renderPrefs() {
+  $('patch-date').value = CFG.patchDate || '';
   if (!DB.ready) return;
   const q = $('pc-search').value.trim().toLowerCase();
   // 類別名稱符合的排前面，只因為裡面有同名材料而符合的排後面
@@ -1504,6 +1707,8 @@ function renderPrefs() {
 }
 function rulesChanged(msg) { RB.clear(); save(); recompute(); renderPrefs(); if (msg) toast(msg); }
 $('pc-search').addEventListener('input', renderPrefs);
+$('patch-date').addEventListener('change', () => { CFG.patchDate = $('patch-date').value || ''; save(); toast(CFG.patchDate ? '已設定版本更新日' : '已清除'); });
+$('patch-clear').addEventListener('click', () => { CFG.patchDate = ''; $('patch-date').value = ''; save(); });
 $('pc-more').addEventListener('click', () => { ST.pcAll = !ST.pcAll; renderPrefs(); });
 $('pc-list').addEventListener('change', e => {
   const s = e.target.closest('[data-pcsel]'); if (!s) return;
@@ -1533,6 +1738,277 @@ document.addEventListener('change', e => {
 $('po-list').addEventListener('click', e => { const b = e.target.closest('[data-porm]'); if (!b) return; delete ST.ov[b.dataset.porm]; rulesChanged(); });
 $('po-clear').addEventListener('click', () => { if (!Object.keys(ST.ov).length || !confirm('確定清除所有個別材料設定？')) return; ST.ov = {}; rulesChanged('個別設定已清除'); });
 
+/* ================= 雇員委託收益 ================= */
+/* 從已掃描的配方找出每種雇員材料「做成成品後每個值多少」。
+   加工倍率 = 成品稅後收入 ÷ 所有材料的市值（自採／雇員材料以市價計）；這個材料做成成品後每個值 = 自己的市值 × 加工倍率。
+   也就是把加工增值依市值比例分攤給每種材料，不會把整個成品的利潤都算在單一材料上。 */
+function ventureUses() {
+  const best = new Map(), tax = 1 - CFG.tax / 100;
+  for (const r of ST.rows) {
+    if (!(r.price > 0) || r.missing) continue;
+    const rev = r.price * tax * r.rec.yields;
+    const mv = y => SELF(y.src) ? (y.gv || 0) : (y.unit || 0);
+    const tot = r.ings.reduce((a, y) => a + mv(y) * y.amount, 0);
+    if (!(tot > 0)) continue;
+    const mult = rev / tot;
+    for (const x of r.ings) {
+      if (!DB.vent[x.id] || !(x.amount > 0)) continue;
+      const base = (x.mi && x.mi.value) || mv(x); if (!(base > 0)) continue;
+      const perX = base * mult;
+      const cur = best.get(x.id);
+      if (!cur || perX > cur.perX) best.set(x.id, { pid: r.id, perX, mult, vel: r.vel, amount: x.amount, yields: r.rec.yields });
+    }
+  }
+  return best;
+}
+function venRows() {
+  const V = ST.ven, q = $('ven-search').value.trim().toLowerCase(), uses = ventureUses(), tax = 1 - CFG.tax / 100, out = [];
+  for (const k in DB.vent) {
+    const id = +k, vi = DB.vent[k], name = DB.names[k];
+    if (!name || !DB.marketable.has(id)) continue;
+    if (V.cat !== 'all' && String(vi.cat) !== String(V.cat)) continue;
+    if (vi.lvl > V.lvl) continue;
+    if (V.noCrys && id >= 2 && id <= 19) continue;
+    if (q && !name.toLowerCase().includes(q)) continue;
+    const s = sellInfo(id, 'nq') || {};
+    const price = s.price, vel = s.vel;
+    if (!(price > 0) || (vel || 0) < V.minVel) continue;
+    const vcost = CFG.ventureG * vi.cost;
+    const trip = vi.qty * price * tax - vcost;
+    const clear = vel > 0 ? vi.qty / vel : null;
+    const u = uses.get(id);
+    const craftTrip = u ? u.perX * vi.qty - vcost : null;
+    const prods = u ? Math.floor(vi.qty / u.amount) * u.yields : 0;            // 一趟能做出幾個成品
+    const prodDays = u && u.vel > 0 ? prods / u.vel : null;                     // 這些成品要賣幾天
+    const gain = u ? u.perX - price * tax : null;
+    if (V.craftOnly && !(gain > 0)) continue;
+    out.push({ id, name, vi, price, vel, trip, clear, u, craftTrip, gain, prods, prodDays, trend: trendFor(id, 'nq'), st: s.st,
+      bal: clear != null ? trip / Math.max(1, clear) : 0, best: Math.max(trip, craftTrip ?? -Infinity) });
+  }
+  return out;
+}
+let venToken = 0;
+async function renderVenture() {
+  const V = ST.ven; updateSummary();
+  [...$('ven-cat').children].forEach(b => b.classList.toggle('on', b.dataset.vc === String(V.cat)));
+  $('ven-sort').value = V.sort; $('ven-lvl').value = V.lvl; $('ven-minvel').value = V.minVel; $('ven-nocrys').checked = V.noCrys; $('ven-craftonly').checked = V.craftOnly;
+  const body = $('ven-body');
+  if (!DB.ready) { body.innerHTML = '<div class="empty">資料庫載入中…</div>'; return; }
+  const tok = ++venToken;
+  const ids = Object.keys(DB.vent).map(Number).filter(id => DB.marketable.has(id) && DB.names[id]);
+  if (ids.some(x => !P[x] || !H[x]) || priceTarget !== CFG.target) {
+    body.innerHTML = '<div class="empty">抓取雇員委託材料的即時行情中…（約 950 種，第一次約 10–20 秒）</div>';
+    try { await fetchPrices(ids, { label: '雇員材料' }); } catch { }
+    if (tok !== venToken) return;
+  }
+  let rows = venRows();
+  const k = V.sort === 'clear' ? 'clear' : V.sort;
+  rows = sortRows(rows, k, k !== 'clear');
+  markHead(document.querySelector('#ven-list .vhead'), k, k !== 'clear');
+  $('ven-meta').textContent = `｜${CFG.isDC ? CFG.target + '全服' : CFG.target}・${rows.length} 種${ST.rows.length ? '' : '・掃描排行後才會顯示加工用途'}`;
+  if (!rows.length) { body.innerHTML = '<div class="empty">沒有符合條件的委託，放寬篩選試試。</div>'; return; }
+  const max = rows.reduce((m, r) => Math.max(m, r.trip), 0) || 1;
+  body.innerHTML = rows.slice(0, 200).map((r, i) => {
+    const u = r.u, better = r.gain > 0;
+    const bestHTML = !ST.rows.length ? '<small>先到商機排行榜掃描，才能比較加工用途</small>'
+      : !u ? '<small>已掃描的配方沒有用到，直接賣</small>'
+      : `<b class="${better ? 'positive' : ''}">${better ? '做成' : '直接賣較好・'}${esc(DB.names[u.pid] || '')}</b><small>${better ? `加工倍率 ×${u.mult.toFixed(2)}，每個材料值 ${fmt(u.perX)} G（直接賣 ${fmt(r.price * (1 - CFG.tax / 100))}），每趟約 ${fmt(r.craftTrip)} G。一趟可做 ${fmt(r.prods)} 個成品${r.prodDays != null ? `，約 ${fmt1(r.prodDays)} 天賣完` : ''}${r.prodDays > 7 ? '<span class="negative">（市場吃不下，實際收益會打折）</span>' : ''}` : `加工倍率 ×${u.mult.toFixed(2)}，做成後每個材料只值 ${fmt(u.perX)} G`}</small>`;
+    return `<div class="rrow vrow" data-vid="${r.id}">
+     <div class="nm"><span class="rk">#${i + 1}</span><b>${esc(r.name)}</b><small>${esc(DB.catNames[DB.cat[r.id]] || '')}${r.st ? `・${r.st.n} 筆成交` : ''}${trendTag(r.trend)}</small></div>
+     <div data-l="委託"><span class="tag venture">${VEN_CAT[r.vi.cat] || '委託'} Lv${r.vi.lvl}</span></div>
+     <div class="num" data-l="每趟"><span class="val">${r.vi.qty}</span><small>個${r.vi.cost > 1 ? `・${r.vi.cost} 張幣` : ''}</small></div>
+     <div class="num" data-l="單價"><span class="val">${fmt(r.price)}</span><small>G</small></div>
+     <div class="num" data-l="每趟直接賣"><div class="profit positive">${fmt(r.trip)}</div><small>G／趟</small></div>
+     <div class="num" data-l="每日售出"><span class="val">${fmt1(r.vel)}</span><small>件／日</small></div>
+     <div class="num" data-l="清倉天數"><span class="val ${r.clear > 3 ? 'negative' : r.clear <= 1 ? 'positive' : ''}">${r.clear != null ? fmt1(r.clear) : '—'}</span><small>天／趟</small></div>
+     <div class="best" data-l="最佳用途">${bestHTML}</div>
+    </div>`;
+  }).join('') + (rows.length > 200 ? `<div class="subtle" style="padding:8px">只顯示前 200 筆，共 ${rows.length} 筆。</div>` : '');
+}
+$('ven-cat').addEventListener('click', e => { const b = e.target.closest('[data-vc]'); if (!b) return; ST.ven.cat = b.dataset.vc; save(); renderVenture(); });
+$('ven-sort').addEventListener('change', () => { ST.ven.sort = $('ven-sort').value; save(); renderVenture(); });
+$('ven-search').addEventListener('input', () => renderVenture());
+for (const [id, key] of [['ven-lvl', 'lvl'], ['ven-minvel', 'minVel']]) $(id).addEventListener('change', () => { ST.ven[key] = Math.max(0, +$(id).value || 0) || (key === 'lvl' ? 100 : 0); save(); renderVenture(); });
+for (const [id, key] of [['ven-nocrys', 'noCrys'], ['ven-craftonly', 'craftOnly']]) $(id).addEventListener('change', () => { ST.ven[key] = $(id).checked; save(); renderVenture(); });
+document.querySelector('#ven-list .vhead').addEventListener('click', e => { const th = e.target.closest('.sortable'); if (!th) return; ST.ven.sort = th.dataset.k; save(); renderVenture(); });
+$('ven-body').addEventListener('click', e => { const r = e.target.closest('[data-vid]'); if (!r) return; const id = +r.dataset.vid; const v = venRows().find(x => x.id === id); if (v && v.u) { selectItem(v.u.pid); go('planner'); } else window.open(`${SITE}/item/${id}`, '_blank', 'noopener'); });
+$('ven-refresh').addEventListener('click', () => { Object.keys(DB.vent).forEach(k => forget(+k)); RB.clear(); renderVenture(); toast('正在更新雇員材料行情'); });
+
+/* ================= 價格趨勢與上架時機 ================= */
+const WD = ['日', '一', '二', '三', '四', '五', '六'];
+const RESET_DAY = 2;   // 每週重置：週二
+const TR = {};         // 物品 id -> { key, entries }（28 天成交明細，物品頁與每週統計共用）
+async function loadTrendData(id) {
+  const key = CFG.target + '|' + id;
+  if (TR[id] && TR[id].key === key && Date.now() - TR[id].at < 30 * 60e3) return TR[id];
+  const d = await fetchJSON(`${UNI}/history/${encodeURIComponent(CFG.target)}/${id}?entriesToReturn=1800&entriesWithin=${28 * 86400}`).catch(() => null);
+  if (!d) return null;
+  const entries = (d.entries || []).filter(e => e && e.pricePerUnit > 0 && !EXCL.has(e.worldID)).map(e => ({ p: e.pricePerUnit, q: e.quantity || 1, hq: !!e.hq, t: e.timestamp * 1000 }));
+  TR[id] = { key, entries, at: Date.now() };
+  return TR[id];
+}
+const dayKey = t => { const d = new Date(t); return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`; };
+/* 每日中位價與成交量（瀏覽器本地時間），並算出趨勢與星期幾的價格／成交指數 */
+function trendAnalysis(entries, q) {
+  let list = q === 'nq' ? entries.filter(e => !e.hq) : q === 'hq' ? entries.filter(e => e.hq) : null;
+  let qq = q;
+  if (!list) { const n = entries.filter(e => !e.hq), h = entries.filter(e => e.hq); list = n.length >= h.length ? n : h; qq = n.length >= h.length ? 'nq' : 'hq'; }
+  if (list.length < 5) return null;
+  // 先剔除極端成交，避免一筆亂賣扭曲某天的中位數
+  const rs = robustStats(list.map(e => e.p));
+  if (rs && rs.lo != null) list = list.filter(e => e.p >= rs.lo && e.p <= rs.hi);
+  const by = new Map();
+  for (const e of list) { const k = dayKey(e.t); const g = by.get(k) || { k, t: e.t, ps: [], vol: 0 }; g.ps.push(e.p); g.vol += e.q; by.set(k, g); }
+  const first = Math.min(...list.map(e => e.t)), days = [];
+  for (let t = new Date(dayKey(first)).getTime(); t <= Date.now(); t += 864e5) {
+    const k = dayKey(t), g = by.get(k);
+    days.push({ k, t, wd: new Date(t).getDay(), med: g ? median(g.ps.sort((a, b) => a - b)) : null, vol: g ? g.vol : 0, n: g ? g.ps.length : 0 });
+  }
+  const meds = days.filter(d => d.med != null);
+  if (meds.length < 2) return null;
+  const all = median(meds.map(d => d.med).sort((a, b) => a - b));
+  const last3 = days.slice(-3).filter(d => d.med != null).map(d => d.med).sort((a, b) => a - b);
+  const prev = days.slice(0, -3).slice(-11).filter(d => d.med != null).map(d => d.med).sort((a, b) => a - b);
+  // 樣本門檻：近 3 天至少 3 筆、之前至少 5 筆成交，才判斷漲跌
+  const nRecent = days.slice(-3).reduce((a, d) => a + d.n, 0), nPrev = days.slice(0, -3).slice(-11).reduce((a, d) => a + d.n, 0);
+  const chg = last3.length && prev.length && nRecent >= 3 && nPrev >= 5 ? median(last3) / median(prev) - 1 : null;
+  // 近 7 天的每日變化率（最小平方法斜率 ÷ 平均價）
+  const w7 = days.slice(-7).filter(d => d.med != null);
+  let slope = null;
+  if (w7.length >= 5 && w7.reduce((a, d) => a + d.n, 0) >= 10) { const xs = w7.map(d => d.t / 864e5), ys = w7.map(d => d.med), mx = mean(xs), my = mean(ys); const b = xs.reduce((a, x, i) => a + (x - mx) * (ys[i] - my), 0) / (xs.reduce((a, x) => a + (x - mx) ** 2, 0) || 1); slope = b / my; }
+  // 星期指數：每天中位價 ÷ 整段中位價；成交量指數：該星期平均成交量 ÷ 全部平均
+  const avgVol = mean(days.map(d => d.vol)) || 1;
+  const wk = WD.map((_, w) => { const ds = days.filter(d => d.wd === w); const pm = ds.filter(d => d.med != null); return { w, pIdx: pm.length ? mean(pm.map(d => d.med / all)) : null, vIdx: ds.length ? mean(ds.map(d => d.vol)) / avgVol : null, n: ds.length }; });
+  const weeks = Math.floor(days.length / 7);
+  return { q: qq, days, all, chg, slope, wk, weeks, n: list.length };
+}
+function patchInfo() {
+  if (!CFG.patchDate) return null;
+  const d = Math.round((new Date(CFG.patchDate + 'T00:00:00').getTime() - new Date(dayKey(Date.now()) + 'T00:00:00').getTime()) / 864e5);
+  return isFinite(d) ? d : null;
+}
+function timingAdvice(a, r) {
+  const tips = [];
+  const capped = a.n >= 1500 && a.days.length < 28;   // 成交量大，明細上限只涵蓋最近幾天
+  if (a.chg == null) tips.push(capped ? `這個物品成交量很大，Universalis 一次最多回傳約 1,800 筆，只涵蓋最近 ${a.days.length} 天，無法和更早比較漲跌；可看每日中位價是否連續走高或走低。` : a.days.length <= 4 ? `成交紀錄只涵蓋最近 ${a.days.length} 天，無法和之前比較。` : '近幾天成交太少，無法判斷短期漲跌。');
+  else {
+    if (a.chg >= 0.08) tips.push(`近 3 天比之前上漲 <b class="positive">${Math.round(a.chg * 100)}%</b>：手上有貨可趁高出清，但別一次大量製作，漲勢常會被大量上架壓回。`);
+    else if (a.chg <= -0.08) tips.push(`近 3 天比之前下跌 <b class="negative">${Math.round(-a.chg * 100)}%</b>：價格正在走弱，先小量製作或等跌勢停止再做，避免做好就碰上崩跌。`);
+    else tips.push(`近 3 天價格與之前持平（${a.chg >= 0 ? '+' : ''}${Math.round(a.chg * 100)}%），可照常製作上架。`);
+  }
+  if (a.slope != null && Math.abs(a.slope) >= 0.02) tips.push(`近 7 天每天平均${a.slope > 0 ? '上漲' : '下跌'}約 ${Math.round(Math.abs(a.slope) * 1000) / 10}%，${a.slope > 0 ? '趨勢向上' : '趨勢向下，持有庫存的風險較高'}。`);
+  const ok = a.wk.filter(w => w.pIdx != null && w.n >= 1);
+  if (a.n < 20 || a.weeks < 2) tips.push(capped ? `資料只涵蓋 ${a.days.length} 天、不到兩週，這類大量成交的物品無法判斷星期規律；它幾乎每天都賣得掉，上架時機影響不大，價格看最低掛單即可。` : `近 ${a.days.length} 天只有 ${a.n} 筆成交${a.weeks < 2 ? '、不到兩週' : ''}，星期規律不可靠，暫不建議特定上架日。`);
+  else if (ok.length >= 5) {
+    const bp = ok.reduce((m, w) => w.pIdx > m.pIdx ? w : m), bv = a.wk.filter(w => w.vIdx != null).reduce((m, w) => w.vIdx > m.vIdx ? w : m);
+    tips.push(`週${WD[bp.w]}成交價平均${bp.pIdx >= 1 ? '高' : '低'} ${Math.abs(Math.round((bp.pIdx - 1) * 100))}%，週${WD[bv.w]}成交量最大（平均的 ${Math.round(bv.vIdx * 100)}%）→ 想賣高價就在<b>週${WD[bp.w]}</b>前上架；想快點清倉選<b>週${WD[bv.w]}</b>${a.weeks < 2 ? '（資料不到兩週，僅供參考）' : ''}。`);
+  }
+  const rw = a.wk[RESET_DAY];
+  if (rw && rw.vIdx != null) tips.push(`每週二重置後（週任務、零式與副本獎勵刷新）消耗品與相關素材需求常增加；這個物品週二成交量是平均的 ${Math.round(rw.vIdx * 100)}%。`);
+  const pd = patchInfo();
+  if (pd != null) {
+    if (pd > 0 && pd <= 7) tips.push(`距離版本更新還有 <b>${pd}</b> 天：舊版本的高階素材與裝備常在更新前走弱，${r && r.rec && r.rec.lvl >= 90 ? '這個物品屬於高等級，' : ''}建議更新前出清庫存、不要囤貨。`);
+    else if (pd <= 0 && pd >= -5) tips.push(`版本剛更新（${-pd} 天前）：需求與價格波動大，新素材與消耗品常短暫高價，舊裝備價格下跌；上架前先確認最新行情。`);
+    else if (pd > 7 && pd <= 21) tips.push(`距離版本更新 ${pd} 天：可開始規劃庫存，更新前一週避免大量囤積舊版本物品。`);
+  }
+  return tips;
+}
+function lineChart(days, key, W = 640) {
+  const Hh = 160, pl = 46, pr = 10, pt = 10, pb = 22;
+  const pts = days.map((d, i) => ({ i, d, v: d[key] }));
+  const vals = pts.filter(p => p.v != null).map(p => p.v);
+  if (!vals.length) return '';
+  let lo = Math.min(...vals), hi = Math.max(...vals); if (lo === hi) { lo *= 0.95; hi *= 1.05; } const pad = (hi - lo) * 0.1; lo = Math.max(0, lo - pad); hi += pad;
+  const x = i => pl + (days.length > 1 ? i / (days.length - 1) : 0.5) * (W - pl - pr), y = v => pt + (1 - (v - lo) / (hi - lo)) * (Hh - pt - pb);
+  const segs = []; let cur = [];
+  pts.forEach(p => { if (p.v == null) { if (cur.length) segs.push(cur); cur = []; } else cur.push(`${x(p.i).toFixed(1)},${y(p.v).toFixed(1)}`); }); if (cur.length) segs.push(cur);
+  const ticks = [lo, (lo + hi) / 2, hi];
+  const lbl = days.map((d, i) => i % Math.ceil(days.length / 7) === 0 || i === days.length - 1 ? `<text x="${x(i)}" y="${Hh - 6}" text-anchor="middle">${d.k.slice(5).replace('-', '/')}</text>` : '').join('');
+  return `<svg class="tchart" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="每日成交中位價">
+   ${ticks.map(t => `<line x1="${pl}" x2="${W - pr}" y1="${y(t)}" y2="${y(t)}" stroke="#22344a" stroke-width="1"/><text x="${pl - 6}" y="${y(t) + 4}" text-anchor="end">${fmt(t)}</text>`).join('')}
+   ${segs.map(s => `<polyline points="${s.join(' ')}" fill="none" stroke="#82d3c6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`).join('')}
+   ${pts.filter(p => p.v != null).map(p => `<circle cx="${x(p.i)}" cy="${y(p.v)}" r="3" fill="#82d3c6" stroke="#101b2a" stroke-width="2"/>`).join('')}
+   <line class="xh" x1="0" x2="0" y1="${pt}" y2="${Hh - pb}" stroke="#98abc2" stroke-width="1" stroke-dasharray="3 3" visibility="hidden"/>
+   ${lbl}
+   ${days.map((d, i) => `<rect class="hit" data-i="${i}" x="${x(i) - (W - pl - pr) / days.length / 2}" y="${pt}" width="${(W - pl - pr) / days.length}" height="${Hh - pt - pb}" fill="transparent"/>`).join('')}
+  </svg>`;
+}
+function barChart(days, W = 640) {
+  const Hh = 80, pl = 46, pr = 10, pt = 6, pb = 6;
+  const max = Math.max(...days.map(d => d.vol), 1), bw = (W - pl - pr) / days.length;
+  return `<svg class="tchart" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="每日成交量">
+   <line x1="${pl}" x2="${W - pr}" y1="${Hh - pb}" y2="${Hh - pb}" stroke="#22344a"/><text x="${pl - 6}" y="${pt + 8}" text-anchor="end">${fmt(max)}</text>
+   ${days.map((d, i) => { const h = d.vol / max * (Hh - pt - pb); return h > 0 ? `<rect x="${pl + i * bw + 1}" y="${Hh - pb - h}" width="${Math.max(1, bw - 2)}" height="${h}" rx="${Math.min(4, bw / 3)}" fill="${d.wd === RESET_DAY ? '#ebc680' : '#4d8f86'}"/>` : ''; }).join('')}
+   ${days.map((d, i) => `<rect class="hit" data-i="${i}" x="${pl + i * bw}" y="0" width="${bw}" height="${Hh}" fill="transparent"/>`).join('')}
+  </svg>`;
+}
+let trendTok = 0;
+async function renderTrend(id, r) {
+  const box = $('trend-box'); if (!box) return;
+  const tok = ++trendTok;
+  if (!DB.marketable.has(id)) { box.innerHTML = '<div class="subtle">這個物品無法在市場交易，沒有價格趨勢。</div>'; return; }
+  const d = await loadTrendData(id);
+  if (tok !== trendTok || !$('trend-box')) return;
+  if (!d) { box.innerHTML = '<div class="subtle">成交紀錄讀取失敗，稍後再試。</div>'; return; }
+  const a = trendAnalysis(d.entries, ST.pq);
+  if (!a) { box.innerHTML = '<div class="subtle">近 28 天成交太少，無法判斷趨勢。</div>'; return; }
+  const tips = timingAdvice(a, r);
+  const CW = Math.max(300, Math.round(box.clientWidth || 640));   // 依實際寬度繪製，文字維持 11px
+  const okW = a.wk.filter(w => w.pIdx != null);
+  const bp = okW.length ? okW.reduce((m, w) => w.pIdx > m.pIdx ? w : m) : null;
+  const vw = a.wk.filter(w => w.vIdx != null); const bv = vw.length ? vw.reduce((m, w) => w.vIdx > m.vIdx ? w : m) : null;
+  box.innerHTML = `<div class="tread" id="tread">${a.q.toUpperCase()}・涵蓋近 ${a.days.length} 天、${fmt(a.n)} 筆成交（已剔除極端值）・整段中位 <b>${fmt(a.all)} G</b>${a.chg != null ? `・近 3 天 <b class="${a.chg > 0 ? 'positive' : a.chg < 0 ? 'negative' : ''}">${a.chg >= 0 ? '+' : ''}${Math.round(a.chg * 100)}%</b>` : ''}　<span class="tiny">游標移到圖上看每天數值</span></div>
+   <div class="tiny">每日成交中位價（G）</div>${lineChart(a.days, 'med', CW)}
+   <div class="tiny" style="margin-top:6px">每日成交量（件，金色 = 週二重置日）</div>${barChart(a.days, CW)}
+   <div class="tiny" style="margin-top:12px">星期指數（價格 ÷ 整段中位；成交量 ÷ 平均）${a.weeks < 2 ? '・資料不到兩週，僅供參考' : `・約 ${a.weeks} 週資料`}</div>
+   <div class="wk">${a.wk.map(w => `<div class="wkd ${bp && w.w === bp.w ? 'best' : ''} ${bv && w.w === bv.w ? 'vbest' : ''} ${w.w === RESET_DAY ? 'reset' : ''}"><small>週${WD[w.w]}</small><b>${w.pIdx != null ? Math.round(w.pIdx * 100) : '—'}</b><small>量 ${w.vIdx != null ? Math.round(w.vIdx * 100) + '%' : '—'}</small></div>`).join('')}</div>
+   <div class="tiny" style="margin-top:4px">綠框 = 價格最高的星期，金底線 = 成交量最大的星期。</div>
+   <div class="tadvice"><b>上架時機建議</b><ul>${tips.map(t => `<li>${t}</li>`).join('')}</ul></div>`;
+  // 滑鼠讀數
+  const read = $('tread'), base = read.innerHTML;
+  box.querySelectorAll('svg.tchart').forEach(svg => {
+    svg.addEventListener('mousemove', e => { const h = e.target.closest('.hit'); if (!h) return; const dd = a.days[+h.dataset.i]; read.innerHTML = `<b>${dd.k.slice(5).replace('-', '/')}（週${WD[dd.wd]}）</b>　中位 <b>${dd.med != null ? fmt(dd.med) + ' G' : '無成交'}</b>・成交 <b>${fmt(dd.vol)}</b> 件（${dd.n} 筆）`;
+      const xh = box.querySelector('.xh'), rect = box.querySelector(`svg.tchart .hit[data-i="${h.dataset.i}"]`); if (xh && rect) { const cx = +rect.getAttribute('x') + +rect.getAttribute('width') / 2; xh.setAttribute('x1', cx); xh.setAttribute('x2', cx); xh.setAttribute('visibility', 'visible'); } });
+    svg.addEventListener('mouseleave', () => { read.innerHTML = base; const xh = box.querySelector('.xh'); if (xh) xh.setAttribute('visibility', 'hidden'); });
+  });
+}
+
+/* ================= 每週上架時機統計（週日） ================= */
+const weekKey = (t = Date.now()) => { const d = new Date(t); d.setHours(0, 0, 0, 0); d.setDate(d.getDate() - d.getDay()); return dayKey(d.getTime()); };   // 該週的週日
+let weeklyBusy = false;
+async function buildWeekly() {
+  if (weeklyBusy || !ST.fav.length) return; weeklyBusy = true;
+  const box = $('weekly-box'); if (box) box.innerHTML = '<div class="subtle">統計收藏商品近 28 天的成交中…</div>';
+  try {
+    const ids = ST.fav.filter(id => DB.marketable.has(id)).slice(0, 30), per = [];
+    let next = 0;
+    await Promise.all(Array.from({ length: 3 }, async () => { while (next < ids.length) { const id = ids[next++]; const d = await loadTrendData(id); const a = d && trendAnalysis(d.entries, 'all'); if (a) per.push({ id, a }); } }));
+    const cutWeek = Date.now() - 7 * 864e5;
+    const agg = WD.map((_, w) => {
+      const p4 = per.map(x => x.a.wk[w].pIdx).filter(v => v != null), v4 = per.map(x => x.a.wk[w].vIdx).filter(v => v != null);
+      const pw = per.map(x => { const d = x.a.days.find(d => d.wd === w && d.t >= cutWeek && d.med != null); return d ? d.med / x.a.all : null; }).filter(v => v != null);
+      return { w, p4: p4.length ? mean(p4) : null, v4: v4.length ? mean(v4) : null, pw: pw.length ? mean(pw) : null };
+    });
+    const items = per.map(x => { const ok = x.a.wk.filter(w => w.pIdx != null); const b = ok.length ? ok.reduce((m, w) => w.pIdx > m.pIdx ? w : m) : null; return { id: x.id, best: b ? b.w : null, up: b ? b.pIdx - 1 : null, chg: x.a.chg }; });
+    ST.weekly = { week: weekKey(), at: Date.now(), target: CFG.target, n: per.length, agg, items }; save();
+  } finally { weeklyBusy = false; renderWeekly(); }
+}
+function renderWeekly() {
+  const box = $('weekly-box'); if (!box) return;
+  const W = ST.weekly;
+  const isSun = new Date().getDay() === 0;
+  if (!ST.fav.length) { box.innerHTML = '<div class="subtle">收藏商品後，每週日會自動統計這些商品一週中哪幾天最好賣。</div>'; return; }
+  if (!W) { box.innerHTML = `<div class="subtle">還沒有統計。${isSun ? '' : '每週日開啟這一頁會自動統計，'}也可以按「立即統計」。</div>`; return; }
+  const ok = W.agg.filter(a => a.p4 != null);
+  const bp = ok.length ? ok.reduce((m, a) => a.p4 > m.p4 ? a : m) : null;
+  const vv = W.agg.filter(a => a.v4 != null); const bv = vv.length ? vv.reduce((m, a) => a.v4 > m.v4 ? a : m) : null;
+  box.innerHTML = `<div class="tiny">統計時間：${new Date(W.at).toLocaleString('zh-TW')}（${W.n} 個收藏商品，${esc(W.target)}）${W.week !== weekKey() ? '・<span class="negative">已是上週的統計</span>' : ''}</div>
+   <div class="wk">${W.agg.map(a => `<div class="wkd ${bp && a.w === bp.w ? 'best' : ''} ${bv && a.w === bv.w ? 'vbest' : ''} ${a.w === RESET_DAY ? 'reset' : ''}"><small>週${WD[a.w]}</small><b>${a.p4 != null ? Math.round(a.p4 * 100) : '—'}</b><small>本週 ${a.pw != null ? Math.round(a.pw * 100) : '—'}</small><small>量 ${a.v4 != null ? Math.round(a.v4 * 100) + '%' : '—'}</small></div>`).join('')}</div>
+   <div class="tadvice"><b>本週結論</b><ul>${bp ? `<li>收藏商品平均在 <b>週${WD[bp.w]}</b> 賣價最高（指數 ${Math.round(bp.p4 * 100)}），<b>週${WD[bv.w]}</b> 成交量最大。</li>` : ''}
+    ${W.items.filter(i => i.best != null).slice(0, 12).map(i => `<li>${esc(DB.names[i.id] || '#' + i.id)}：週${WD[i.best]} 最好（+${Math.round(i.up * 100)}%）${i.chg != null && Math.abs(i.chg) >= 0.08 ? `，近 3 天${i.chg > 0 ? '上漲' : '下跌'} ${Math.round(Math.abs(i.chg) * 100)}%` : ''}</li>`).join('')}</ul></div>
+   <div class="tiny" style="margin-top:6px">大數字 = 近 4 週平均價格指數（100 = 該商品整段中位價）；「本週」= 最近 7 天當天的指數。</div>`;
+}
+
 /* ================= 收合／摘要 ================= */
 function applyFolds() {
   document.querySelectorAll('.fold[data-fold]').forEach(el => {
@@ -1557,6 +2033,8 @@ function updateSummary() {
   $('filt-cnt').textContent = n || '';
   let m = 0; const C = ST.col; if (C.tier !== 'high') m++; if (C.sort !== 'cps') m++; if (!C.myJobs) m++; if (!C.hideMiss) m++; if (C.noInt) m++; if (C.lvMin !== 1 || C.lvMax !== 100) m++; if (C.jobs.length) m++;
   $('colf-cnt').textContent = m || '';
+  let v = 0; const V = ST.ven; if (V.lvl !== 100) v++; if (V.minVel !== 1) v++; if (!V.noCrys) v++; if (V.craftOnly) v++;
+  $('venf-cnt').textContent = v || '';
 }
 $('filt-reset').addEventListener('click', () => {
   Object.assign(CFG, { onlyProfit: true, hideMissing: true, hideStale: true, worthCraft: false, noGatherOnly: false, favOnly: false, maxCost: 0, wv: DEF.wv, wa: DEF.wa, wc: DEF.wc });
@@ -1579,14 +2057,16 @@ $('upload-json').addEventListener('change', async e => {
   } catch { toast('無法匯入：請確認檔案格式'); }
   e.target.value = '';
 });
-$('reset-all').addEventListener('click', () => { if (!confirm('確定清除本機儲存的設定、材料偏好與清單？')) return; try { localStorage.removeItem(STORE); } catch { } location.reload(); });
+$('clear-cache').addEventListener('click', async () => { await clearCache(); resetMarket(); ST.scanned = []; ST.rows = []; ST.scanTs = null; renderRanking(); toast('行情快取已清除'); });
+$('reset-all').addEventListener('click', async () => { if (!confirm('確定清除本機儲存的設定、材料偏好、清單與行情快取？')) return; try { await clearCache(); } catch { } try { localStorage.removeItem(STORE); } catch { } location.reload(); });
 
 const TITLES = {
   ranking: ['現在製作什麼最值得？', '每種材料自動在市場板、NPC 商店、自採、自製中挑最便宜的，再依銷量與利潤排行。'],
   planner: ['生產規劃工作台', '展開完整材料樹，比較每種材料的四種取得方式，評估真正能實現的利潤。'],
   favorites: ['我的收藏', '常做的商品集中在這裡，隨時更新行情、看利潤，一鍵加入採購清單。'],
+  venture: ['雇員委託收益', '派雇員帶回什麼最賺：直接賣的每趟收益、清倉速度，以及做成哪個成品最划算。'],
   collect: ['收藏品換票', '計算製作收藏品換巧手橙票／紫票的成本，找出每張票最便宜的做法。'],
-  shopping: ['材料採購與生產清單', '合併多個商品的材料需求，依市場、NPC、自採分開列出。'],
+  shopping: ['材料採購與生產清單', '合併多個商品的材料需求，依市場（含跨服購買路線）、NPC、雇員、自採分開列出。'],
   settings: ['資料與說明', '資料來源、計算方式與本機資料管理。'],
   prefs: ['設定', '批量指定常見材料一律用市場、NPC、自採或自製，套用到所有排行與計算。'],
 };
@@ -1596,7 +2076,7 @@ function go(tab) {
   document.querySelectorAll('#nav button').forEach(b => b.classList.toggle('active', b.dataset.tab === tab));
   $('page-title').textContent = TITLES[tab][0]; $('page-sub').textContent = TITLES[tab][1];
   $('export-btn').classList.toggle('hidden', tab !== 'ranking');
-  if (tab === 'ranking') renderRanking(); if (tab === 'planner') renderPlanner(); if (tab === 'shopping') renderShopping(); if (tab === 'favorites') renderFavorites(); if (tab === 'collect') renderCollect(); if (tab === 'prefs') renderPrefs();
+  if (tab === 'ranking') renderRanking(); if (tab === 'planner') renderPlanner(); if (tab === 'shopping') renderShopping(); if (tab === 'favorites') renderFavorites(); if (tab === 'collect') renderCollect(); if (tab === 'prefs') renderPrefs(); if (tab === 'venture') renderVenture();
   window.scrollTo({ top: 0 });
 }
 $('nav').addEventListener('click', e => { const b = e.target.closest('button[data-tab]'); if (b) go(b.dataset.tab); });
