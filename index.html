@@ -162,6 +162,22 @@ details.note{margin-top:4px}details.note summary{cursor:pointer;font-weight:700;
 .wkd.best{border-color:#65c4ad;background:#173a33}.wkd.vbest{box-shadow:inset 0 -3px 0 var(--gold)}.wkd.reset::after{content:'重置';position:absolute;top:3px;right:4px;font-size:9px;color:var(--gold)}
 .tadvice{margin-top:12px;font-size:12.5px;line-height:1.8;background:#0d1826;border:1px solid #23364a;border-radius:10px;padding:10px 13px}.tadvice ul{margin:0;padding-left:18px}
 
+.pricepanel{border-color:#2f5a5a}
+.pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.pt{background:#0d1927;border:1px solid #263a50;border-radius:13px;padding:14px;min-width:0}.pt .label{font-size:12px;color:var(--muted);font-weight:650}.pt .label .tiny{margin-left:4px}
+.pnum{font-size:28px;font-weight:800;letter-spacing:-.6px;margin:8px 0 6px;font-variant-numeric:tabular-nums}.pt .hint{font-size:11.5px;color:var(--muted);line-height:1.6}
+.pt.warnt{border-color:#6b3445;background:#21161d}.pt.mine{border-color:#3f7f78;background:#0f2224}
+.pin{display:flex;align-items:center;gap:6px;margin:8px 0 6px}.pin input.input{width:100%;height:42px;font-size:20px;font-weight:700}.pin span{color:var(--muted)}
+.pquick{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}.pres{font-size:22px;font-weight:800}.presult .tiny{line-height:1.6}
+.pscale{margin-top:10px}.pscale .track{position:relative;height:30px;border-radius:8px;background:#16273a;margin:42px 10px 44px}
+.pnum2{font-size:14px;color:#f3cdd4;margin-top:10px}.pnum2 b{font-size:20px;color:var(--gold)}
+.pscale .oppz{position:absolute;top:0;bottom:0;background:#4a3a20}.pscale .mk.op{background:var(--gold)}.pscale .mk.op span{color:var(--gold)}
+.pscale .lossz{position:absolute;left:0;top:0;bottom:0;background:#4a2330;border-radius:8px 0 0 8px}
+.pscale .mk{position:absolute;top:0;bottom:0;width:2px;background:#98abc2}.pscale .mk span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;color:var(--text);margin-bottom:3px}
+.pscale .mk.be{background:var(--red)}.pscale .mk.mn{background:#8db9fa}.pscale .mk.av{background:var(--gold)}.pscale .mk.me{background:var(--a);width:3px}
+.pscale .mk.dn span,.pscale .mk.dn2 span{bottom:auto;top:100%;margin:3px 0 0}.pscale .mk.up2 span{margin-bottom:19px}.pscale .mk.dn2 span{margin-top:19px}.pscale .mk.me span{color:var(--a);font-weight:700}
+@media(max-width:900px){.pgrid{grid-template-columns:1fr}}
+@media(max-width:560px){.pgrid{grid-template-columns:1fr}.pnum{font-size:24px}}
 .vtag{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:7px;white-space:nowrap}
 .vtag.sell{background:#4a2631;color:#ffb3bf;border:1px solid #8a4152}.vtag.craft{background:#173a33;color:#a6f0dc;border:1px solid #2f6f62}
 .rrow.sellmat{border-color:#5a3240;background:linear-gradient(160deg,#21202f,#171b29);box-shadow:inset 3px 0 0 #e0788a}
@@ -520,6 +536,7 @@ const ST = {
   ov: saved.ov && typeof saved.ov === 'object' ? saved.ov : {},          // 材料 id -> 指定來源
   plans: Array.isArray(saved.plans) ? saved.plans : [],
   pq: ['all', 'nq', 'hq'].includes(saved.pq) ? saved.pq : 'all',
+  myPrice: saved.myPrice && typeof saved.myPrice === 'object' ? saved.myPrice : {},
   ven: Object.assign({ cat: 'all', sort: 'bal', desc: true, lvl: 100, minVel: 1, noCrys: true, craftOnly: false, mid: false }, saved.ven || {}),
   weekly: saved.weekly && typeof saved.weekly === 'object' ? saved.weekly : null,                   // [{id, qty}]
   fav: Array.isArray(saved.fav) ? saved.fav.filter(Number.isInteger) : [], // 收藏的成品 id
@@ -530,7 +547,7 @@ const ST = {
 if (!Array.isArray(ST.col.jobs)) ST.col.jobs = [];
 if (saved.col && !saved.col.v2) { ST.col.tier = 'high'; ST.col.v2 = true; }   // 收藏價值一律預設最高檔（舊設定重設一次）
 ST.col.v2 = true;
-const save = () => { try { localStorage.setItem(STORE, JSON.stringify({ cfg: CFG, selected: ST.selected, batch: ST.batch, ov: ST.ov, plans: ST.plans, fav: ST.fav, col: ST.col, ui: ST.ui, pq: ST.pq, weekly: ST.weekly, ven: ST.ven })); } catch { } };
+const save = () => { try { localStorage.setItem(STORE, JSON.stringify({ cfg: CFG, selected: ST.selected, batch: ST.batch, ov: ST.ov, plans: ST.plans, fav: ST.fav, col: ST.col, ui: ST.ui, pq: ST.pq, weekly: ST.weekly, ven: ST.ven, myPrice: ST.myPrice })); } catch { } };
 
 const DB = { ready: false, names: {}, cat: {}, catNames: {}, marketable: null, recipes: {}, vendor: {}, gather: {}, dcs: [], worlds: {} };
 const P = {};       // 物品 id -> 市場資料 {vN,vH,aN,aH,mN,mH,wN,wH,t}
@@ -637,6 +654,7 @@ async function loadDB() {
     // 依「被多少配方用到」排序，水晶這種每個配方都要的會排最前面
     const use = {}; for (const k in DB.recipes) { const seen = new Set(); for (const x of DB.recipes[k].ing) { const c = DB.cat[x.id]; if (c != null && !seen.has(c)) { seen.add(c); use[c] = (use[c] || 0) + 1; } } }
     DB.matCats = Object.entries(byCat).map(([c, ids]) => ({ cat: c, name: DB.catNames[c], ids, use: use[c] || 0 })).sort((a, b) => b.use - a.use);
+    await restoreCache();   // 先還原快取再標記就緒，避免其他分頁同時抓價被覆蓋
     DB.ready = true;
     const nRec = Object.keys(DB.recipes).length;
     $('db-badge').textContent = `配方 ${nRec.toLocaleString()}｜NPC 商品 ${Object.keys(DB.vendor).length.toLocaleString()}｜採集品 ${Object.keys(DB.gather).length.toLocaleString()}`;
@@ -647,7 +665,6 @@ async function loadDB() {
     fillCats();
     $('scan-btn').disabled = false;
     renderRanking(); if (ST.tab === 'prefs') renderPrefs();
-    await restoreCache();
     if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites(); if (ST.tab === 'collect') renderCollect();
   } catch (e) {
     $('db-badge').textContent = '資料庫載入失敗'; $('db-badge').className = 'badge err';
@@ -1082,7 +1099,7 @@ function sellInfo(id, q = 'all') {
   const avg = CFG.robust ? ravg : rawAvg;
   const lp = listingPick(id, useN, useH);
   const minL = lp.good ? lp.good.price : null;
-  return { vel, avg, rawAvg, minL, minRaw: lp.raw ? lp.raw.price : null, bad: lp.bad, st, price: basisPick(CFG.sellBasis, minL, avg), up: p.up };
+  return { vel, avg, rawAvg, minL, minHQ: lp.good ? !!lp.good.hq : null, minRaw: lp.raw ? lp.raw.price : null, bad: lp.bad, st, price: basisPick(CFG.sellBasis, minL, avg), up: p.up };
 }
 /* 一個成品的完整試算 */
 function evalItem(id, memo, batch = CFG.estQty, q = 'all') {
@@ -1094,7 +1111,7 @@ function evalItem(id, memo, batch = CFG.estQty, q = 'all') {
   const cost = missing ? null : ings.reduce((a, x) => a + x.unit * x.amount, 0) / rec.yields; // 每件成品
   const mix = {}; ings.forEach(x => { if (x.src) mix[x.src] = (mix[x.src] || 0) + 1; });
   const out = { id, rec, name: DB.names[id] || '#' + id, catName: DB.catNames[DB.cat[id]] || '', cat: DB.cat[id], ings, missing, cost, mix,
-    vel: s.vel, avg: s.avg, rawAvg: s.rawAvg, minL: s.minL, minRaw: s.minRaw, bad: s.bad || [], st: s.st, price: s.price, up: s.up };
+    vel: s.vel, avg: s.avg, rawAvg: s.rawAvg, minL: s.minL, minHQ: s.minHQ, minRaw: s.minRaw, bad: s.bad || [], st: s.st, price: s.price, up: s.up };
   if (s.price > 0 && cost != null) {
     out.profit = s.price * (1 - CFG.tax / 100) - cost; out.roi = cost > 0 ? out.profit / cost : null;
   }
@@ -1331,6 +1348,7 @@ async function renderPlanner() {
     <div class="stat"><div class="label">每件淨利</div><div class="num ${r.profit > 0 ? 'positive' : 'negative'}">${r.profit != null ? sgn(r.profit) + fmt(r.profit) + ' G' : '—'}</div><div class="hint">售價 ${fmt(r.price)} G 扣 ${CFG.tax}% 稅與材料｜ROI ${r.cost === 0 && r.profit > 0 ? '∞（材料全自採）' : pct(r.roi)}</div></div>
     <div class="stat"><div class="label">製作 ${made} 件所需本金</div><div class="num">${totalCost != null ? fmt(totalCost) + ' G' : '—'}</div><div class="hint">${crafts} 次製作${rec.yields > 1 ? `，每次產出 ${rec.yields}` : ''}</div></div>
     <div class="stat"><div class="label">整批理論淨利</div><div class="num ${net > 0 ? 'positive' : 'negative'}">${net != null ? sgn(net) + fmt(net) + ' G' : '—'}</div><div class="hint">假設全部以售價賣出</div></div></div>
+   ${priceBox(id, r, made)}
    <div class="two"><div class="panel"><div class="panel-title"><h2>${starBtn(id)} ${esc(r.name)} · 材料樹</h2><div class="actions"><span class="tag craft">${JOBS[rec.job]} Lv${rec.lvl}</span><button class="btn small" id="reset-ov">重設為逐項最低</button></div></div>
      <div class="tree">${r.ings.map(x => nodeHTML(x, x.amount * crafts, memo, 1)).join('')}</div>
      <div class="divider"></div><div class="subtle">每種材料列出所有可用來源的單價，<b style="color:#bff3e4">框線</b>為最低、<b style="color:#a6f4de">底色</b>為目前採用。下拉選單可指定來源（套用到所有用到這個材料的配方）。選「自製」時會展開它的材料。</div></div>
@@ -1355,6 +1373,7 @@ async function renderPlanner() {
      <p class="subtle" style="margin-bottom:0">可加入多個商品，會合併同名材料與中間材需求。</p></div></div>
    <div class="panel"><div class="panel-title"><h2>價格趨勢與上架時機</h2><span class="tiny">最多近 28 天成交・${ST.pq === 'all' ? '綜合（取成交較多的品質）' : ST.pq.toUpperCase()}</span></div><div id="trend-box"><div class="subtle">讀取近 28 天成交紀錄…</div></div></div>`;
   renderTrend(id, r);
+  updateMyPrice();
   const nRule = Object.keys(CFG.catRule).length;
   $('plan-badge').textContent = Object.keys(ST.ov).length || nRule ? `個別指定 ${Object.keys(ST.ov).length} 項・類別規則 ${nRule} 個` : '逐項最低成本';
   const coll = DB.coll && DB.coll[id];
@@ -1374,6 +1393,52 @@ async function renderPlanner() {
       <div class="line"><span>庫存消化天數</span><strong class="${days > 5 ? 'negative' : days > 2 ? 'gold' : 'positive'}">${days != null ? fmt1(days) + ' 天' : '—'}</strong></div>
       ${top.length ? `<div class="tiny" style="margin:6px 0">最便宜的掛單</div>` + top.map(l => `<div class="line" style="margin:4px 0;font-size:12px"><span>${esc(l.worldName || CFG.target)}${l.hq ? ' <span class="tag">HQ</span>' : ''} ×${l.quantity}${(b => b && (l.pricePerUnit < b.lo || l.pricePerUnit > b.hi))(bandOf(l.hq)) ? ' <span class="tag warn">極端值</span>' : ''}</span><strong>${fmt(l.pricePerUnit)} G</strong></div>`).join('') : ''}`;
   });
+}
+/* 定價面板：成交均價、市場最低價、保本價，以及自填價格試算 */
+let PCTX = null;
+function priceBox(id, r, made) {
+  if (!DB.marketable.has(id)) { PCTX = null; return ''; }
+  const tax = CFG.tax / 100;
+  const ta = tradeAvg(id, ST.pq);
+  const be = r.cost != null ? r.cost / (1 - tax) : null;                                  // 保本上架價（含稅）
+  const beOpp = r.cost != null && r.gv > 0 && r.cash != null ? (r.cash + r.gv) / (1 - tax) : null;          // 自採材料按市價算的保本價
+  const low = r.bad.filter(b => b.price < (r.minL ?? Infinity)).sort((a, b) => a.price - b.price)[0];
+  PCTX = { id, cost: r.cost, tax, made, be, beOpp, avg: ta ? ta.avg : null, minL: r.minL };
+  const pctTo = (a, b) => a != null && b > 0 ? `${a >= b ? '+' : ''}${Math.round((a / b - 1) * 100)}%` : '';
+  const qlab = ST.pq === 'all' ? '綜合' : ST.pq.toUpperCase();
+  return `<div class="panel pricepanel"><div class="panel-title"><h2>定價（${qlab}）</h2><span class="tiny">以 1 個成品計・市場稅 ${CFG.tax}%</span></div>
+   <div class="pgrid">
+    <div class="pt"><div class="label">現在成交均價<span class="tiny">（已售出的平均）</span></div><div class="pnum">${ta ? fmt(ta.avg) + ' G' : '—'}</div>
+     <div class="hint">${ta ? `近 ${ta.win} 天 ${ta.n} 筆／${fmt(ta.units)} 件成交，依數量加權、已剔除極端值${ta.avg14 && Math.abs(ta.avg14 / ta.avg - 1) >= 0.05 ? `；14 天均價 ${fmt(ta.avg14)} G` : ''}` : '近 14 天沒有成交紀錄'}</div></div>
+    <div class="pt"><div class="label">市場最低價${r.minL != null && r.minHQ != null ? `<span class="tag" style="margin-left:6px">${r.minHQ ? 'HQ' : 'NQ'}</span>` : ''}</div><div class="pnum">${r.minL != null ? fmt(r.minL) + ' G' : '—'}</div>
+     <div class="hint">${r.minL != null && ta ? `比成交均價 ${pctTo(r.minL, ta.avg)}${ST.pq === 'all' ? '（綜合模式混合 NQ／HQ，切換品質看更準）' : ''}` : ''}${low ? `${r.minL != null && ta ? '；' : ''}<span class="negative">${fmt(low.price)} G 的掛單${low.chk.why}，已略過</span>` : ''}${r.minL == null && !low ? '目前沒有在售掛單' : ''}</div></div>
+    <div class="pt warnt"><div class="label">保本價<span class="tiny">（低於這個價格上架就虧）</span></div>
+     <div class="pnum negative">${be == null ? '缺價' : be > 0 ? fmt(Math.ceil(be)) + ' G' : '0 G'}</div>
+     <div class="hint">${be == null ? '有材料抓不到價格' : be > 0 ? `買材料花 ${fmt(r.cost)} G ÷ (1 − ${CFG.tax}% 稅)` : '材料全部自採／雇員，不會虧現金'}</div>
+     ${beOpp ? `<div class="pnum2">低於 <b>${fmt(Math.ceil(beOpp))} G</b> 不如直接賣材料</div><div class="hint">自採／雇員材料按市價算的保本價</div>` : ''}
+     ${r.minL != null && be != null ? `<div class="hint" style="margin-top:6px">${r.minL < be ? '<span class="negative">最低價已低於保本價，跟價會虧</span>' : beOpp && r.minL < beOpp ? '<span class="gold">跟最低價賣，賺的比直接賣材料少</span>' : `最低價比保本價高 ${fmt(r.minL - (beOpp || be))} G，還有利潤`}</div>` : ''}</div>
+   </div>
+   <div class="pscale" id="pscale"></div></div>`;
+}
+function updateMyPrice() {
+  const sc = $('pscale'); if (!sc || !PCTX) return;
+  const C = PCTX;
+  // 價格位置刻度：保本價、賣材料打平、最低價、成交均價
+  const marks = [['保本', C.be, 'be'], ['賣材料打平', C.beOpp, 'op'], ['最低', C.minL, 'mn'], ['均價', C.avg, 'av']].filter(m => m[1] > 0);
+  if (marks.length < 2) { sc.innerHTML = ''; return; }
+  const lo = Math.min(...marks.map(m => m[1])) * 0.9, hi = Math.max(...marks.map(m => m[1])) * 1.1, span = hi - lo || 1;
+  const x = v => ((v - lo) / span * 100).toFixed(2);
+  const zOpp = C.beOpp > 0 ? `<div class="oppz" style="left:${C.be > 0 ? x(C.be) : 0}%;width:${(x(C.beOpp) - (C.be > 0 ? x(C.be) : 0)).toFixed(2)}%"></div>` : '';
+  const W = (sc.clientWidth || 600) - 20, last = { up: -1e9, dn: -1e9, up2: -1e9, dn2: -1e9 };
+  const labels = marks.slice().sort((a, b) => a[1] - b[1]).map(m => {
+    const px = x(m[1]) / 100 * W, w = (m[0].length * 12 + String(fmt(m[1])).length * 7 + 10);
+    const row = ['up', 'dn', 'up2', 'dn2'].find(r => px - w / 2 > last[r] + 4) || 'up';
+    last[row] = px + w / 2;
+    return `<div class="mk ${m[2]} ${row}" style="left:${x(m[1])}%"><span>${m[0]} ${fmt(m[1])}</span></div>`;
+  }).join('');
+  const used = r => last[r] > -1e9;   // 依實際用到的標籤列調整上下留白
+  const mt = used('up2') ? 42 : 24, mb = used('dn2') ? 44 : used('dn') ? 26 : 10;
+  sc.innerHTML = `<div class="track" style="margin-top:${mt}px;margin-bottom:${mb}px">${C.be > 0 ? `<div class="lossz" style="width:${x(C.be)}%"></div>` : ''}${zOpp}${labels}</div><div class="tiny">${C.be > 0 ? '紅色 = 低於保本價、上架會虧現金' : ''}${C.be > 0 && C.beOpp ? '；' : ''}${C.beOpp ? '橘色 = 雖然賺錢，但不如直接賣自採材料' : ''}</div>`;
 }
 /* NQ／HQ 對照：兩種品質各自剔除極端值後的售價、銷量、淨利 */
 function qualBox(rec, rN, rH) {
@@ -1767,12 +1832,18 @@ $('po-clear').addEventListener('click', () => { if (!Object.keys(ST.ov).length |
 /* ================= 雇員委託收益 ================= */
 /* 成交均價（依成交數量加權）：剔除極端成交後，總成交金額 ÷ 總成交件數。
    買 1 個的高價零售不會像 99 個一組的大宗成交一樣有分量，比單純平均每筆價格保守。 */
-function tradeAvg(id) {
+function tradeAvg(id, q = 'nqpref') {
   const e = H[id]; if (!e || !e.length) return null;
   const nq = e.filter(x => !x.hq);
-  let list = nq.length >= 4 ? nq : e;
-  const rs = robustStats(list.map(x => x.p));
-  if (rs && rs.lo != null) list = list.filter(x => x.p >= rs.lo && x.p <= rs.hi);
+  let list = q === 'nq' ? nq : q === 'hq' ? e.filter(x => x.hq) : q === 'all' ? e : (nq.length >= 4 ? nq : e);
+  if (!list.length) return null;
+  if (q === 'all') {   // NQ、HQ 價差大，各自剔除極端值後再合併
+    const f = l => { const rs = robustStats(l.map(x => x.p)); return rs && rs.lo != null ? l.filter(x => x.p >= rs.lo && x.p <= rs.hi) : l; };
+    list = [...f(list.filter(x => !x.hq)), ...f(list.filter(x => x.hq))];
+  } else {
+    const rs = robustStats(list.map(x => x.p));
+    if (rs && rs.lo != null) list = list.filter(x => x.p >= rs.lo && x.p <= rs.hi);
+  }
   const vw = l => { const u = l.reduce((a, x) => a + (x.q || 1), 0); return u ? { avg: l.reduce((a, x) => a + x.p * (x.q || 1), 0) / u, n: l.length, units: u } : null; };
   const now = Date.now();
   const d14 = vw(list), d7 = vw(list.filter(x => now - x.t < 7 * 864e5)), d3 = vw(list.filter(x => now - x.t < 3 * 864e5));
