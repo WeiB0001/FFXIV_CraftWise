@@ -170,7 +170,7 @@ details.note{margin-top:4px}details.note summary{cursor:pointer;font-weight:700;
 .pin{display:flex;align-items:center;gap:6px;margin:8px 0 6px}.pin input.input{width:100%;height:42px;font-size:20px;font-weight:700}.pin span{color:var(--muted)}
 .pquick{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}.pres{font-size:22px;font-weight:800}.presult .tiny{line-height:1.6}
 .pscale{margin-top:10px}.pscale .track{position:relative;height:30px;border-radius:8px;background:#16273a;margin:42px 10px 44px}
-.pnum2{font-size:14px;color:#f3cdd4;margin-top:10px}.pnum2 b{font-size:20px;color:var(--gold)}
+.pnum2{font-size:14px;color:#f3cdd4;margin-top:10px}.pnum2 b{font-size:20px;color:var(--gold)}.pnum2.big{font-size:16px;margin:8px 0 6px}.pnum2.big b{font-size:28px;font-weight:800;letter-spacing:-.6px}
 .pscale .oppz{position:absolute;top:0;bottom:0;background:#4a3a20}.pscale .mk.op{background:var(--gold)}.pscale .mk.op span{color:var(--gold)}
 .pscale .lossz{position:absolute;left:0;top:0;bottom:0;background:#4a2330;border-radius:8px 0 0 8px}
 .pscale .mk{position:absolute;top:0;bottom:0;width:2px;background:#98abc2}.pscale .mk span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;color:var(--text);margin-bottom:3px}
@@ -178,6 +178,14 @@ details.note{margin-top:4px}details.note summary{cursor:pointer;font-weight:700;
 .pscale .mk.dn span,.pscale .mk.dn2 span{bottom:auto;top:100%;margin:3px 0 0}.pscale .mk.up2 span{margin-bottom:19px}.pscale .mk.dn2 span{margin-top:19px}.pscale .mk.me span{color:var(--a);font-weight:700}
 @media(max-width:900px){.pgrid{grid-template-columns:1fr}}
 @media(max-width:560px){.pgrid{grid-template-columns:1fr}.pnum{font-size:24px}}
+.rtag{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:6px;margin-left:4px;vertical-align:1px}
+.rtag.low{background:#173a33;color:#a6f0dc}.rtag.mid{background:#42351e;color:#f6d99b}.rtag.high{background:#4a2631;color:#ffb3bf}
+.rstrip{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-top:12px;padding:11px 14px;border-radius:12px;border:1px solid #263a50;background:#0d1927;font-size:12.5px;color:var(--muted)}
+.rstrip b{color:var(--text)}.rstrip small{color:var(--muted)}
+.rstrip .rbig{font-size:14px;font-weight:800;color:var(--text);padding:3px 10px;border-radius:8px}
+.rstrip.low .rbig{background:#173a33;color:#a6f0dc}.rstrip.mid .rbig{background:#42351e;color:#f6d99b}.rstrip.high .rbig{background:#4a2631;color:#ffb3bf}
+.rstrip.high{border-color:#6b3445}.rstrip.mid{border-color:#795e31}
+.rstrip .rtip{flex-basis:100%;color:var(--text);line-height:1.6}
 .vtag{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:7px;white-space:nowrap}
 .vtag.sell{background:#4a2631;color:#ffb3bf;border:1px solid #8a4152}.vtag.craft{background:#173a33;color:#a6f0dc;border:1px solid #2f6f62}
 .rrow.sellmat{border-color:#5a3240;background:linear-gradient(160deg,#21202f,#171b29);box-shadow:inset 3px 0 0 #e0788a}
@@ -248,7 +256,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
   <div class="group"><span class="flabel">材料成本來源（逐項取最低）</span><div class="chips sm" id="src-chips"></div>
    <div class="controls"><div class="field"><label for="g-pct">自採計價（市價 %）</label><input class="input" id="g-pct" type="number" min="0" max="100" step="5" value="0"></div><div class="field"><label for="est-qty" title="排行榜用這個數量估算要買多少材料，依掛單深度算實際平均單價">估算採購量（成品件數）</label><input class="input" id="est-qty" type="number" min="1" max="999" step="5" value="10"></div><div class="field"><label for="v-g" title="每張雇員探險幣（Venture）折算多少 G，0 = 不計">雇員計價（G／探險幣）</label><input class="input" id="v-g" type="number" min="0" step="50" value="0"></div><div class="field"><label for="mat-basis">市場材料價</label><select class="input" id="mat-basis"><option value="min">依掛單深度（實際買得到的價）</option><option value="avg">近期成交均價</option><option value="low">兩者取低</option></select></div></div>
    <div class="controls"><label class="switch"><input type="checkbox" id="g-nolimited"> 自採排除限時節點</label><label class="switch"><input type="checkbox" id="g-nolegend"> 自採排除傳說節點</label></div></div>
-  <div class="group"><span class="flabel">成品售價</span>   <div class="controls"><div class="field"><label for="sell-basis">售價基準</label><select class="input" id="sell-basis"><option value="avg">近期成交均價</option><option value="min">目前最低掛單</option><option value="low">兩者取低（保守）</option></select></div><div class="field"><label for="tax">市場稅 (%)</label><input class="input" id="tax" type="number" min="0" max="20" step="1" value="5"></div><div class="field"><label for="min-vel">每日售出 ≥</label><input class="input" id="min-vel" type="number" min="0" step="0.5" value="1"></div></div></div>
+  <div class="group"><span class="flabel">成品售價</span>   <div class="controls"><div class="field"><label for="sell-basis">售價基準</label><select class="input" id="sell-basis"><option value="avg">近期成交均價</option><option value="min">目前最低掛單</option><option value="low">兩者取低（保守）</option></select></div><div class="field"><label for="min-vel">每日售出 ≥</label><input class="input" id="min-vel" type="number" min="0" step="0.5" value="1"></div></div></div>
   <div class="group"><span class="flabel">資料品質</span>
    <label class="switch"><input type="checkbox" id="robust" checked> 剔除極端值（近 14 天成交，中位數 ± 3σ）</label>
    <div class="controls"><div class="field"><label for="cache-min" title="重新整理時沿用上次掃描的行情；超過這個時間的資料會在用到時重新抓">行情快取（分鐘）</label><input class="input" id="cache-min" type="number" min="0" max="1440" step="10" value="30"></div><div class="field"><label for="stale-h">掛單過期（小時）</label><input class="input" id="stale-h" type="number" min="0" max="720" step="12" value="48" title="0 = 不檢查"></div></div></div>
@@ -283,6 +291,7 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
    <div class="rng">每日售出 w₁ <input type="range" id="wv" min="0" max="2" step="0.1" value="0.5"><b id="wv-v">0.5</b></div>
    <div class="rng">每件淨利 w₂ <input type="range" id="wa" min="0" max="2" step="0.1" value="1"><b id="wa-v">1.0</b></div>
    <div class="rng">成本懲罰 w₃ <input type="range" id="wc" min="0" max="2" step="0.1" value="0.5"><b id="wc-v">0.5</b></div>
+   <label class="switch" style="margin-top:4px"><input type="checkbox" id="risk-adj" checked> 依競爭風險調整划算度（高 ×0.55、中 ×0.8）</label>
    <p class="wnote">划算度 = 淨利<sup>w₂</sup> × 每日售出<sup>w₁</sup> ÷ 成本基準<sup>w₃</sup>，榜首標準化為 100。成本基準 = 單個成本，但至少取售價的 10%（避免全自採的 0 成本配方無限大）。在「單個成本」與「每日售出數量」之間取平衡：賣得多、本錢小、淨利高的排前面。</p></div>
  </div>
  </div>
@@ -375,6 +384,11 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
 <!-- ============ 設定 ============ -->
 <section id="prefs" class="page hidden">
 <div class="panel">
+ <div class="panel-title"><h2>市場稅率</h2></div>
+ <div class="controls"><div class="field"><label for="buy-tax">買入稅 (%)</label><input class="input" id="buy-tax" type="number" min="0" max="20" step="0.5" value="5"></div><div class="field"><label for="tax">賣出稅 (%)</label><input class="input" id="tax" type="number" min="0" max="20" step="0.5" value="0"></div>
+  <span class="tiny" style="align-self:flex-end;max-width:560px">FF14 的市場稅由買方支付（依城市 0–5%），賣方收到的是完整掛單價，所以賣出稅預設 0%。買入稅會自動加進所有從市場板買的材料成本與採購清單金額。</span></div>
+</div>
+<div class="panel">
  <div class="panel-title"><h2>依材料類別固定來源</h2><span class="tiny">優先順序：個別物品 ＞ 類別 ＞ 自動取最低。指定的來源沒有價格時，會自動改回取最低。</span></div>
  <div class="fbar" style="margin-bottom:12px">
   <input class="input fsearch" id="pc-search" placeholder="🔍 搜尋類別或材料名稱…" aria-label="搜尋類別">
@@ -413,8 +427,10 @@ details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8p
  <b>剔除極端值</b>：每個成品與材料都抓近 14 天最多 80 筆成交，用中位數 ± 3 × 1.4826 × MAD（約 3σ）剔除極端成交後取平均（樣本少於 4 筆不剔除；近 14 天沒有成交就不採用舊均價）。最低掛單（NQ、HQ 各自對照同品質成交）若低於中位數 60% 或高於 180% 且超出 3σ 範圍（異常低的釣魚價、異常高的亂掛），或該筆掛單超過設定時數沒有被重新確認，就不採用，改抓前 20 筆掛單找最便宜的合理掛單；都不合理時改用剔除後的成交均價。可在掃描設定關閉。<br>
  <b>時效</b>：每列顯示行情最後上傳時間；超過「掛單資料過期」時數會標紅，預設從排行隱藏。行情來自 Universalis 的玩家上傳，只有有人開啟市場板的物品才會更新。<br>
  <b>掛單深度</b>：材料市價不是只看最低一筆，而是抓前 50 筆掛單，依要買的數量由便宜到貴「整組」購買（遊戲裡一次要買整筆掛單），略過極端值與過期掛單，算出需要的數量平均單價；多買的部分不算進單價，但採購清單會列出要付的整組金額與多買數量。掛單不夠時，不足的部分用剔除後的成交均價估算。排行榜以「估算採購量」（預設 10 件成品）計算，生產規劃用你填的製作數量，收藏品用換 1,000 票所需的數量。<br>
+ <b>市場稅</b>：FF14 的市場稅由買方支付，賣方收到完整掛單價。設定頁可分開設定買入稅（預設 5%，自動加進市場材料成本與採購清單）與賣出稅（預設 0%）。<br>
  <b>雇員</b>：有雇員委託的材料可選「雇員」來源，每個成本 = 探險幣數 × 雇員計價 ÷ 每趟數量（預設計價 0）。每趟數量依「雇員委託」分頁填的雇員等級、獲得力、鑑別力計算，派不了的委託不會當作來源。成本相同時優先用雇員（比自己採省事）。<br>
  <b>行情快取</b>：行情存在瀏覽器（IndexedDB），重新整理不必重掃；超過設定分鐘數的物品在用到時會自動重抓，按「開始掃描」一律抓最新。<br>
+ <b>競爭風險</b>：四個訊號各給 0／1／2 分──在售量 ÷ 日銷量（市場上已排了幾天的貨，&gt;3 天 1 分、&gt;7 天 2 分）、同品質最低掛單比 14 天成交中位數低多少（&gt;8% 1 分、&gt;20% 2 分）、近 3 天或 7 天成交均價跌幅（&gt;5% 1 分、&gt;15% 2 分）；物品頁再加上你填的製作數量削價上架要賣幾天（&gt;1 天 1 分、&gt;3 天 2 分）。排行榜只看市場本身的三個訊號。合計 ≥4 為高、2–3 為中，划算度分別乘 0.55、0.8（可關閉）。物品頁建議一次製作量：市場擁擠（在售 &gt;3 天銷量）時約 1 天銷量，否則約 2 天。在售量取全服前 100 筆掛單並排除關服伺服器。<br>
  <b>單賣材料 vs 製成成品</b>：自採材料雖然成本算 0（或自採計價 %），仍會用它的市價（同樣剔除極端值）估算「直接拿去賣」能拿多少。加工增值 = 成品售價 ×(1−稅) − 實際要買的材料 − 自採材料市值 ×(1−稅)；大於 0 代表做成成品比單賣材料划算。自製中間材裡用到的自採材料也會一起算進去。<br>
  <b>划算度</b>：淨利<sup>w₂</sup> × 每日售出<sup>w₁</sup> ÷ 成本基準<sup>w₃</sup>（預設 1、0.5、0.5），在單個成本與每日售出數量之間取平衡；成本基準至少取售價 10%。虧錢的配方 0 分。<br>
  <b>缺價</b>：任何材料四種來源都抓不到價格時整筆標成「材料缺價」，不會當成 0 元。<br>
@@ -517,9 +533,9 @@ async function fetchRepoJSON(path) {
 const DEF = {
   dc: '陸行鳥', target: '陸行鳥', isDC: true, jobs: [8, 9, 10, 11, 12, 13, 14, 15], cLvl: 100, cMinLvl: 1,
   src: { mkt: true, npc: true, venture: true, gather: true, craft: true }, gLvl: 100, gPct: 0, matBasis: 'min', noLimited: false, noLegend: false,
-  quality: 'all', sellBasis: 'avg', tax: 5, minVel: 1, wv: 0.5, wa: 1, wc: 0.5,
+  quality: 'all', sellBasis: 'avg', tax: 0, minVel: 1, wv: 0.5, wa: 1, wc: 0.5,
   sort: 'score', desc: true, onlyProfit: true, hideMissing: true, noGatherOnly: false, maxCost: 0, minROI: 0,
-  robust: true, staleH: 48, patchDate: '', retLv: 100, retG: 3277, retP: 4965, retI: 710, estQty: 10, ventureG: 0, cacheMin: 30, hideStale: true, favOnly: false, worthCraft: false, catRule: {},
+  robust: true, staleH: 48, patchDate: '', buyTax: 5, riskAdj: true, retLv: 100, retG: 3277, retP: 4965, retI: 710, estQty: 10, ventureG: 0, cacheMin: 30, hideStale: true, favOnly: false, worthCraft: false, catRule: {},
 };
 const STORE = 'craftwise-live-v1';
 let saved = {}; try { saved = JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch { saved = {}; }
@@ -527,6 +543,8 @@ const CFG = Object.assign({}, DEF, saved.cfg || {}); CFG.src = Object.assign({},
 if (!('wc' in (saved.cfg || {}))) CFG.wv = DEF.wv;
 if (!CFG.catRule || typeof CFG.catRule !== 'object') CFG.catRule = {};
 CFG.quality = 'all';
+// 市場稅改成買／賣分開：FF14 由買方付稅，舊設定的 5% 市場稅改為買入稅，賣出稅歸零（只轉換一次）
+if (saved.cfg && !('buyTax' in saved.cfg)) { CFG.buyTax = saved.cfg.tax ?? 5; CFG.tax = 0; }
 // 舊版預設的雇員能力（3600／4000）是估計值，換成目前版本滿級雇員的實際數值；使用者自己改過的保留
 if (CFG.retG === 3600 && CFG.retP === 4000) { CFG.retG = 3277; CFG.retP = 4965; }   // 首頁一律綜合；NQ／HQ 改在物品頁比較
 const COL_BANDS = [[1, 100, '全部'], [50, 59, '50–59'], [60, 69, '60–69'], [70, 79, '70–79'], [80, 89, '80–89'], [90, 99, '90–99'], [100, 100, '100']];   // 舊版設定：划算度公式已改
@@ -711,9 +729,9 @@ $('src-chips').addEventListener('click', e => {
   CFG.src[s] = !CFG.src[s]; if (!Object.values(CFG.src).some(Boolean)) CFG.src.mkt = true;
   renderStaticChips(); save(); recompute();
 });
-const NUMS = { 'ven-lvl': 'retLv', 'ven-g': 'retG', 'ven-p': 'retP', 'ven-i': 'retI', 'est-qty': 'estQty', 'v-g': 'ventureG', 'cache-min': 'cacheMin', 'stale-h': 'staleH', 'c-lvl': 'cLvl', 'c-minlvl': 'cMinLvl', 'g-lvl': 'gLvl', 'g-pct': 'gPct', tax: 'tax', 'min-vel': 'minVel', 'max-cost': 'maxCost' };
+const NUMS = { 'buy-tax': 'buyTax', 'ven-lvl': 'retLv', 'ven-g': 'retG', 'ven-p': 'retP', 'ven-i': 'retI', 'est-qty': 'estQty', 'v-g': 'ventureG', 'cache-min': 'cacheMin', 'stale-h': 'staleH', 'c-lvl': 'cLvl', 'c-minlvl': 'cMinLvl', 'g-lvl': 'gLvl', 'g-pct': 'gPct', tax: 'tax', 'min-vel': 'minVel', 'max-cost': 'maxCost' };
 const SELS = { 'mat-basis': 'matBasis', 'sell-basis': 'sellBasis', sort: 'sort' };
-const CHKS = { 'g-nolimited': 'noLimited', 'g-nolegend': 'noLegend', 'only-profit': 'onlyProfit', 'hide-missing': 'hideMissing', 'no-gather-only': 'noGatherOnly', robust: 'robust', 'hide-stale': 'hideStale', 'fav-only': 'favOnly', 'worth-craft': 'worthCraft' };
+const CHKS = { 'g-nolimited': 'noLimited', 'g-nolegend': 'noLegend', 'only-profit': 'onlyProfit', 'hide-missing': 'hideMissing', 'no-gather-only': 'noGatherOnly', robust: 'robust', 'risk-adj': 'riskAdj', 'hide-stale': 'hideStale', 'fav-only': 'favOnly', 'worth-craft': 'worthCraft' };
 function syncInputs() {
   for (const [id, k] of Object.entries(NUMS)) $(id).value = CFG[k];
   for (const [id, k] of Object.entries(SELS)) $(id).value = CFG[k];
@@ -816,8 +834,8 @@ async function fetchHist(ids, signal, conc, onProg) {
   RB.clear();
   return failed;
 }
-function resetMarket() { for (const k in P) delete P[k]; for (const k in H) delete H[k]; for (const k in L) delete L[k]; RB.clear(); priceTarget = CFG.target; }
-const forget = id => { delete P[id]; delete H[id]; delete L[id]; };
+function resetMarket() { for (const k in P) delete P[k]; for (const k in H) delete H[k]; for (const k in L) delete L[k]; for (const k in SK) delete SK[k]; RB.clear(); priceTarget = CFG.target; }
+const forget = id => { delete P[id]; delete H[id]; delete L[id]; delete SK[id]; };
 /* 最低掛單被判定為極端值或過期時，抓前 20 筆掛單，改用其中最便宜的合理掛單 */
 async function fetchListings(ids, signal, conc, onProg) {
   const t = encodeURIComponent(CFG.target), tw = targetWorldId();
@@ -847,7 +865,7 @@ function needsListings(id) {
   const p = P[id]; if (!p || L[id]) return false;
   return (p.mN > 0 && !checkListing(p.mN, p.tN, listBand(id, false)).ok) || (p.mH > 0 && !checkListing(p.mH, p.tH, listBand(id, true)).ok);
 }
-async function fetchPrices(ids, { signal, label = '抓價', conc = 6, onBatch, hist = true } = {}) {
+async function fetchPrices(ids, { signal, label = '抓價', conc = 6, onBatch, hist = true, stock = [] } = {}) {
   if (priceTarget !== CFG.target) resetMarket();
   const uniq = [...new Set(ids)].filter(id => DB.marketable.has(+id));
   // 快取超過有效時間的物品重新抓（行情、成交、掛單一起更新）
@@ -871,6 +889,8 @@ async function fetchPrices(ids, { signal, label = '抓價', conc = 6, onBatch, h
     // 材料：抓前 50 筆掛單，依實際要買的數量算平均單價；成品：只有最低掛單被排除時才抓
     const ln = uniq.filter(id => !L[id] && P[id] && (DB.matSet.has(+id) || needsListings(id)));
     if (ln.length && !(signal && signal.aborted)) await fetchListings(ln, signal, conc, (d, t) => onBatch && onBatch(d, t, 0, label + '・在售掛單'));
+    const sn = [...new Set(stock)].filter(id => !SK[id] && DB.marketable.has(+id));
+    if (sn.length && !(signal && signal.aborted)) await fetchStock(sn, signal, conc, (d, t) => onBatch && onBatch(d, t, 0, label + '・在售量'));
   }
   if (need.length) saveCache();
   return { total: batches.length, failed, count: need.length };
@@ -879,7 +899,7 @@ async function fetchPrices(ids, { signal, label = '抓價', conc = 6, onBatch, h
 /* ================= 行情快取（IndexedDB）=================
    重新整理頁面時沿用上次的行情與掃描結果；超過「行情快取」分鐘數的物品在用到時會重新抓。
    瀏覽器不支援或被封鎖時就略過，不影響其他功能。 */
-const IDB_NAME = 'craftwise', IDB_STORE = 'kv', CACHE_KEY = 'market-v2';
+const IDB_NAME = 'craftwise', IDB_STORE = 'kv', CACHE_KEY = 'market-v4';
 function idbOpen() { return new Promise((res, rej) => { const r = indexedDB.open(IDB_NAME, 1); r.onupgradeneeded = () => r.result.createObjectStore(IDB_STORE); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
 async function idbDo(mode, fn) {
   try { const db = await idbOpen(); return await new Promise((res, rej) => { const tx = db.transaction(IDB_STORE, mode); const out = fn(tx.objectStore(IDB_STORE)); tx.oncomplete = () => { db.close(); res(out && out.result); }; tx.onerror = () => { db.close(); rej(tx.error); }; }); }
@@ -888,13 +908,13 @@ async function idbDo(mode, fn) {
 let cacheTimer = null;
 function saveCache(now) {
   clearTimeout(cacheTimer);
-  const run = () => idbDo('readwrite', st => st.put({ v: 1, target: CFG.target, isDC: CFG.isDC, ts: ST.scanTs || null, scanned: ST.scanned, P, H, L, saved: Date.now() }, CACHE_KEY));
+  const run = () => idbDo('readwrite', st => st.put({ v: 1, target: CFG.target, isDC: CFG.isDC, ts: ST.scanTs || null, scanned: ST.scanned, P, H, L, SK, saved: Date.now() }, CACHE_KEY));
   if (now) run(); else cacheTimer = setTimeout(run, 1500);
 }
 async function restoreCache() {
   const c = await idbDo('readonly', st => st.get(CACHE_KEY));
   if (!c || c.v !== 1 || c.target !== CFG.target || c.isDC !== CFG.isDC) return false;
-  resetMarket(); Object.assign(P, c.P || {}); Object.assign(H, c.H || {}); Object.assign(L, c.L || {});
+  resetMarket(); Object.assign(P, c.P || {}); Object.assign(H, c.H || {}); Object.assign(L, c.L || {}); Object.assign(SK, c.SK || {});
   if (Array.isArray(c.scanned) && c.scanned.length && c.ts) {
     ST.scanned = c.scanned; ST.scanTs = c.ts; computeAll(); ST.shown = 100; renderRanking();
     const age = (Date.now() - c.ts) / 60000, old = CFG.cacheMin > 0 && age > CFG.cacheMin;
@@ -906,6 +926,88 @@ async function restoreCache() {
 const clearCache = () => idbDo('readwrite', st => st.delete(CACHE_KEY));
 function metaText() { return ST.scanTs ? `｜${CFG.isDC ? CFG.target + '全服' : CFG.target}・${ago(ST.scanTs)}掃描` : ''; }
 setInterval(() => { if ($('scan-meta')) $('scan-meta').textContent = metaText(); }, 60000);
+
+/* ================= 市場競爭風險 =================
+   四個訊號各給 0／1／2 分，合計 ≥4 為高、2–3 為中：
+   ① 在售量 ÷ 日銷量（前面排了幾天的貨） ② 最低掛單 vs 近期成交均價（有沒有在削價）
+   ③ 近 3 天、近 7 天成交均價變化（是不是在跌） ④ 加上你要做的數量，市場要幾天才消化得完。
+   另外算出「2 天內賣得完的建議製作量」。 */
+function vwapWin(list, from, to) {
+  const now = Date.now(), l = list.filter(x => now - x.t >= from * 864e5 && now - x.t < to * 864e5);
+  const u = l.reduce((a, x) => a + (x.q || 1), 0);
+  return u && l.length >= 2 ? l.reduce((a, x) => a + x.p * (x.q || 1), 0) / u : null;
+}
+function compRisk(id, q, vel, minL, Q) {
+  const e = H[id] || [];
+  let qq = q;
+  if (q === 'all') { const n = e.filter(x => !x.hq).length, h = e.filter(x => x.hq).length; qq = h > n ? 'hq' : 'nq'; }
+  let list = e.filter(x => qq === 'hq' ? x.hq : !x.hq);
+  const rs = robustStats(list.map(x => x.p)); if (rs && rs.lo != null) list = list.filter(x => x.p >= rs.lo && x.p <= rs.hi);
+  const a3 = vwapWin(list, 0, 3), b3 = vwapWin(list, 3, 14), a7 = vwapWin(list, 0, 7), b7 = vwapWin(list, 7, 14);
+  const chg3 = a3 && b3 ? a3 / b3 - 1 : null, chg7 = a7 && b7 ? a7 / b7 - 1 : null;
+  const ref = rs ? rs.med : vwapWin(list, 0, 14);   // 用 14 天成交中位數當基準，不受短期暴漲暴跌影響
+  // 最低價與成交價用同一品質比，避免綜合模式把 NQ 最低價拿去和 HQ 成交價比
+  const mq = q === 'all' ? ((sellInfo(id, qq) || {}).minL ?? minL) : minL;
+  const gap = mq > 0 && ref ? mq / ref - 1 : null;
+  const sk = SK[id];
+  // 在售量與日銷量都用同一品質（綜合模式取成交較多的品質）
+  const pv = P[id] || {}, vq = q === 'all' ? (qq === 'hq' ? pv.vH : pv.vN) : vel;
+  const units = sk ? (q === 'all' || sk.nq == null ? (qq === 'hq' ? sk.hq : sk.nq) ?? sk.units : (q === 'hq' ? sk.hq : sk.nq)) : null;
+  const ratio = units != null && vq > 0 ? units / vq : null;          // 競爭強度：市場上已經排了幾天的貨
+  const days = vq > 0 && Q ? Q / vq : null;                         // 你削價上架時，這批要賣幾天（排行榜不看，只在物品頁依製作數量判斷）
+  const fall = Math.min(chg3 ?? 0, chg7 ?? 0);
+  let pts = 0; const why = [];
+  const add = (p, txt) => { if (p) { pts += p; why.push(txt); } };
+  if (ratio != null) add(ratio > 7 ? 2 : ratio > 3 ? 1 : 0, `在售 ${fmt(units)} 件＝${fmt1(ratio)} 天銷量`);
+  if (gap != null) add(gap < -0.20 ? 2 : gap < -0.08 ? 1 : 0, `最低價比成交價低 ${Math.round(-gap * 100)}%`);
+  add(fall < -0.15 ? 2 : fall < -0.05 ? 1 : 0, `近${(chg3 ?? 0) <= (chg7 ?? 0) ? ' 3 ' : ' 7 '}天跌 ${Math.round(-fall * 100)}%`);
+  if (days != null) add(days > 3 ? 2 : days > 1 ? 1 : 0, `做 ${Q} 個要賣 ${fmt1(days)} 天`);
+  const level = pts >= 4 ? 'high' : pts >= 2 ? 'mid' : 'low';
+  // 建議一次製作量：擁擠的市場只做約 1 天銷量，否則約 2 天；至少 1 個
+  const maxQ = vq > 0 ? Math.max(1, Math.floor(vq * (ratio != null && ratio > 3 ? 1 : 2))) : null;
+  return { level, factor: level === 'high' ? 0.55 : level === 'mid' ? 0.8 : 1, pts, why, units, capped: sk && sk.capped, ratio, gap, chg3, chg7, days, Q, maxQ, qq, partial: !sk };
+}
+const RISK_TXT = { low: '低', mid: '中', high: '高' };
+const riskTag = k => k ? `<span class="rtag ${k.level}" title="${k.why.length ? esc(k.why.join('；')) : '沒有明顯競爭壓力'}${k.partial ? '（尚無在售量資料）' : ''}">競爭${RISK_TXT[k.level]}</span>` : '';
+/* 在售量：抓前 100 筆掛單的數量（排除關服伺服器）；只要數量欄位，資料量很小 */
+const SK = {};
+async function fetchStock(ids, signal, conc, onProg) {
+  const t = encodeURIComponent(CFG.target);
+  const f = 'items.listings.quantity,items.listings.worldID,items.listings.hq,items.itemID,listings.quantity,listings.worldID,listings.hq,itemID';
+  const batches = []; for (let i = 0; i < ids.length; i += 100) batches.push(ids.slice(i, i + 100));
+  let next = 0, done = 0;
+  async function worker() {
+    while (next < batches.length) {
+      if (signal && signal.aborted) return;
+      const b = batches[next++];
+      try {
+        const d = await fetchJSON(`${UNI}/${t}/${b.join(',')}?listings=100&entries=0&fields=${f}`, { signal });
+        const map = b.length === 1 ? { [b[0]]: d } : ((d && d.items) || {});
+        for (const id of b) { const it = map[id]; if (!it) { SK[id] = { units: 0, nq: 0, hq: 0, n: 0, capped: false }; continue; } const ls = (it.listings || []).filter(l => !EXCL.has(l.worldID)); const sum = l => l.reduce((a, x) => a + (x.quantity || 0), 0); SK[id] = { units: sum(ls), nq: sum(ls.filter(x => !x.hq)), hq: sum(ls.filter(x => x.hq)), n: ls.length, capped: (it.listings || []).length >= 100 }; }
+      } catch (e) { if (e.name === 'AbortError') return; }
+      done++; onProg && onProg(done, batches.length);
+    }
+  }
+  await Promise.all(Array.from({ length: Math.min(conc, batches.length) }, worker));
+}
+/* 物品頁的競爭風險列：四個數字＋具體建議 */
+function riskStrip(r, made) {
+  const k = r.risk; if (!k) return '';
+  const pc = v => v == null ? '—' : `<b class="${v > 0.02 ? 'positive' : v < -0.02 ? 'negative' : ''}">${v >= 0 ? '+' : ''}${Math.round(v * 100)}%</b>`;
+  const crowded = k.ratio != null && k.ratio > 3;
+  let tip;
+  if (k.maxQ != null && k.maxQ < made) tip = `建議一次最多做 <b>${fmt(k.maxQ)}</b> 個（約 ${crowded ? 1 : 2} 天銷量${crowded ? '，市場上已有 ' + fmt1(k.ratio) + ' 天份的貨' : ''}），賣完再補，避免被後來的人削價卡住。`;
+  else if (k.level === 'low') tip = `競爭不大，做 ${made} 個削價上架約 ${fmt1(k.days)} 天可賣完。`;
+  else tip = `做 ${made} 個約 ${fmt1(k.days)} 天可賣完，可照常製作，但上架後留意被削價。`;
+  if (k.gap != null && k.gap < -0.15) tip += ' 最低價明顯低於成交價、正在削價，' + (r.cost != null && r.minL != null && r.minL * (1 - CFG.tax / 100) < r.cost ? '跟價會虧，等價格回穩再上架。' : '跟價前先確認價格還在門檻以上。');
+  else if ((k.chg3 ?? 0) < -0.10) tip += ' 價格正在下跌，做好就上架，不要囤貨。';
+  return `<div class="rstrip ${k.level}"><span class="rbig">競爭風險 ${RISK_TXT[k.level]}</span>
+   <span>在售量／日銷量${ST.pq === 'all' ? `（${k.qq.toUpperCase()}）` : ''} <b>${k.ratio != null ? fmt1(k.ratio) + ' 天' : '—'}</b>${k.units != null ? `<small>（${fmt(k.units)}${k.capped ? '+' : ''} 件）</small>` : ''}</span>
+   <span>最低價 vs 成交價${ST.pq === 'all' ? `（${k.qq.toUpperCase()}）` : ''} ${pc(k.gap)}</span>
+   <span>近 3 天 ${pc(k.chg3)}・近 7 天 ${pc(k.chg7)}</span>
+   <span>做 ${made} 個要賣 <b>${k.days != null ? fmt1(k.days) + ' 天' : '—'}</b></span>
+   <div class="rtip">${tip}</div></div>`;
+}
 
 /* ================= 剔除極端值 ================= */
 const median = s => { const n = s.length; return n % 2 ? s[(n - 1) / 2] : (s[n / 2 - 1] + s[n / 2]) / 2; };
@@ -1043,7 +1145,7 @@ function resolve(id, memo, depth = 0, stack = new Set(), need = 1) {
     bp = CFG.matBasis !== 'avg' ? buyPlan(id, need) : null;
     let v = bp ? bp.avg : mi.value;
     if (CFG.matBasis === 'low' && mi.avg != null) v = Math.min(v, mi.avg);
-    opts.mkt = v;
+    opts.mkt = v * (1 + CFG.buyTax / 100);   // 市場買入要另付買入稅
   }
   if (CFG.src.npc && DB.vendor[id] > 0) opts.npc = DB.vendor[id];
   // 雇員委託：每個 = 探險幣數 × 計價 ÷ 每趟數量（同分時排在自採前面，派雇員比自己採省事）
@@ -1102,7 +1204,7 @@ function sellInfo(id, q = 'all') {
   return { vel, avg, rawAvg, minL, minHQ: lp.good ? !!lp.good.hq : null, minRaw: lp.raw ? lp.raw.price : null, bad: lp.bad, st, price: basisPick(CFG.sellBasis, minL, avg), up: p.up };
 }
 /* 一個成品的完整試算 */
-function evalItem(id, memo, batch = CFG.estQty, q = 'all') {
+function evalItem(id, memo, batch = CFG.estQty, q = 'all', batchRisk = false) {
   const rec = DB.recipes[id]; if (!rec) return null;
   const s = sellInfo(id, q) || {};
   const times = Math.ceil(Math.max(1, batch) / rec.yields);
@@ -1132,6 +1234,8 @@ function evalItem(id, memo, batch = CFG.estQty, q = 'all') {
     out.topLeaf = out.leaves[0] || null;
   }
   out.trend = trendFor(id, q);
+  out.risk = s.price > 0 ? compRisk(id, q, out.vel, out.minL, batchRisk ? Math.max(1, batch) : 0) : null;
+  if (out.risk && CFG.riskAdj) out.score *= out.risk.factor;   // 依競爭風險打折，擁擠的市場自然往後排
   out.stale = CFG.staleH > 0 && (s.up == null || Date.now() - s.up > CFG.staleH * 3600e3);
   return out;
 }
@@ -1213,7 +1317,7 @@ async function startScan() {
     const hot = cands.filter(id => { const s = sellInfo(id); return s && s.vel != null && s.vel >= CFG.minVel && s.price > 0; });
     const mats = closure(hot);
     setStatus(`第 2 步：${hot.length.toLocaleString()} 個成品日均銷量 ≥ ${CFG.minVel}，抓 ${mats.length.toLocaleString()} 種材料（含中間材）的行情，以及成品與材料近 ${HIST_DAYS} 天成交明細（剔除極端值用）…`);
-    const r2 = await fetchPrices([...hot, ...mats], { signal, label: '材料行情', onBatch: prog });
+    const r2 = await fetchPrices([...hot, ...mats], { signal, label: '材料行情', onBatch: prog, stock: hot });
     if (signal.aborted) throw Object.assign(new Error('aborted'), { name: 'AbortError' });
     ST.scanned = hot;
     computeAll();
@@ -1257,7 +1361,7 @@ function rowHTML(r, i, maxScore, opts = {}) {
    <div class="num" data-l="單個成本"><span class="val">${r.missing ? `<span class="tag warn">缺價 ${r.missing}</span>` : fmt(r.cost)}</span><small>${mixTags(r.mix)}</small></div>
    <div class="num" data-l="單個售價" title="${tip}"><span class="val">${fmt(r.price)}</span><small>${priceSub}</small></div>
    <div class="num" data-l="淨利"><div class="profit ${r.profit > 0 ? 'positive' : 'negative'}">${r.profit != null ? sgn(r.profit) + fmt(r.profit) : '—'}</div>${r.gv > 0 && r.added != null ? `<small class="${r.added > 0 ? 'positive' : 'negative'}" title="自採材料直接賣：${fmt(r.matSell)} G（稅後）｜做成成品：${fmt(r.craftNet)} G">比單賣材料 ${sgn(r.added)}${fmt(r.added)}</small>` : `<small>ROI ${r.cost === 0 && r.profit > 0 ? '∞' : pct(r.roi)}</small>`}</div>
-   <div class="num" data-l="每日售出"><span class="val">${fmt1(r.vel)}</span><small>件／日</small></div>
+   <div class="num" data-l="每日售出"><span class="val">${fmt1(r.vel)}</span><small>件／日${riskTag(r.risk)}</small></div>
    <div class="sc" data-l="划算度"><span>${sc.toFixed(1)}</span><div class="track"><div class="scorebar" style="width:${Math.max(2, sc)}%"></div></div></div>
   </div>`;
 }
@@ -1332,20 +1436,20 @@ async function renderPlanner() {
   if (document.activeElement !== $('item-search')) $('item-search').value = DB.names[id] || '';
   const tok = ++planToken;
   const ids = [id, ...closure([id])];
-  if (ids.some(x => (!P[x] || !H[x]) && DB.marketable.has(+x)) || priceTarget !== CFG.target) {
+  if (ids.some(x => (!P[x] || !H[x]) && DB.marketable.has(+x)) || (DB.marketable.has(id) && !SK[id]) || priceTarget !== CFG.target) {
     body.innerHTML = '<div class="panel empty">抓取這個配方的即時行情中…</div>';
-    try { await fetchPrices(ids, { label: '配方行情' }); } catch (e) { }
+    try { await fetchPrices(ids, { label: '配方行情', stock: [id] }); } catch (e) { }
     if (tok !== planToken) return;
   }
   [...$('pq').children].forEach(b => b.classList.toggle('on', b.dataset.pq === ST.pq));
-  const memo = new Map(); const r = evalItem(id, memo, ST.batch, ST.pq);
+  const memo = new Map(); const r = evalItem(id, memo, ST.batch, ST.pq, true);
   const rN = evalItem(id, new Map(), ST.batch, 'nq'), rH = evalItem(id, new Map(), ST.batch, 'hq');
   const crafts = Math.ceil(ST.batch / rec.yields), made = crafts * rec.yields;
   const totalCost = r.cost != null ? r.cost * rec.yields * crafts : null;
   const gross = (r.price || 0) * made, fee = gross * CFG.tax / 100, net = totalCost != null ? gross - fee - totalCost : null;
   body.innerHTML = `<div class="overview">
     <div class="stat"><div class="label">每件材料成本</div><div class="num">${r.cost != null ? fmt(r.cost) + ' G' : '缺價'}</div><div class="hint">逐項依目前來源</div></div>
-    <div class="stat"><div class="label">每件淨利</div><div class="num ${r.profit > 0 ? 'positive' : 'negative'}">${r.profit != null ? sgn(r.profit) + fmt(r.profit) + ' G' : '—'}</div><div class="hint">售價 ${fmt(r.price)} G 扣 ${CFG.tax}% 稅與材料｜ROI ${r.cost === 0 && r.profit > 0 ? '∞（材料全自採）' : pct(r.roi)}</div></div>
+    <div class="stat"><div class="label">每件淨利</div><div class="num ${r.profit > 0 ? 'positive' : 'negative'}">${r.profit != null ? sgn(r.profit) + fmt(r.profit) + ' G' : '—'}</div><div class="hint">售價 ${fmt(r.price)} G${CFG.tax ? ` 扣 ${CFG.tax}% 賣出稅` : ''}、扣材料（含 ${CFG.buyTax}% 買入稅）｜ROI ${r.cost === 0 && r.profit > 0 ? '∞（材料全自採）' : pct(r.roi)}</div></div>
     <div class="stat"><div class="label">製作 ${made} 件所需本金</div><div class="num">${totalCost != null ? fmt(totalCost) + ' G' : '—'}</div><div class="hint">${crafts} 次製作${rec.yields > 1 ? `，每次產出 ${rec.yields}` : ''}</div></div>
     <div class="stat"><div class="label">整批理論淨利</div><div class="num ${net > 0 ? 'positive' : 'negative'}">${net != null ? sgn(net) + fmt(net) + ' G' : '—'}</div><div class="hint">假設全部以售價賣出</div></div></div>
    ${priceBox(id, r, made)}
@@ -1401,34 +1505,36 @@ function priceBox(id, r, made) {
   const tax = CFG.tax / 100;
   const ta = tradeAvg(id, ST.pq);
   const be = r.cost != null ? r.cost / (1 - tax) : null;                                  // 保本上架價（含稅）
-  const beOpp = r.cost != null && r.gv > 0 && r.cash != null ? (r.cash + r.gv) / (1 - tax) : null;          // 自採材料按市價算的保本價
+  // 賣成品 p×(1−賣出稅) − 買材料 ≥ 自採材料直接賣 gv×(1−賣出稅) → p ≥ 買材料÷(1−賣出稅) + gv
+  const beOpp = r.cost != null && r.gv > 0 && r.cash != null ? r.cash / (1 - tax) + r.gv : null;
+  const thr = beOpp ?? be, thrOpp = beOpp != null;
   const low = r.bad.filter(b => b.price < (r.minL ?? Infinity)).sort((a, b) => a.price - b.price)[0];
-  PCTX = { id, cost: r.cost, tax, made, be, beOpp, avg: ta ? ta.avg : null, minL: r.minL };
+  PCTX = { id, cost: r.cost, tax, made, be, beOpp, thr, thrOpp, avg: ta ? ta.avg : null, minL: r.minL };
   const pctTo = (a, b) => a != null && b > 0 ? `${a >= b ? '+' : ''}${Math.round((a / b - 1) * 100)}%` : '';
   const qlab = ST.pq === 'all' ? '綜合' : ST.pq.toUpperCase();
-  return `<div class="panel pricepanel"><div class="panel-title"><h2>定價（${qlab}）</h2><span class="tiny">以 1 個成品計・市場稅 ${CFG.tax}%</span></div>
+  return `<div class="panel pricepanel"><div class="panel-title"><h2>定價（${qlab}）</h2><span class="tiny">以 1 個成品計・買入稅 ${CFG.buyTax}%・賣出稅 ${CFG.tax}%</span></div>
    <div class="pgrid">
     <div class="pt"><div class="label">現在成交均價<span class="tiny">（已售出的平均）</span></div><div class="pnum">${ta ? fmt(ta.avg) + ' G' : '—'}</div>
      <div class="hint">${ta ? `近 ${ta.win} 天 ${ta.n} 筆／${fmt(ta.units)} 件成交，依數量加權、已剔除極端值${ta.avg14 && Math.abs(ta.avg14 / ta.avg - 1) >= 0.05 ? `；14 天均價 ${fmt(ta.avg14)} G` : ''}` : '近 14 天沒有成交紀錄'}</div></div>
     <div class="pt"><div class="label">市場最低價${r.minL != null && r.minHQ != null ? `<span class="tag" style="margin-left:6px">${r.minHQ ? 'HQ' : 'NQ'}</span>` : ''}</div><div class="pnum">${r.minL != null ? fmt(r.minL) + ' G' : '—'}</div>
      <div class="hint">${r.minL != null && ta ? `比成交均價 ${pctTo(r.minL, ta.avg)}${ST.pq === 'all' ? '（綜合模式混合 NQ／HQ，切換品質看更準）' : ''}` : ''}${low ? `${r.minL != null && ta ? '；' : ''}<span class="negative">${fmt(low.price)} G 的掛單${low.chk.why}，已略過</span>` : ''}${r.minL == null && !low ? '目前沒有在售掛單' : ''}</div></div>
-    <div class="pt warnt"><div class="label">保本價<span class="tiny">（低於這個價格上架就虧）</span></div>
-     <div class="pnum negative">${be == null ? '缺價' : be > 0 ? fmt(Math.ceil(be)) + ' G' : '0 G'}</div>
-     <div class="hint">${be == null ? '有材料抓不到價格' : be > 0 ? `買材料花 ${fmt(r.cost)} G ÷ (1 − ${CFG.tax}% 稅)` : '材料全部自採／雇員，不會虧現金'}</div>
-     ${beOpp ? `<div class="pnum2">低於 <b>${fmt(Math.ceil(beOpp))} G</b> 不如直接賣材料</div><div class="hint">自採／雇員材料按市價算的保本價</div>` : ''}
-     ${r.minL != null && be != null ? `<div class="hint" style="margin-top:6px">${r.minL < be ? '<span class="negative">最低價已低於保本價，跟價會虧</span>' : beOpp && r.minL < beOpp ? '<span class="gold">跟最低價賣，賺的比直接賣材料少</span>' : `最低價比保本價高 ${fmt(r.minL - (beOpp || be))} G，還有利潤`}</div>` : ''}</div>
+    <div class="pt warnt"><div class="label">${thrOpp ? '不如直接賣材料的價位' : '會虧本的價位'}</div>
+     <div class="pnum2 big">低於 <b>${thr != null ? fmt(Math.ceil(thr)) + ' G' : '—'}</b> ${thrOpp ? '不如直接賣材料' : '會虧本'}</div>
+     <div class="hint">${thr == null ? '有材料抓不到價格' : thrOpp ? `自採／雇員材料按市價算${r.cash > 0 ? `，買的材料含 ${CFG.buyTax}% 買入稅` : ''}` : `材料成本 ${fmt(r.cost)} G（含 ${CFG.buyTax}% 買入稅）${CFG.tax ? `÷ (1 − ${CFG.tax}% 賣出稅)` : ''}`}</div>
+     ${r.minL != null && thr != null ? `<div class="hint" style="margin-top:6px">${r.minL < thr ? (thrOpp ? '<span class="gold">跟最低價賣，賺的比直接賣材料少</span>' : '<span class="negative">跟最低價賣會虧本</span>') : `最低價比這個價位高 ${fmt(r.minL - thr)} G`}</div>` : ''}</div>
    </div>
+   ${riskStrip(r, made)}
    <div class="pscale" id="pscale"></div></div>`;
 }
 function updateMyPrice() {
   const sc = $('pscale'); if (!sc || !PCTX) return;
   const C = PCTX;
   // 價格位置刻度：保本價、賣材料打平、最低價、成交均價
-  const marks = [['保本', C.be, 'be'], ['賣材料打平', C.beOpp, 'op'], ['最低', C.minL, 'mn'], ['均價', C.avg, 'av']].filter(m => m[1] > 0);
+  const marks = [[C.thrOpp ? '賣材料打平' : '虧本線', C.thr, 'op'], ['最低', C.minL, 'mn'], ['均價', C.avg, 'av']].filter(m => m[1] > 0);
   if (marks.length < 2) { sc.innerHTML = ''; return; }
   const lo = Math.min(...marks.map(m => m[1])) * 0.9, hi = Math.max(...marks.map(m => m[1])) * 1.1, span = hi - lo || 1;
   const x = v => ((v - lo) / span * 100).toFixed(2);
-  const zOpp = C.beOpp > 0 ? `<div class="oppz" style="left:${C.be > 0 ? x(C.be) : 0}%;width:${(x(C.beOpp) - (C.be > 0 ? x(C.be) : 0)).toFixed(2)}%"></div>` : '';
+  const zOpp = C.thr > 0 ? `<div class="${C.thrOpp ? 'oppz' : 'lossz'}" style="left:0;width:${x(C.thr)}%"></div>` : '';
   const W = (sc.clientWidth || 600) - 20, last = { up: -1e9, dn: -1e9, up2: -1e9, dn2: -1e9 };
   const labels = marks.slice().sort((a, b) => a[1] - b[1]).map(m => {
     const px = x(m[1]) / 100 * W, w = (m[0].length * 12 + String(fmt(m[1])).length * 7 + 10);
@@ -1438,7 +1544,7 @@ function updateMyPrice() {
   }).join('');
   const used = r => last[r] > -1e9;   // 依實際用到的標籤列調整上下留白
   const mt = used('up2') ? 42 : 24, mb = used('dn2') ? 44 : used('dn') ? 26 : 10;
-  sc.innerHTML = `<div class="track" style="margin-top:${mt}px;margin-bottom:${mb}px">${C.be > 0 ? `<div class="lossz" style="width:${x(C.be)}%"></div>` : ''}${zOpp}${labels}</div><div class="tiny">${C.be > 0 ? '紅色 = 低於保本價、上架會虧現金' : ''}${C.be > 0 && C.beOpp ? '；' : ''}${C.beOpp ? '橘色 = 雖然賺錢，但不如直接賣自採材料' : ''}</div>`;
+  sc.innerHTML = `<div class="track" style="margin-top:${mt}px;margin-bottom:${mb}px">${zOpp}${labels}</div><div class="tiny">${C.thr > 0 ? (C.thrOpp ? '橘色區段 = 這個價位不如直接賣自採材料' : '紅色區段 = 這個價位會虧本') : ''}</div>`;
 }
 /* NQ／HQ 對照：兩種品質各自剔除極端值後的售價、銷量、淨利 */
 function qualBox(rec, rN, rH) {
@@ -1532,9 +1638,9 @@ async function renderFavorites() {
   if (!DB.ready) { box.innerHTML = '<div class="empty">資料庫載入中…</div>'; return; }
   const tok = ++favToken;
   const ids = ST.fav.flatMap(id => DB.recipes[id] ? [id, ...closure([id])] : [id]);
-  if (ids.some(x => (!P[x] || !H[x]) && DB.marketable.has(+x)) || priceTarget !== CFG.target) {
+  if (ids.some(x => (!P[x] || !H[x]) && DB.marketable.has(+x)) || ST.fav.some(x => DB.marketable.has(x) && !SK[x]) || priceTarget !== CFG.target) {
     box.innerHTML = '<div class="empty">抓取收藏商品的即時行情中…</div>';
-    try { await fetchPrices(ids, { label: '收藏行情' }); } catch { }
+    try { await fetchPrices(ids, { label: '收藏行情', stock: ST.fav }); } catch { }
     if (tok !== favToken) return;
   }
   const memo = new Map();
@@ -1697,7 +1803,7 @@ function routeHTML(list) {
   }
   if (!by.size) return '';
   const ws = [...by.values()].sort((a, b) => b.sum - a.sum);
-  return `<h3 class="rowtitle">跨服購買路線（${ws.length} 台伺服器）</h3><div class="route">${ws.map((w, i) => `<div class="rstop"><div class="rhd"><b>${i + 1}. ${esc(wName(w.w) || '—')}</b><span>${fmt(w.sum)} G</span></div>${w.items.map(it => `<div class="ritem"><span>${esc(DB.names[it.id] || '#' + it.id)}${it.hq ? ' <span class="tag">HQ</span>' : ''}</span><span>${it.q} 個 × ${fmt(it.p)}</span></div>`).join('')}</div>`).join('')}</div>`;
+  return `<h3 class="rowtitle">跨服購買路線（${ws.length} 台伺服器・金額含 ${CFG.buyTax}% 買入稅）</h3><div class="route">${ws.map((w, i) => `<div class="rstop"><div class="rhd"><b>${i + 1}. ${esc(wName(w.w) || '—')}</b><span>${fmt(w.sum * (1 + CFG.buyTax / 100))} G</span></div>${w.items.map(it => `<div class="ritem"><span>${esc(DB.names[it.id] || '#' + it.id)}${it.hq ? ' <span class="tag">HQ</span>' : ''}</span><span>${it.q} 個 × ${fmt(it.p)}</span></div>`).join('')}</div>`).join('')}</div>`;
 }
 async function renderShopping() {
   updateCount();
@@ -1709,7 +1815,7 @@ async function renderShopping() {
   const memo = new Map();
   const evals = ST.plans.map(p => ({ p, r: DB.recipes[p.id] ? evalItem(p.id, memo) : null }));
   const { crafts, leaves } = expandPlans();
-  const payOf = l => l.src === 'mkt' && l.bp ? l.bp.total : (l.unit || 0) * l.qty;   // 市場要整組買，付的是整組金額
+  const payOf = l => l.src === 'mkt' && l.bp ? l.bp.total * (1 + CFG.buyTax / 100) : (l.unit || 0) * l.qty;   // 市場整組購買＋買入稅   // 市場要整組買，付的是整組金額
   const totalBuy = leaves.reduce((a, l) => a + (l.unit != null && !SELF(l.src) ? payOf(l) : 0), 0);
   const revenue = evals.reduce((a, { p, r }) => a + (r && r.price ? r.price * p.qty * (1 - CFG.tax / 100) : 0), 0);
   const gatherVal = leaves.reduce((a, l) => a + (SELF(l.src) && l.unit ? l.unit * l.qty : 0), 0);
@@ -2153,7 +2259,7 @@ function updateSummary() {
   if ($('cat').value) n++; if (CFG.maxCost > 0) n++;
   for (const k of ['worthCraft', 'noGatherOnly', 'favOnly']) if (CFG[k]) n++;
   for (const k of ['onlyProfit', 'hideMissing', 'hideStale']) if (!CFG[k]) n++;
-  if (CFG.wv !== DEF.wv || CFG.wa !== DEF.wa || CFG.wc !== DEF.wc) n++;
+  if (CFG.wv !== DEF.wv || CFG.wa !== DEF.wa || CFG.wc !== DEF.wc || !CFG.riskAdj) n++;
   $('filt-cnt').textContent = n || '';
   let m = 0; const C = ST.col; if (C.tier !== 'high') m++; if (C.sort !== 'cps') m++; if (!C.myJobs) m++; if (!C.hideMiss) m++; if (C.noInt) m++; if (C.lvMin !== 1 || C.lvMax !== 100) m++; if (C.jobs.length) m++;
   $('colf-cnt').textContent = m || '';
@@ -2161,7 +2267,7 @@ function updateSummary() {
   $('venf-cnt').textContent = v || '';
 }
 $('filt-reset').addEventListener('click', () => {
-  Object.assign(CFG, { onlyProfit: true, hideMissing: true, hideStale: true, worthCraft: false, noGatherOnly: false, favOnly: false, maxCost: 0, wv: DEF.wv, wa: DEF.wa, wc: DEF.wc });
+  Object.assign(CFG, { onlyProfit: true, hideMissing: true, hideStale: true, worthCraft: false, noGatherOnly: false, favOnly: false, maxCost: 0, wv: DEF.wv, wa: DEF.wa, wc: DEF.wc, riskAdj: true });
   $('cat').value = ''; syncInputs(); save(); recompute(); toast('篩選已重設');
 });
 
