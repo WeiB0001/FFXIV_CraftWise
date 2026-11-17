@@ -214,7 +214,7 @@ details.help summary{cursor:pointer;color:var(--a);font-size:12px;font-weight:65
 details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8px}
 .rng{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}.rng input{accent-color:var(--a);flex:1}.rng b{color:var(--text);width:28px;text-align:right}
 .favt td{vertical-align:middle}.favt tbody tr{cursor:pointer}.favt tbody tr:hover{background:#1a2b3d}.favt .today{font-size:17px;font-weight:800;letter-spacing:-.3px}
-.tag.ship{background:#1d3550;color:#a9d4f5}
+.tag.ship{background:#1d3550;color:#a9d4f5}.tag.new{background:#4a2a12;color:#ffc98a}
 .kbd{font-family:ui-monospace,Consolas,monospace;font-size:11px;background:#16273a;border:1px solid #2c4058;border-radius:5px;padding:1px 5px;color:#bdd3eb}
 .rrow:focus-visible{outline:2px solid var(--a);outline-offset:2px}
 tr.isdone td{opacity:.45}tr.isdone strong{text-decoration:line-through}
@@ -287,6 +287,7 @@ td .chk{accent-color:var(--a);width:16px;height:16px;margin-right:8px;vertical-a
  <div class="fbar">
   <input class="input fsearch" id="search" placeholder="🔍 搜尋名稱或分類…" aria-label="搜尋商品">
   <select class="input" id="sort" aria-label="排行依據"><option value="score">排序：划算度</option><option value="profit">排序：淨利</option><option value="added">排序：加工增值</option><option value="velocity">排序：每日售出</option><option value="cost">排序：單個成本（低→高）</option><option value="price">排序：單個售價</option><option value="roi">排序：ROI</option></select>
+  <button class="fbtn" id="rank-new" title="只看這次版本新增的成品，或用到新素材的配方（等同篩選裡的分類）" aria-pressed="false">🆕 新版本</button>
   <button class="fbtn" id="rank-ship" title="只看潛水艇／飛空艇組件會用到的素材（等同篩選裡的分類）" aria-pressed="false">⚓ 艇材</button>
   <button class="btn ftoggle fbtn" data-toggle="filt" aria-expanded="false">⚲ 篩選 <span class="fcnt" id="filt-cnt"></span> <span class="chev">▾</span></button>
  </div>
@@ -355,8 +356,9 @@ td .chk{accent-color:var(--a);width:16px;height:16px;margin-right:8px;vertical-a
 <div class="panel"><div class="panel-title"><h2>今日行情 <span class="tiny" id="favm-meta"></span></h2><div class="actions"><button class="btn small" id="fav-refresh">↻ 更新收藏行情</button></div></div>
  <div class="fbar" style="margin-bottom:10px">
   <input class="input fsearch" id="fav-search" placeholder="🔍 搜尋任何物品（成品、材料都可以）加入收藏…" aria-label="搜尋物品加入收藏" autocomplete="off">
-  <button class="btn" id="fav-ship" title="列出潛水艇／飛空艇組件會用到的素材，方便一次收藏">⚓ 潛水艇／飛空艇素材</button>
-  <div class="chips seg" id="fav-view"><button class="chip" data-fv="all">全部</button><button class="chip" data-fv="craft">成品</button><button class="chip" data-fv="mat">材料</button><button class="chip" data-fv="ship">艇材</button></div>
+  <button class="btn" id="fav-new" title="列出這次版本新增、可在市場交易的生產品與材料">🆕 新版本物品</button>
+  <button class="btn" id="fav-ship" title="列出潛水艇／飛空艇組件會用到、而且近期賣得動的生產品與材料">⚓ 潛水艇／飛空艇素材</button>
+  <div class="chips seg" id="fav-view"><button class="chip" data-fv="all">全部</button><button class="chip" data-fv="craft">成品</button><button class="chip" data-fv="mat">材料</button><button class="chip" data-fv="ship">艇材</button><button class="chip" data-fv="new">新版本</button></div>
  </div>
  <div id="fav-results"></div>
  <div id="fav-market"></div>
@@ -460,7 +462,7 @@ td .chk{accent-color:var(--a);width:16px;height:16px;margin-right:8px;vertical-a
 </div>
 <div class="panel">
  <div class="panel-title"><h2>上架時機</h2></div>
- <div class="controls"><div class="field"><label for="patch-date">下次版本更新日</label><input class="input" id="patch-date" type="date" style="width:170px"></div><button class="btn small" id="patch-clear" style="align-self:flex-end">清除</button><span class="tiny" style="align-self:flex-end;max-width:520px">填入繁中服公告的下個版本日期，物品頁的上架建議會提醒更新前出清、更新後注意價格波動。每週重置固定以週二計算。</span></div>
+ <div class="controls"><div class="field"><label for="tw-patch" title="用來標示「新版本物品」：遊戲資料裡屬於這個版本（含 x.x1、x.x5 小版本）的物品">目前繁中服版本</label><input class="input" id="tw-patch" type="text" inputmode="decimal" maxlength="5" style="width:90px" placeholder="7.3"></div><div class="field"><label for="patch-date">下次版本更新日</label><input class="input" id="patch-date" type="date" style="width:170px"></div><button class="btn small" id="patch-clear" style="align-self:flex-end">清除</button><span class="tiny" style="align-self:flex-end;max-width:520px">填入繁中服公告的下個版本日期，物品頁的上架建議會提醒更新前出清、更新後注意價格波動。每週重置固定以週二計算。</span></div>
 </div>
 <div class="panel">
  <div class="panel-title"><h2>個別材料固定來源 <span class="tiny" id="po-meta"></span></h2><button class="btn small" id="po-clear">清除全部</button></div>
@@ -522,6 +524,15 @@ const MAXD = 4;
 const SCRIP = { 41784: '巧手橙票', 33913: '巧手紫票' };
 const SHIP_CATS = new Set([90, 91, 92, 93, 101, 102, 103, 104]);   // 飛空艇／潛水艇組件的物品分類
 const isShip = id => !!(DB.shipMats && DB.shipMats.has(+id));
+/* 新版本物品：屬於設定的繁中服版本（7.3 也包含 7.31、7.35 這類小版本），而且已有繁中名稱 */
+const isNew = id => { const v = DB.ver && DB.ver[id]; if (!v || !DB.names[id]) return false; const t = CFG.twPatch; return v === t || (v.startsWith(t) && /^\d$/.test(v.charAt(t.length))); };
+const usesNew = r => isNew(r.id) || r.rec.ing.some(x => isNew(x.id));
+const newLabel = () => `🆕 ${CFG.twPatch}`;
+function updatePatchLabels() {
+  const o = document.querySelector('#cat option[value="new"]'); if (o) o.textContent = `${newLabel()} 新物品／用到新素材`;
+  $('rank-new').textContent = newLabel(); $('fav-new').textContent = `${newLabel()} 新物品`;
+  const c = document.querySelector('#fav-view [data-fv="new"]'); if (c) c.textContent = CFG.twPatch;
+}
 const TIER = { high: '高', mid: '中', base: '基本' };
 
 /* ================= 小工具 ================= */
@@ -605,6 +616,8 @@ const DEF = {
   quality: 'all', sellBasis: 'avg', tax: 0, minVel: 1, wv: 0.5, wa: 1, wc: 0.5,
   sort: 'score', desc: true, onlyProfit: true, hideMissing: true, noGatherOnly: false, maxCost: 0, minROI: 0,
   robust: true, staleH: 48, patchDate: '', buyTax: 5, riskAdj: true, retLv: 100, retG: 3277, retP: 4965, retI: 710, estQty: 10, ventureG: 0, cacheMin: 30, hideStale: true, favOnly: false, worthCraft: false, catRule: {},
+  shipVel: 10, newVel: 0, twPatch: '7.3',   // 新版本物品清單：每日售出門檻、目前繁中服版本
+    // 潛水艇／飛空艇素材清單：每日售出門檻
   crafter: { v2: true, all: { lvl: 100, cms: 0, ctl: 0, cp: 0 }, jobs: {} },                       // 製作者數值（生產巨集用）
   mac: { waitA: 3, waitB: 2, echo: true, se: 1, lock: false, width: 'std', ban: {} },                 // 巨集格式
 };
@@ -676,7 +689,9 @@ async function loadDB() {
       fetchRepoJSON(TCJ + '/nodes.json').catch(() => null),
     ]);
     // 釣魚點不在 nodes.json 裡，另外讀（失敗不影響其他功能）
-    const [fishSpots, bigFish, colls, vtasks] = await Promise.all([fetchRepoJSON(TCJ + '/fishing-spots.json').catch(() => null), fetchRepoJSON(TCJ + '/legendary-fish.json').catch(() => null), fetchRepoJSON(TCJ + '/collectables.json').catch(() => null), fetchRepoJSON(TCJ + '/retainer-tasks.json').catch(() => null)]);
+    const [fishSpots, bigFish, colls, vtasks, itemPatch, patchNames] = await Promise.all([fetchRepoJSON(TCJ + '/fishing-spots.json').catch(() => null), fetchRepoJSON(TCJ + '/legendary-fish.json').catch(() => null), fetchRepoJSON(TCJ + '/collectables.json').catch(() => null), fetchRepoJSON(TCJ + '/retainer-tasks.json').catch(() => null), fetchRepoJSON(TCJ + '/item-patch.json').catch(() => null), fetchRepoJSON(TCJ + '/patch-names.json').catch(() => null)]);
+    // 物品所屬版本（標示新版本物品用）：物品 id → 版本號字串，例如 "7.3"、"7.31"
+    DB.ver = {}; if (itemPatch && patchNames) for (const k in itemPatch) { const pn = patchNames[itemPatch[k]]; if (pn && pn.version) DB.ver[k] = String(pn.version); }
     // 伺服器
     if (srv && srv[0] && srv[1]) {
       srv[1].forEach(w => DB.worlds[w.id] = w.name);
@@ -785,7 +800,7 @@ async function loadDB() {
     $('ds-mkt').textContent = `可交易物品 ${DB.marketable.size.toLocaleString()}`;
     $('db-state').textContent = '資料庫已就緒。';
     if (!nodes) setStatus('採集節點資料下載失敗，「自採」來源暫時無法使用。', true);
-    fillCats();
+    fillCats(); updatePatchLabels();
     $('scan-btn').disabled = false;
     renderRanking(); if (ST.tab === 'prefs') renderPrefs();
     if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites(); if (ST.tab === 'collect') renderCollect(); if (ST.tab === 'venture') renderVenture(); if (ST.tab === 'macro') renderMacro();
@@ -798,7 +813,7 @@ async function loadDB() {
 function fillCats() {
   const used = new Set();
   for (const id in DB.recipes) if (DB.marketable.has(+id)) { const c = DB.cat[id]; if (c != null) used.add(c); }
-  const sel = $('cat'); sel.innerHTML = '<option value="">全部分類</option><option value="ship">⚓ 潛水艇／飛空艇素材</option>' +
+  const sel = $('cat'); sel.innerHTML = '<option value="">全部分類</option><option value="ship">⚓ 潛水艇／飛空艇素材</option><option value="new">🆕 新版本物品</option>' +
     [...used].filter(c => DB.catNames[c]).sort((a, b) => a - b).map(c => `<option value="${c}">${esc(DB.catNames[c])}</option>`).join('');
 }
 
@@ -854,8 +869,9 @@ for (const [id, k] of Object.entries(SELS)) $(id).addEventListener('change', () 
 for (const [id, k] of Object.entries(CHKS)) $(id).addEventListener('change', () => { CFG[k] = $(id).checked; RB.clear(); save(); recompute(); });
 for (const k of ['wv', 'wa', 'wc']) $(k).addEventListener('input', () => { CFG[k] = +$(k).value; $(k + '-v').textContent = CFG[k].toFixed(1); save(); recompute(); });
 $('search').addEventListener('input', () => { ST.shown = 100; renderRanking(); });
-const syncShipBtn = () => { const on = $('cat').value === 'ship', b = $('rank-ship'); b.setAttribute('aria-pressed', String(on)); b.style.cssText = on ? 'border-color:#65c4ad;background:#1a3a3a;color:#a6f4de' : ''; };
+const syncShipBtn = () => { for (const [v, id] of [['ship', 'rank-ship'], ['new', 'rank-new']]) { const on = $('cat').value === v, b = $(id); b.setAttribute('aria-pressed', String(on)); b.style.cssText = on ? 'border-color:#65c4ad;background:#1a3a3a;color:#a6f4de' : ''; } };
 $('cat').addEventListener('change', () => { ST.shown = 100; syncShipBtn(); updateSummary(); renderRanking(); });
+$('rank-new').addEventListener('click', () => { if (!DB.ready) return; $('cat').value = $('cat').value === 'new' ? '' : 'new'; $('cat').dispatchEvent(new Event('change')); });
 $('rank-ship').addEventListener('click', () => { if (!DB.ready) return; $('cat').value = $('cat').value === 'ship' ? '' : 'ship'; $('cat').dispatchEvent(new Event('change')); });
 let rcTimer = null;
 function recompute() { updateSummary(); clearTimeout(rcTimer); rcTimer = setTimeout(() => { if (ST.scanned.length) { ST.shown = 100; computeAll(); } renderRanking(); if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites(); if (ST.tab === 'collect') renderCollect(); if (ST.tab === 'prefs') renderPrefs(); if (ST.tab === 'venture') renderVenture(); }, 120); }
@@ -1448,7 +1464,7 @@ async function startScan() {
 function filteredRows() {
   const q = $('search').value.trim().toLowerCase(), cat = $('cat').value;
   return ST.rows.filter(r =>
-    (!q || (r.name + r.catName).toLowerCase().includes(q)) && (!cat || (cat === 'ship' ? isShip(r.id) : String(r.cat) === cat)) &&
+    (!q || (r.name + r.catName).toLowerCase().includes(q)) && (!cat || (cat === 'ship' ? isShip(r.id) : cat === 'new' ? usesNew(r) : String(r.cat) === cat)) &&
     CFG.jobs.includes(r.rec.job) && r.rec.lvl <= CFG.cLvl && r.rec.lvl >= CFG.cMinLvl &&
     r.vel != null && r.vel >= CFG.minVel &&
     !(CFG.hideMissing && r.missing) && !(CFG.onlyProfit && !(r.profit > 0)) &&
@@ -1468,7 +1484,7 @@ function rowHTML(r, i, maxScore, opts = {}) {
     : craftWin ? `<span class="vtag craft" title="製成成品較划算｜自採材料直接賣：${fmt(r.matSell)} G／件（稅後）｜做成成品：${fmt(r.craftNet)} G／件">✓ +${fmt(r.added)} G／件</span>` : '';
   return `<div class="rrow${sellMat ? ' sellmat' : ''}" data-id="${r.id}" tabindex="0" role="link" aria-label="${esc(r.name)}：開啟生產規劃">
    <div>${starBtn(r.id)}</div>
-   <div class="nm">${opts.rank === false ? '' : `<span class="rk">#${i + 1}</span>`}<b>${esc(r.name)}</b><small>${esc(r.catName)}${isShip(r.id) ? ` · <span class="tag ship" title="${DB.shipMats.get(r.id)} 種潛水艇／飛空艇組件會用到">⚓ 艇材</span>` : ''} · <span class="${ageCls(r.up)}">更新 ${ago(r.up)}</span></small>${verdict}${opts.actions ? `<div class="fa"><button class="btn small" data-open="${r.id}">規劃</button><button class="btn small" data-addfav="${r.id}">＋清單</button>${r.rec.cr ? `<button class="btn small" data-macro="${r.id}">巨集</button>` : ''}</div>` : ''}</div>
+   <div class="nm">${opts.rank === false ? '' : `<span class="rk">#${i + 1}</span>`}<b>${esc(r.name)}</b><small>${isNew(r.id) ? `<span class="tag new">${newLabel()}</span>` : usesNew(r) ? `<span class="tag new" title="用到 ${esc(r.rec.ing.filter(x => isNew(x.id)).map(x => DB.names[x.id]).join('、'))}">用新素材</span>` : ''}${esc(r.catName)}${isShip(r.id) ? ` · <span class="tag ship" title="${DB.shipMats.get(r.id)} 種潛水艇／飛空艇組件會用到">⚓ 艇材</span>` : ''} · <span class="${ageCls(r.up)}">更新 ${ago(r.up)}</span></small>${verdict}${opts.actions ? `<div class="fa"><button class="btn small" data-open="${r.id}">規劃</button><button class="btn small" data-addfav="${r.id}">＋清單</button>${r.rec.cr ? `<button class="btn small" data-macro="${r.id}">巨集</button>` : ''}</div>` : ''}</div>
    <div class="cr" data-l="製作"><span class="tag craft">${JOBS[r.rec.job]} Lv${r.rec.lvl}${r.rec.stars ? ' ' + '★'.repeat(r.rec.stars) : ''}</span>${r.rec.yields > 1 ? `<span class="tag">×${r.rec.yields}</span>` : ''}${opts.actions && !craftable(r.rec) ? '<span class="tag warn">職業／等級不符</span>' : ''}</div>
    <div class="num" data-l="單個成本"><span class="val">${r.missing ? `<span class="tag warn">缺價 ${r.missing}</span>` : fmt(r.cost)}</span><small>${mixTags(r.mix)}</small></div>
    <div class="num" data-l="單個售價" title="${tip}"><span class="val">${fmt(r.price)}</span><small>${priceSub}</small></div>
@@ -1742,7 +1758,7 @@ function nodeHTML(x, need, memo, depth) {
     const sub = x.rec.ing.map(c => ({ ...resolve(c.id, new Map(), depth + 1, new Set([x.id]), c.amount * crafts), amount: c.amount }));
     kids = `<div class="children"><div class="tiny">製作 ${crafts} 次${x.rec.yields > 1 ? `（每次 ${x.rec.yields} 個）` : ''}</div>${sub.map(c => nodeHTML(c, c.amount * crafts, memo, depth + 1)).join('')}</div>`;
   }
-  return `<div class="node"><div class="head"><div>${starBtn(x.id)}<span class="name">${esc(name)}</span> <span class="tag">× ${fmt(need)}</span>${x.unit == null ? ' <span class="tag warn">缺價</span>' : ''}</div><strong>${x.unit != null ? fmt(x.unit * need) + ' G' : '—'}${SELF(x.src) && x.gv > 0 ? `<small style="display:block;font-size:11px;color:var(--muted);font-weight:500">單賣值 ${fmt(x.gv * need)} G</small>` : ''}</strong>${sel}</div><div class="opts">${opts || (extraChip ? '' : '<span class="opt">沒有任何來源的價格</span>')}${extraChip}</div>${kids}</div>`;
+  return `<div class="node"><div class="head"><div>${starBtn(x.id)}<span class="name">${esc(name)}</span>${isNew(x.id) ? ` <span class="tag new">${newLabel()}</span>` : ''} <span class="tag">× ${fmt(need)}</span>${x.unit == null ? ' <span class="tag warn">缺價</span>' : ''}</div><strong>${x.unit != null ? fmt(x.unit * need) + ' G' : '—'}${SELF(x.src) && x.gv > 0 ? `<small style="display:block;font-size:11px;color:var(--muted);font-weight:500">單賣值 ${fmt(x.gv * need)} G</small>` : ''}</strong>${sel}</div><div class="opts">${opts || (extraChip ? '' : '<span class="opt">沒有任何來源的價格</span>')}${extraChip}</div>${kids}</div>`;
 }
 $('planner-body').addEventListener('change', e => {
   const s = e.target.closest('select[data-ov]'); if (!s) return;
@@ -2169,18 +2185,18 @@ function dayAvg(id, back = 0, days = 1) {
   const units = list.reduce((a, x) => a + (x.q || 1), 0);
   return units ? { avg: list.reduce((a, x) => a + x.p * (x.q || 1), 0) / units, n: list.length, units } : null;
 }
-const FAV = { view: 'all', ship: false };
+const FAV = { view: 'all', list: null };
 /* 今日行情：所有收藏（成品與材料）的今日均價、昨日均價、近 7 天均價、最低掛單 */
 function favMarketHTML() {
   const kind = id => DB.recipes[id] ? 'craft' : 'mat';
-  const ids = ST.fav.filter(id => FAV.view === 'all' || (FAV.view === 'ship' ? isShip(id) : kind(id) === FAV.view));
+  const ids = ST.fav.filter(id => FAV.view === 'all' || (FAV.view === 'ship' ? isShip(id) : FAV.view === 'new' ? isNew(id) : kind(id) === FAV.view));
   if (!ids.length) return `<div class="empty">${ST.fav.length ? '這個分類沒有收藏。' : '還沒有收藏。用上方搜尋加入任何物品，或在排行榜、材料樹、雇員委託按 ☆。'}</div>`;
   const rows = ids.map(id => {
     const name = DB.names[id] || '#' + id, ok = DB.marketable.has(id), s = ok ? sellInfo(id) || {} : {};
     const t = ok ? dayAvg(id, 0) : null, y = ok ? dayAvg(id, 1) : null, w = ok ? dayAvg(id, 0, 7) : null;
     const chg = t && y && y.avg > 0 ? t.avg / y.avg - 1 : null;
     const sub = x => x ? `<small>${x.n} 筆／${fmt(x.units)} 件</small>` : '';
-    return `<tr data-fid="${id}"><td>${starBtn(id)}</td><td><strong>${esc(name)}</strong><small>${esc(DB.catNames[DB.cat[id]] || '')} <span class="tag ${kind(id) === 'craft' ? 'craft' : 'gather'}">${kind(id) === 'craft' ? '成品' : '材料'}</span>${isShip(id) ? '<span class="tag ship">⚓ 艇材</span>' : ''}${ok ? '' : '<span class="tag warn">不可交易</span>'}</small></td>
+    return `<tr data-fid="${id}"><td>${starBtn(id)}</td><td><strong>${esc(name)}</strong><small>${esc(DB.catNames[DB.cat[id]] || '')} <span class="tag ${kind(id) === 'craft' ? 'craft' : 'gather'}">${kind(id) === 'craft' ? '成品' : '材料'}</span>${isShip(id) ? '<span class="tag ship">⚓ 艇材</span>' : ''}${isNew(id) ? `<span class="tag new">${newLabel()}</span>` : ''}${ok ? '' : '<span class="tag warn">不可交易</span>'}</small></td>
      <td class="num"><span class="today">${t ? fmt(t.avg) : '—'}</span>${chg != null && Math.abs(chg) >= 0.01 ? ` <span class="trend ${chg > 0 ? 'up' : 'down'}" title="和昨日均價比">${chg > 0 ? '↑' : '↓'}${Math.round(Math.abs(chg) * 100)}%</span>` : ''}${t ? sub(t) : `<small>${ok ? '今天還沒有成交' : ''}</small>`}</td>
      <td class="num">${y ? fmt(y.avg) : '—'}${sub(y)}</td><td class="num">${w ? fmt(w.avg) : '—'}${sub(w)}</td>
      <td class="num">${fmt(s.minL)}${s.minL != null && s.minHQ != null ? `<small>${s.minHQ ? 'HQ' : 'NQ'}</small>` : ''}</td><td class="num">${fmt1(s.vel)}<small>件／日</small></td>
@@ -2190,18 +2206,51 @@ function favMarketHTML() {
   return `<div class="table-wrap" style="max-height:none"><table class="favt"><thead><tr><th></th><th>物品</th><th class="num">今日均價</th><th class="num">昨日均價</th><th class="num">近 7 天均價</th><th class="num">最低掛單</th><th class="num">每日售出</th><th>行情更新</th><th></th></tr></thead><tbody>${rows}</tbody></table></div>
    <p class="subtle" style="margin-bottom:0">今日均價 = 今天 0 點起的成交（依數量加權、${CFG.robust ? '已剔除極端值' : '未剔除極端值'}，NQ／HQ 合併計算）。每個物品只取近 14 天最多 80 筆成交，成交非常頻繁的物品可能只涵蓋今天，昨日與 7 天均價會顯示「—」或偏向最近幾筆。</p>`;
 }
-/* 搜尋任何可交易物品（或列出潛水艇／飛空艇素材）加入收藏 */
-function favSearchRender() {
-  const box = $('fav-results'), q = $('fav-search').value.trim().toLowerCase();
-  $('fav-ship').classList.toggle('primary', FAV.ship);
-  if (!DB.ready || (!q && !FAV.ship)) { box.innerHTML = ''; return; }
+/* 收藏頁的特殊清單：⚓ 潛水艇／飛空艇素材、🆕 新版本物品。只列近期每日售出達門檻的，依每日售出由多到少排 */
+const LISTS = {
+  ship: { ids: () => [...DB.shipMats.keys()], vk: 'shipVel', title: () => '潛水艇／飛空艇組件用到的素材', what: '艇材', sub: id => `${DB.shipMats.get(id)} 種艇組件用到` },
+  new: { ids: () => Object.keys(DB.ver || {}).map(Number).filter(isNew), vk: 'newVel', title: () => `${CFG.twPatch} 版本新增的物品`, what: '新物品', sub: id => `版本 ${DB.ver[id]}` },
+};
+function listHot(key) {
+  const L0 = LISTS[key], min = CFG[L0.vk], out = [];
+  for (const id of L0.ids()) {
+    if (!DB.marketable.has(id) || !DB.names[id]) continue;
+    const s = sellInfo(id) || {}, ta = tradeAvg(id, 'all'), vel = s.vel || 0;
+    if (min > 0 ? !(ta && vel >= min) : false) continue;      // 門檻 0 時連還沒成交的也列（新版本剛開放常常還沒有成交）
+    out.push({ id, vel, avg: ta ? ta.avg : null, n: ta ? ta.n : 0, win: ta ? ta.win : null, minL: s.minL, turnover: ta ? vel * ta.avg : 0 });
+  }
+  return out.sort((a, b) => b.vel - a.vel || (b.minL != null) - (a.minL != null) || DB.names[a.id].localeCompare(DB.names[b.id], 'zh-Hant'));
+}
+const shipHot = () => listHot('ship');
+/* 搜尋任何可交易物品（或列出特殊清單）加入收藏 */
+let shipTok = 0;
+async function favSearchRender() {
+  const box = $('fav-results'), q = $('fav-search').value.trim().toLowerCase(), key = FAV.list;
+  $('fav-ship').classList.toggle('primary', key === 'ship'); $('fav-new').classList.toggle('primary', key === 'new');
+  if (!DB.ready || (!q && !key)) { box.innerHTML = ''; box.style.cssText = ''; return; }
+  const wrap = n => { box.style.cssText = n > 8 ? 'max-height:380px;overflow:auto;border:1px solid #23364a;border-radius:10px;margin-bottom:12px' : 'margin-bottom:12px'; };
+  if (key) {
+    const L0 = LISTS[key], all = L0.ids().filter(id => DB.marketable.has(id) && DB.names[id]), tok = ++shipTok;
+    if (key === 'new' && !Object.keys(DB.ver || {}).length) { box.innerHTML = '<div class="subtle" style="padding:10px">物品版本資料下載失敗，無法判斷新版本物品，請重新整理再試。</div>'; wrap(0); return; }
+    if (all.some(id => !P[id] || !H[id]) || priceTarget !== CFG.target) {
+      box.innerHTML = `<div class="subtle" style="padding:10px">抓取 ${all.length} 種${L0.what}的行情中…</div>`; wrap(0);
+      try { await fetchPrices(all, { label: L0.what + '行情' }); } catch { }
+      if (tok !== shipTok || FAV.list !== key) return;
+    }
+    const hits = listHot(key).filter(x => !q || DB.names[x.id].toLowerCase().includes(q)), min = CFG[L0.vk];
+    box.innerHTML = `<div class="ovrow" style="grid-template-columns:1fr auto auto auto"><div><b>${esc(L0.title())}</b><small>${hits.length} / ${all.length} 種${min > 0 ? '近期有成交且每日售出達門檻' : '可交易（含還沒有成交的）'}，依每日售出排序</small></div>
+       <label class="lvin" title="每日售出低於這個數量的不列出；0 = 全部列出">每日售出 ≥ <input class="input" id="list-vel" type="number" min="0" step="1" value="${min}"></label>
+       <button class="btn small" id="fav-list-all">收藏列出的</button><button class="btn small" id="fav-list-close">收起</button></div>`
+      + (hits.length ? hits.map(x => `<div class="ovrow"><div><b>${esc(DB.names[x.id])}</b><small>${esc(DB.catNames[DB.cat[x.id]] || '')}・${DB.recipes[x.id] ? '生產品' : '材料'}・${L0.sub(x.id)}${key === 'new' && DB.gather[x.id] ? '・可採集' : ''}${key === 'new' && DB.vendor[x.id] ? `・NPC ${fmt(DB.vendor[x.id])} G` : ''}</small></div>
+        <span class="tiny" style="text-align:right;line-height:1.6">${x.avg != null ? `<b style="color:var(--text);font-size:13px">${fmt1(x.vel)}</b> 件／日・均價 <b style="color:var(--text)">${fmt(x.avg)}</b> G<br>日成交額約 ${fmt(x.turnover)} G・近 ${x.win} 天 ${x.n} 筆` : `<span class="gold">尚無成交</span>${x.minL != null ? `<br>最低掛單 <b style="color:var(--text)">${fmt(x.minL)}</b> G` : '<br>也還沒有掛單'}`}</span>${starBtn(x.id)}</div>`).join('')
+        : '<div class="subtle" style="padding:10px">沒有達門檻的物品，把「每日售出 ≥」調低試試。</div>');
+    wrap(hits.length + 1); return;
+  }
   if (!DB.mkIdx) DB.mkIdx = [...DB.marketable].filter(id => DB.names[id]).map(id => [id, DB.names[id].toLowerCase()]);
-  let hits;
-  if (FAV.ship) hits = [...DB.shipMats.entries()].filter(([id]) => !q || DB.names[id].toLowerCase().includes(q)).sort((a, b) => b[1] - a[1]).map(x => x[0]);
-  else { hits = DB.mkIdx.filter(x => x[1].includes(q)); hits.sort((a, b) => (b[1] === q) - (a[1] === q) || b[1].startsWith(q) - a[1].startsWith(q) || a[1].length - b[1].length); hits = hits.slice(0, 15).map(x => x[0]); }
-  const head = FAV.ship ? `<div class="ovrow"><div><b>潛水艇／飛空艇組件用到的素材</b><small>共 ${hits.length} 種，依用到的組件數排序</small></div><button class="btn small" id="fav-ship-all">全部收藏</button><button class="btn small" id="fav-ship-close">收起</button></div>` : '';
-  box.innerHTML = head + (hits.length ? hits.map(id => `<div class="ovrow"><div><b>${esc(DB.names[id])}</b><small>${esc(DB.catNames[DB.cat[id]] || '')}${DB.recipes[id] ? '・可製作' : ''}${isShip(id) ? `・${DB.shipMats.get(id)} 種艇組件用到` : ''}${DB.marketable.has(id) ? '' : '・不可交易'}</small></div><span></span>${starBtn(id)}</div>`).join('') : '<div class="subtle">找不到物品。</div>');
-  box.style.cssText = hits.length > 8 ? 'max-height:340px;overflow:auto;border:1px solid #23364a;border-radius:10px;margin-bottom:12px' : 'margin-bottom:12px';
+  let hits = DB.mkIdx.filter(x => x[1].includes(q));
+  hits.sort((a, b) => (b[1] === q) - (a[1] === q) || b[1].startsWith(q) - a[1].startsWith(q) || a[1].length - b[1].length); hits = hits.slice(0, 15).map(x => x[0]);
+  box.innerHTML = hits.length ? hits.map(id => `<div class="ovrow"><div><b>${esc(DB.names[id])}</b><small>${esc(DB.catNames[DB.cat[id]] || '')}${DB.recipes[id] ? '・可製作' : ''}${isShip(id) ? `・${DB.shipMats.get(id)} 種艇組件用到` : ''}</small></div><span></span>${starBtn(id)}</div>`).join('') : '<div class="subtle">找不到物品。</div>';
+  wrap(hits.length);
 }
 let favToken = 0;
 async function renderFavorites() {
@@ -2248,10 +2297,11 @@ $('fav-market').addEventListener('click', e => {
 });
 $('fav-view').addEventListener('click', e => { const b = e.target.closest('[data-fv]'); if (!b) return; FAV.view = b.dataset.fv; renderFavorites(); });
 $('fav-search').addEventListener('input', debounce(favSearchRender, 150));
-$('fav-ship').addEventListener('click', () => { if (!DB.ready) return; FAV.ship = !FAV.ship; favSearchRender(); });
+$('fav-results').addEventListener('change', e => { if (e.target.id !== 'list-vel' || !FAV.list) return; CFG[LISTS[FAV.list].vk] = Math.max(0, +e.target.value || 0); save(); favSearchRender(); });
+for (const k of ['ship', 'new']) $('fav-' + k).addEventListener('click', () => { if (!DB.ready) return; FAV.list = FAV.list === k ? null : k; favSearchRender(); });
 $('fav-results').addEventListener('click', e => {
-  if (e.target.id === 'fav-ship-close') { FAV.ship = false; favSearchRender(); return; }
-  if (e.target.id === 'fav-ship-all') { const add = [...DB.shipMats.keys()].filter(id => DB.marketable.has(id) && !isFav(id)); if (!add.length) return toast('已經全部收藏了'); if (!confirm(`確定把 ${add.length} 種潛水艇／飛空艇素材全部加入收藏？`)) return; ST.fav = [...ST.fav, ...add]; save(); toast(`已收藏 ${add.length} 種素材`); renderFavorites(); return; }
+  if (e.target.id === 'fav-list-close') { FAV.list = null; favSearchRender(); return; }
+  if (e.target.id === 'fav-list-all' && FAV.list) { const add = listHot(FAV.list).map(x => x.id).filter(id => !isFav(id)); if (!add.length) return toast('列出的都已經收藏了'); if (!confirm(`確定把列出的 ${add.length} 種加入收藏？`)) return; ST.fav = [...ST.fav, ...add]; save(); toast(`已收藏 ${add.length} 種`); renderFavorites(); return; }
   const sb = e.target.closest('[data-fav]'); if (sb) { const on = toggleFav(+sb.dataset.fav); toast(on ? '已加入收藏' : '已取消收藏'); renderFavorites(); }
 });
 $('weekly-btn').addEventListener('click', () => { if (!ST.fav.length) return toast('請先收藏商品'); buildWeekly(); });
@@ -2485,7 +2535,7 @@ $('csv-list').addEventListener('click', () => {
 const SRC_OPTS = [['', '自動（最低）'], ['mkt', '市場'], ['npc', 'NPC'], ['venture', '雇員'], ['gather', '自採'], ['craft', '自製']];
 const srcSelect = (attr, val) => `<select class="input" ${attr}>${SRC_OPTS.map(([v, l]) => `<option value="${v}" ${v === (val || '') ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
 function renderPrefs() {
-  $('patch-date').value = CFG.patchDate || ''; renderCrafter();
+  $('patch-date').value = CFG.patchDate || ''; if (document.activeElement !== $('tw-patch')) $('tw-patch').value = CFG.twPatch; renderCrafter();
   if (!DB.ready) return;
   const q = $('pc-search').value.trim().toLowerCase();
   // 類別名稱符合的排前面，只因為裡面有同名材料而符合的排後面
@@ -2509,6 +2559,11 @@ function renderPrefs() {
 function rulesChanged(msg) { RB.clear(); save(); recompute(); renderPrefs(); if (msg) toast(msg); }
 $('pc-search').addEventListener('input', renderPrefs);
 $('patch-date').addEventListener('change', () => { CFG.patchDate = $('patch-date').value || ''; save(); toast(CFG.patchDate ? '已設定版本更新日' : '已清除'); });
+$('tw-patch').addEventListener('change', () => {
+  const v = $('tw-patch').value.trim();
+  if (!/^\d\.\d{1,2}$/.test(v)) { $('tw-patch').value = CFG.twPatch; return toast('版本格式像 7.3 或 7.35'); }
+  CFG.twPatch = v; save(); updatePatchLabels(); recompute(); toast(`新版本物品改為 ${v}`);
+});
 $('patch-clear').addEventListener('click', () => { CFG.patchDate = ''; $('patch-date').value = ''; save(); });
 $('pc-more').addEventListener('click', () => { ST.pcAll = !ST.pcAll; renderPrefs(); });
 $('pc-list').addEventListener('change', e => {
@@ -2935,7 +2990,7 @@ document.addEventListener('keydown', e => {
 });
 
 DB.dcs = FALLBACK_DCS.map(d => ({ ...d, worlds: d.worlds.filter(w => !EXCL.has(w)) })); Object.assign(DB.worlds, FALLBACK_WORLDS);
-syncInputs(); updateCount(); renderServerChips(); applyFolds(); updateSummary(); $('fav-cnt').textContent = ST.fav.length;
+updatePatchLabels(); syncInputs(); updateCount(); renderServerChips(); applyFolds(); updateSummary(); $('fav-cnt').textContent = ST.fav.length;
 if (hashTab() !== 'ranking') go(hashTab()); else renderRanking();
 loadDB();
 </script></body></html>
