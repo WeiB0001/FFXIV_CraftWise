@@ -3,81 +3,84 @@
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="theme-color" content="#0b1220">
+<script>/* 主題：在畫面繪製前套用，避免閃一下深色 */try{var t=localStorage.getItem('craftwise-theme')||'dark';if(t==='auto')t=matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';document.documentElement.dataset.theme=t;}catch(e){document.documentElement.dataset.theme='dark';}</script>
 <title>CraftWise 生產收益</title>
 <style>
-:root{color-scheme:dark;--bg:#0a101b;--panel:#101b2a;--panel2:#152438;--line:#26374b;--text:#e8eff8;--muted:#98abc2;--a:#82d3c6;--gold:#ebc680;--red:#f48b96;--blue:#8db9fa;--shadow:0 12px 35px #0003}
+:root{--k0:#0a101b;--k1:#101b2a;--k2:#152438;--k3:#26374b;--k4:#e8eff8;--k5:#98abc2;--k6:#82d3c6;--k7:#ebc680;--k8:#f48b96;--k9:#8db9fa;--k10:#0003;--k11:#1b3b45;--k12:#28263b;--k13:#0c1420c7;--k14:#83e3cb;--k15:#4665a0;--k16:#102035;--k17:#192b3a;--k18:#2b5156;--k19:#234;--k20:#3b4753;--k21:#121f2b;--k22:#385068;--k23:#8cddcb;--k24:#0c2630;--k25:#446258;--k26:#a9e8d9;--k27:#153c37;--k28:#f6d99b;--k29:#42351e;--k30:#795e31;--k31:#ffc0c8;--k32:#4a2330;--k33:#86414f;--k34:#172737;--k35:#111c2c;--k36:#131f2e;--k37:#101a28;--k38:#0d1825;--k39:#35485b;--k40:#39516a;--k41:#142335;--k42:#204541;--k43:#65c4ad;--k44:#a6f4de;--k45:#23364a;--k46:#0d1826;--k47:#283848;--k48:#459e9e;--k49:#96e5c3;--k50:#253548;--k51:#152436;--k52:#9eb2c5;--k53:#203246;--k54:#27374b;--k55:#bdd3eb;--k56:#22344d;--k57:#a9c9f5;--k58:#3a3220;--k59:#f1d595;--k60:#1f3b2c;--k61:#a7e6bf;--k62:#243a1f;--k63:#cde79f;--k64:#33284a;--k65:#d4bdf7;--k66:#4d2633;--k67:#ffabb7;--k68:#0d1927;--k69:#263a50;--k70:#0e1a29;--k71:#2c4058;--k72:#111f30;--k73:#4d8f80;--k74:#bff3e4;--k75:#2b4157;--k76:#b9b0a0;--k77:#322b22;--k78:#574634;--k79:#1a3a3a;--k80:#d8c9ae;--k81:#111c2b;--k82:#152435;--k83:#22354a;--k84:#3f7f78;--k85:#22344a;--k86:#1d2d40;--k87:#173a33;--k88:#3a2230;--k89:#f3cdd4;--k90:#331d27;--k91:#6b3445;--k92:#10262a;--k93:#1f3043;--k94:#2f5a5a;--k95:#21161d;--k96:#0f2224;--k97:#16273a;--k98:#4a3a20;--k99:#a6f0dc;--k100:#4a2631;--k101:#ffb3bf;--k102:#8a4152;--k103:#2f6f62;--k104:#5a3240;--k105:#21202f;--k106:#171b29;--k107:#e0788a;--k108:#4f6378;--k109:#24443d;--k110:#c6fff0;--k111:#5aab9f;--k112:#0f1c2b;--k113:#1c3043;--k114:#1a2b3d;--k115:#1d3550;--k116:#a9d4f5;--k117:#3a2a4d;--k118:#dcc4ff;--k119:#4a2a12;--k120:#ffc98a;--k121:#4d8f86}
+:root[data-theme=light]{--k0:#e9eef4;--k1:#ffffff;--k2:#f3f6fa;--k3:#d7dfe9;--k4:#0d1c30;--k5:#475f7b;--k6:#329686;--k7:#9d6e15;--k8:#930a19;--k9:#033d93;--k10:#1f2d3d22;--k11:#d6ece8;--k12:#e4e1f1;--k13:#f4f7fbee;--k14:#1f987a;--k15:#abb9d5;--k16:#e3ebf5;--k17:#e0e9f0;--k18:#d1e3e6;--k19:#dbe3eb;--k20:#d2d8de;--k21:#e8eef4;--k22:#c8d3de;--k23:#278d76;--k24:#e6f2f7;--k25:#cad8d4;--k26:#1b705c;--k27:#e0f2f0;--k28:#835c09;--k29:#ede7dc;--k30:#e1d4bf;--k31:#5e000c;--k32:#ead8de;--k33:#d8b8bf;--k34:#ffffff;--k35:#f7f9fc;--k36:#ffffff;--k37:#fbfcfe;--k38:#ecf1f7;--k39:#cfd7e0;--k40:#c7d2de;--k41:#e3eaf3;--k42:#dbecea;--k43:#41b397;--k44:#0c7759;--k45:#d8e1ea;--k46:#ebf0f7;--k47:#d9e0e8;--k48:#acd5d5;--k49:#1e8458;--k50:#d9e0e9;--k51:#e3eaf2;--k52:#445d75;--k53:#dae2ec;--k54:#d7dfe8;--k55:#1a395b;--k56:#d6dfeb;--k57:#0b3774;--k58:#ece9e0;--k59:#88630f;--k60:#e0ede6;--k61:#1e723e;--k62:#e3ede0;--k63:#587b1c;--k64:#ddd8e8;--k65:#2b095f;--k66:#e8d6dc;--k67:#730010;--k68:#ebf0f7;--k69:#d5dee8;--k70:#eaeff6;--k71:#d0dae5;--k72:#e6ecf4;--k73:#b3d2cb;--k74:#0f5c46;--k75:#d1dbe6;--k76:#716652;--k77:#ece8e4;--k78:#e1d9d1;--k79:#e0efef;--k80:#675330;--k81:#e8eef5;--k82:#e3eaf2;--k83:#d8e1eb;--k84:#bcdad6;--k85:#d8e0eb;--k86:#dde5ee;--k87:#e1f1ee;--k88:#ebe0e7;--k89:#4c111b;--k90:#eee4e9;--k91:#e0c6ce;--k92:#e9f3f5;--k93:#dce4ec;--k94:#cfe3e3;--k95:#f2edf1;--k96:#ecf5f6;--k97:#e1e9f1;--k98:#ece4d8;--k99:#11765a;--k100:#e9d8dd;--k101:#6b0011;--k102:#d8b6be;--k103:#c5e3dc;--k104:#e2cfd6;--k105:#e6e6ed;--k106:#e9ebf2;--k107:#a32238;--k108:#bfc8d2;--k109:#dbeae7;--k110:#005841;--k111:#64b3a7;--k112:#e9eff6;--k113:#dce5ee;--k114:#dfe7ef;--k115:#d5e0ed;--k116:#0b4674;--k117:#ded6e6;--k118:#24005a;--k119:#f3e4d9;--k120:#944f00;--k121:#b3d2ce;color-scheme:light}
+:root{color-scheme:dark;--bg:var(--k0);--panel:var(--k1);--panel2:var(--k2);--line:var(--k3);--text:var(--k4);--muted:var(--k5);--a:var(--k6);--gold:var(--k7);--red:var(--k8);--blue:var(--k9);--shadow:0 12px 35px var(--k10)}
 *{box-sizing:border-box}
-body{margin:0;background:radial-gradient(circle at 15% -10%,#1b3b45 0%,transparent 32%),radial-gradient(circle at 100% 3%,#28263b 0%,transparent 25%),var(--bg);color:var(--text);font-family:Inter,"Noto Sans TC",system-ui,-apple-system,sans-serif;font-size:14px}
+body{margin:0;background:radial-gradient(circle at 15% -10%,var(--k11) 0%,transparent 32%),radial-gradient(circle at 100% 3%,var(--k12) 0%,transparent 25%),var(--bg);color:var(--text);font-family:Inter,"Noto Sans TC",system-ui,-apple-system,sans-serif;font-size:14px}
 button,input,select{font:inherit}button{cursor:pointer}button:disabled{opacity:.5;cursor:not-allowed}
 button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--a);outline-offset:2px}
 a{color:var(--a);text-decoration:none}a:hover{text-decoration:underline}
 .app{max-width:1600px;margin:auto;display:grid;grid-template-columns:225px minmax(0,1fr);min-height:100vh}
-.side{border-right:1px solid var(--line);padding:28px 16px;position:sticky;top:0;height:100vh;background:#0c1420c7;display:flex;flex-direction:column;gap:22px}
+.side{border-right:1px solid var(--line);padding:28px 16px;position:sticky;top:0;height:100vh;background:var(--k13);display:flex;flex-direction:column;gap:22px}
 .brand{display:flex;align-items:center;gap:12px;padding:6px 10px}
-.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,#83e3cb,#4665a0);color:#102035;display:grid;place-items:center;font-size:23px;font-weight:900}
+.logo{width:42px;height:42px;border-radius:13px;background:linear-gradient(135deg,var(--k14),var(--k15));color:var(--k16);display:grid;place-items:center;font-size:23px;font-weight:900}
 .brand strong{font-size:21px;letter-spacing:-.6px}.tiny{font-size:11px;color:var(--muted)}
 .nav{display:grid;gap:7px}
 .nav button{width:100%;border:1px solid transparent;border-radius:11px;color:var(--muted);background:transparent;text-align:left;padding:12px 13px;display:flex;gap:10px;align-items:center;font-weight:650}
-.nav button.active,.nav button:hover{background:#192b3a;color:var(--a);border-color:#2b5156}
-.nav .ico{font-size:18px;width:23px}.nav .cnt{margin-left:auto;font-size:11px;background:#234;padding:2px 7px;border-radius:9px}
-.side-note{margin-top:auto;padding:15px;border:1px solid #3b4753;border-radius:13px;background:#121f2b;color:var(--muted);font-size:12px;line-height:1.8}
+.nav button.active,.nav button:hover{background:var(--k17);color:var(--a);border-color:var(--k18)}
+.nav .ico{font-size:18px;width:23px}.nav .cnt{margin-left:auto;font-size:11px;background:var(--k19);padding:2px 7px;border-radius:9px}
+.side-foot{margin-top:auto;display:flex;flex-direction:column;gap:8px;padding:0 10px}.side-foot .btn{align-self:flex-start}
 .main{padding:30px 34px 70px;min-width:0}
 .top{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;flex-wrap:wrap;margin-bottom:22px}
 .eyebrow{text-transform:uppercase;letter-spacing:2px;color:var(--a);font-weight:750;font-size:11px}
 .top h1{margin:7px 0 6px;font-size:29px;letter-spacing:-.8px}.sub{color:var(--muted);margin:0;line-height:1.7}
 .actions{display:flex;gap:9px;flex-wrap:wrap;align-items:center}
-.btn{border-radius:10px;background:var(--panel2);border:1px solid #385068;color:var(--text);padding:10px 13px;font-weight:650;white-space:nowrap}
-.btn:hover:not(:disabled){border-color:var(--a)}.btn.primary{background:#8cddcb;color:#0c2630;border-color:#8cddcb}
+.btn{border-radius:10px;background:var(--panel2);border:1px solid var(--k22);color:var(--text);padding:10px 13px;font-weight:650;white-space:nowrap}
+.btn:hover:not(:disabled){border-color:var(--a)}.btn.primary{background:var(--k23);color:var(--k24);border-color:var(--k23)}
 .btn.small{padding:6px 10px;font-size:12px}
-.badge{font-size:11px;border-radius:15px;padding:5px 9px;border:1px solid #446258;color:#a9e8d9;background:#153c37}
-.badge.warn{color:#f6d99b;background:#42351e;border-color:#795e31}.badge.err{color:#ffc0c8;background:#4a2330;border-color:#86414f}
+.badge{font-size:11px;border-radius:15px;padding:5px 9px;border:1px solid var(--k25);color:var(--k26);background:var(--k27)}
+.badge.warn{color:var(--k28);background:var(--k29);border-color:var(--k30)}.badge.err{color:var(--k31);background:var(--k32);border-color:var(--k33)}
 .overview{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px;margin-bottom:18px}
-.stat{background:linear-gradient(160deg,#172737,#111c2c);border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);min-width:0}
+.stat{background:linear-gradient(160deg,var(--k34),var(--k35));border:1px solid var(--line);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow);min-width:0}
 .stat .label{color:var(--muted);font-size:12px}.stat .num{font-size:25px;letter-spacing:-.8px;margin:9px 0 4px;font-weight:760;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.stat .hint{font-size:11px;color:var(--muted)}
 .positive{color:var(--a)}.gold{color:var(--gold)}.negative{color:var(--red)}
-.panel{background:linear-gradient(165deg,#131f2e,#101a28);border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:var(--shadow);margin-bottom:18px;min-width:0}
+.panel{background:linear-gradient(165deg,var(--k36),var(--k37));border:1px solid var(--line);border-radius:17px;padding:20px;box-shadow:var(--shadow);margin-bottom:18px;min-width:0}
 .panel-title{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:15px}
 .panel-title h2{font-size:17px;letter-spacing:-.2px;margin:0}
 .controls{display:flex;gap:11px;flex-wrap:wrap;align-items:flex-end}
 .field{display:flex;flex-direction:column;gap:6px;min-width:105px}.field label,.flabel{color:var(--muted);font-size:11px;font-weight:650}
-.input{background:#0d1825;border:1px solid #35485b;border-radius:9px;color:var(--text);height:36px;padding:0 10px;max-width:100%;min-width:0}
+.input{background:var(--k38);border:1px solid var(--k39);border-radius:9px;color:var(--text);height:36px;padding:0 10px;max-width:100%;min-width:0}
 input[type=number].input{width:100px}.search{min-width:200px;flex:1}
 .chips{display:flex;gap:6px;flex-wrap:wrap}
-.chip{border:1px solid #39516a;background:#142335;padding:7px 11px;border-radius:9px;color:var(--muted);font-weight:650;font-size:12px}
-.chip.on{background:#204541;border-color:#65c4ad;color:#a6f4de}
-.group{border:1px solid #23364a;border-radius:12px;padding:12px 14px;background:#0d1826;display:flex;flex-direction:column;gap:9px;min-width:0}
+.chip{border:1px solid var(--k40);background:var(--k41);padding:7px 11px;border-radius:9px;color:var(--muted);font-weight:650;font-size:12px}
+.chip.on{background:var(--k42);border-color:var(--k43);color:var(--k44)}
+.group{border:1px solid var(--k45);border-radius:12px;padding:12px 14px;background:var(--k46);display:flex;flex-direction:column;gap:9px;min-width:0}
 .grid-set{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px;margin-bottom:14px}
 .switch{display:flex;gap:7px;align-items:center;cursor:pointer;color:var(--muted);font-size:12px}.switch input{accent-color:var(--a)}
 .scanbar{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
-.progress{height:8px;border-radius:10px;background:#283848;overflow:hidden;flex:1;min-width:160px}
-.bar{height:100%;width:0;background:linear-gradient(90deg,#459e9e,#96e5c3);transition:width .2s}
+.progress{height:8px;border-radius:10px;background:var(--k47);overflow:hidden;flex:1;min-width:160px}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--k48),var(--k49));transition:width .2s}
 .status{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.6;min-height:1em}.status.err{color:var(--red)}
 .table-wrap{overflow:auto;border:1px solid var(--line);border-radius:12px;max-height:72vh}
 table{border-collapse:collapse;width:100%;white-space:nowrap;text-align:left}
-th,td{padding:10px 10px;border-bottom:1px solid #253548}
-th{background:#152436;color:#9eb2c5;font-size:11px;letter-spacing:.3px;position:sticky;top:0;z-index:1}
+th,td{padding:10px 10px;border-bottom:1px solid var(--k50)}
+th{background:var(--k51);color:var(--k52);font-size:11px;letter-spacing:.3px;position:sticky;top:0;z-index:1}
 th.sortable{cursor:pointer;user-select:none}th.sortable:hover{color:var(--a)}th .arrow{color:var(--a);margin-left:3px}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
-tr:last-child td{border:0}#rank-body tr{cursor:pointer}#rank-body tr:hover{background:#203246}
+tr:last-child td{border:0}#rank-body tr{cursor:pointer}#rank-body tr:hover{background:var(--k53)}
 td strong{display:block;font-size:13px}td small{display:block;font-size:11px;color:var(--muted);margin-top:3px}
 .rank{color:var(--muted);font-size:12px}
-.tag{display:inline-block;padding:3px 6px;background:#27374b;color:#bdd3eb;border-radius:6px;font-size:11px;margin:1px 3px 1px 0}
-.tag.mkt{background:#22344d;color:#a9c9f5}.tag.npc{background:#3a3220;color:#f1d595}.tag.gather{background:#1f3b2c;color:#a7e6bf}.tag.venture{background:#243a1f;color:#cde79f}.tag.craft{background:#33284a;color:#d4bdf7}.tag.warn{background:#4d2633;color:#ffabb7}
-.scorebar{height:6px;border-radius:4px;background:linear-gradient(90deg,#459e9e,#96e5c3);margin-top:4px}
+.tag{display:inline-block;padding:3px 6px;background:var(--k54);color:var(--k55);border-radius:6px;font-size:11px;margin:1px 3px 1px 0}
+.tag.mkt{background:var(--k56);color:var(--k57)}.tag.npc{background:var(--k58);color:var(--k59)}.tag.gather{background:var(--k60);color:var(--k61)}.tag.venture{background:var(--k62);color:var(--k63)}.tag.craft{background:var(--k64);color:var(--k65)}.tag.warn{background:var(--k66);color:var(--k67)}
+.scorebar{height:6px;border-radius:4px;background:linear-gradient(90deg,var(--k48),var(--k49));margin-top:4px}
 .two{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(320px,.65fr);gap:18px}
-.box{background:#0d1927;border:1px solid #263a50;border-radius:12px;padding:14px}
+.box{background:var(--k68);border:1px solid var(--k69);border-radius:12px;padding:14px}
 .metric{font-size:22px;font-weight:780;letter-spacing:-.6px;margin:8px 0}
 .line{display:flex;justify-content:space-between;align-items:center;gap:15px;margin:9px 0;color:var(--muted)}.line strong{color:var(--text);text-align:right}
 .subtle{font-size:12px;color:var(--muted);line-height:1.7}.divider{height:1px;background:var(--line);margin:15px 0}
 .tree{display:flex;flex-direction:column;gap:6px}
-.node{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:#0e1a29}
+.node{border:1px solid var(--line);border-radius:10px;padding:10px 12px;background:var(--k70)}
 .node .head{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:10px;align-items:center}
 .node .name{font-weight:650}.node .opts{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
-.opt{font-size:11px;padding:3px 7px;border-radius:6px;border:1px solid #2c4058;color:var(--muted);background:#111f30}
-.opt.best{border-color:#4d8f80;color:#bff3e4}.opt.chosen{background:#204541;border-color:#65c4ad;color:#a6f4de;font-weight:700}
-.node select{width:118px}.children{margin:8px 0 0 14px;padding-left:10px;border-left:2px dashed #2b4157;display:flex;flex-direction:column;gap:6px}
+.opt{font-size:11px;padding:3px 7px;border-radius:6px;border:1px solid var(--k71);color:var(--muted);background:var(--k72)}
+.opt.best{border-color:var(--k73);color:var(--k74)}.opt.chosen{background:var(--k42);border-color:var(--k43);color:var(--k44);font-weight:700}
+.node select{width:118px}.children{margin:8px 0 0 14px;padding-left:10px;border-left:2px dashed var(--k75);display:flex;flex-direction:column;gap:6px}
 .empty{padding:34px;text-align:center;color:var(--muted)}
-.note{font-size:12px;line-height:1.75;color:#b9b0a0;padding:13px 15px;background:#322b22;border:1px solid #574634;border-radius:11px}
+.note{font-size:12px;line-height:1.75;color:var(--k76);padding:13px 15px;background:var(--k77);border:1px solid var(--k78);border-radius:11px}
 .hidden{display:none!important}
 .top{margin-bottom:16px}.top h1{font-size:24px;margin:4px 0 4px}.top .sub{font-size:13px}
 .fold>.fbody{margin-top:12px}.fold.folded>.fbody{display:none}
@@ -90,22 +93,22 @@ td strong{display:block;font-size:13px}td small{display:block;font-size:11px;col
 .scanpanel .scanbar{margin-top:10px}.scanpanel .progress{height:5px}.scanbar.idle{display:none}
 .fbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .fbar .fsearch{flex:1;min-width:180px;height:40px;font-size:14px}.fbar select{height:40px}
-.fbtn{height:40px;display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text);background:var(--panel2);border:1px solid #385068;border-radius:10px;padding:0 13px}
+.fbtn{height:40px;display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--text);background:var(--panel2);border:1px solid var(--k22);border-radius:10px;padding:0 13px}
 .fbtn:hover{border-color:var(--a);color:var(--text)}
-.fold:not(.folded) .fbtn{border-color:#65c4ad;background:#1a3a3a}
-.fcnt:empty{display:none}.fcnt{background:var(--a);color:#0c2630;border-radius:9px;font-size:11px;padding:1px 7px;font-weight:800}
-.fpanel{background:#0d1826;border:1px solid #23364a;border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.fold:not(.folded) .fbtn{border-color:var(--k43);background:var(--k79)}
+.fcnt:empty{display:none}.fcnt{background:var(--a);color:var(--k24);border-radius:9px;font-size:11px;padding:1px 7px;font-weight:800}
+.fpanel{background:var(--k46);border:1px solid var(--k45);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:12px}
 .tgls{display:flex;gap:6px;flex-wrap:wrap}
-.tgl{cursor:pointer;border:1px solid #39516a;background:#142335;padding:7px 12px;border-radius:20px;color:var(--muted);font-weight:650;font-size:12px;user-select:none}
+.tgl{cursor:pointer;border:1px solid var(--k40);background:var(--k41);padding:7px 12px;border-radius:20px;color:var(--muted);font-weight:650;font-size:12px;user-select:none}
 .tgl input{position:absolute;opacity:0;pointer-events:none}
-.tgl:has(input:checked){background:#204541;border-color:#65c4ad;color:#a6f4de}
+.tgl:has(input:checked){background:var(--k42);border-color:var(--k43);color:var(--k44)}
 .tgl:has(input:checked)::before{content:'✓ '}
 .tgl:has(input:focus-visible){outline:2px solid var(--a);outline-offset:2px}
-.wnote{margin:4px 0 0}.weights{display:flex;flex-direction:column;gap:6px;border-top:1px solid #23364a;padding-top:12px;font-size:12px;color:var(--muted);line-height:1.7}
-.chips.seg{gap:0;border:1px solid #39516a;border-radius:10px;overflow:hidden;flex-wrap:nowrap}
+.wnote{margin:4px 0 0}.weights{display:flex;flex-direction:column;gap:6px;border-top:1px solid var(--k45);padding-top:12px;font-size:12px;color:var(--muted);line-height:1.7}
+.chips.seg{gap:0;border:1px solid var(--k40);border-radius:10px;overflow:hidden;flex-wrap:nowrap}
 .chips.seg .chip{border:0;border-radius:0;height:38px;padding:0 14px;font-size:13px}
-.chips.seg .chip+.chip{border-left:1px solid #39516a}
-details.note{margin-top:4px}details.note summary{cursor:pointer;font-weight:700;color:#d8c9ae}details.note[open] summary{margin-bottom:6px}
+.chips.seg .chip+.chip{border-left:1px solid var(--k40)}
+details.note{margin-top:4px}details.note summary{cursor:pointer;font-weight:700;color:var(--k80)}details.note[open] summary{margin-bottom:6px}
 .panel-title{margin-bottom:12px}
 @media(max-width:700px){.fhead .actions{width:100%}.fhead .actions .btn{flex:1}.fsum{flex-basis:100%;white-space:normal;order:3}.fbar .fsearch{flex-basis:100%}.fbar select,.fbar .fbtn{flex:1}.chips.seg{flex:1}.chips.seg .chip{flex:1}}
 .scanpanel{padding:14px 18px}.scanrow{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-end}
@@ -117,80 +120,80 @@ details.note{margin-top:4px}details.note summary{cursor:pointer;font-weight:700;
 .advgrid .group{padding:10px 12px;gap:7px}.advgrid .input{height:32px}.advgrid input[type=number].input{width:92px}
 .rlist{display:flex;flex-direction:column;gap:7px}
 .rhead,.rrow{display:grid;grid-template-columns:34px minmax(170px,2.2fr) minmax(96px,1fr) minmax(96px,1fr) minmax(96px,1fr) minmax(120px,1.2fr) minmax(90px,.9fr) minmax(110px,1fr);gap:12px;align-items:center}
-.rhead{padding:0 16px;font-size:11px;color:#9eb2c5;letter-spacing:.3px;position:sticky;top:0;z-index:2;background:#111c2b;padding-top:8px;padding-bottom:8px;border-radius:8px}
+.rhead{padding:0 16px;font-size:11px;color:var(--k52);letter-spacing:.3px;position:sticky;top:0;z-index:2;background:var(--k81);padding-top:8px;padding-bottom:8px;border-radius:8px}
 .rhead .sortable{cursor:pointer;user-select:none}.rhead .sortable:hover{color:var(--a)}.rhead .arrow{color:var(--a);margin-left:3px}
 .rhead .num,.rrow .num{text-align:right}
-.rrow{padding:13px 16px;background:linear-gradient(160deg,#152435,#111c2b);border:1px solid #22354a;border-radius:13px;cursor:pointer;transition:border-color .15s,transform .15s}
-.rrow:hover{border-color:#3f7f78;transform:translateY(-1px)}
+.rrow{padding:13px 16px;background:linear-gradient(160deg,var(--k82),var(--k81));border:1px solid var(--k83);border-radius:13px;cursor:pointer;transition:border-color .15s,transform .15s}
+.rrow:hover{border-color:var(--k84);transform:translateY(-1px)}
 .rrow .nm{min-width:0}.rrow .nm b{display:block;font-size:14.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.rrow .nm small,.rrow .num small,.rrow .cr small{display:block;font-size:11px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .rrow .rk{color:var(--muted);font-size:11px;margin-right:6px;font-weight:600}
 .rrow .val{font-size:14px;font-weight:650;font-variant-numeric:tabular-nums}
 .rrow .profit{font-size:24px;font-weight:800;letter-spacing:-.6px;font-variant-numeric:tabular-nums;line-height:1.1}
 .rrow .sc{display:flex;flex-direction:column;gap:5px}.rrow .sc span{font-size:12px;font-weight:700}
-.rrow .sc .track{height:6px;border-radius:4px;background:#22344a;overflow:hidden}.rrow .sc .scorebar{margin:0;height:100%}
+.rrow .sc .track{height:6px;border-radius:4px;background:var(--k85);overflow:hidden}.rrow .sc .scorebar{margin:0;height:100%}
 .rrow .fa{display:flex;gap:6px;margin-top:6px}
 .chead,.crow{grid-template-columns:minmax(170px,2.2fr) minmax(96px,1fr) minmax(96px,1fr) minmax(80px,.8fr) minmax(120px,1.2fr) minmax(100px,1fr) minmax(110px,1fr)}
 .crow .profit{color:var(--gold)}
 
 .qbox table.mini,.leafbox table.mini{width:100%;border-collapse:collapse;margin-top:8px;font-size:12px;white-space:nowrap}
-.qbox .mini th,.leafbox .mini th{background:none;position:static;padding:5px 4px;color:var(--muted);font-weight:600;border-bottom:1px solid #263a50}
-.qbox .mini td,.leafbox .mini td{padding:6px 4px;border-bottom:1px solid #1d2d40}.qbox .mini tr.hot2 td{background:#173a33}.leafbox .mini tr.hot td{background:#3a2230}.leafbox .mini a{color:var(--text)}
-.leafbox .advice{margin-top:10px;font-size:12px;line-height:1.7;color:#f3cdd4;background:#331d27;border:1px solid #6b3445;border-radius:9px;padding:9px 11px}
+.qbox .mini th,.leafbox .mini th{background:none;position:static;padding:5px 4px;color:var(--muted);font-weight:600;border-bottom:1px solid var(--k69)}
+.qbox .mini td,.leafbox .mini td{padding:6px 4px;border-bottom:1px solid var(--k86)}.qbox .mini tr.hot2 td{background:var(--k87)}.leafbox .mini tr.hot td{background:var(--k88)}.leafbox .mini a{color:var(--text)}
+.leafbox .advice{margin-top:10px;font-size:12px;line-height:1.7;color:var(--k89);background:var(--k90);border:1px solid var(--k91);border-radius:9px;padding:9px 11px}
 .leafbox{overflow-x:auto}
 .lvrow{display:flex;gap:10px;flex-wrap:wrap;align-items:center}.lvin{display:flex;gap:6px;align-items:center;color:var(--muted)}
 .lvin input.input{width:72px;height:32px}
 .catlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:8px}
-.catrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid #22354a;border-radius:11px;background:#0e1a29}
-.catrow.set{border-color:#3f7f78;background:#10262a}.catrow input[type=checkbox]{accent-color:var(--a);width:16px;height:16px}
+.catrow{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px 12px;border:1px solid var(--k83);border-radius:11px;background:var(--k70)}
+.catrow.set{border-color:var(--k84);background:var(--k92)}.catrow input[type=checkbox]{accent-color:var(--a);width:16px;height:16px}
 .catrow b{font-size:13px}.catrow small{display:block;font-size:11px;color:var(--muted);margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .catrow select{height:32px;width:122px}.catrow>div{min-width:0}
-.ovrow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid #1f3043}
+.ovrow{display:grid;grid-template-columns:1fr auto auto;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid var(--k93)}
 .ovrow small{color:var(--muted);font-size:11px;margin-left:6px}.ovrow select{height:32px;width:110px}
-#po-results .ovrow{background:#0e1a29}
+#po-results .ovrow{background:var(--k70)}
 .route{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-bottom:18px}
-.rstop{border:1px solid #263a50;border-radius:11px;background:#0e1a29;padding:10px 12px}.rhd{display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px}.rhd span{color:var(--gold);font-weight:700}
-.ritem{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);padding:3px 0;border-top:1px dashed #1f3043}.ritem span:first-child{color:var(--text)}
+.rstop{border:1px solid var(--k69);border-radius:11px;background:var(--k70);padding:10px 12px}.rhd{display:flex;justify-content:space-between;margin-bottom:6px;font-size:13px}.rhd span{color:var(--gold);font-weight:700}
+.ritem{display:flex;justify-content:space-between;gap:8px;font-size:12px;color:var(--muted);padding:3px 0;border-top:1px dashed var(--k93)}.ritem span:first-child{color:var(--text)}
 .vhead,.vrow{grid-template-columns:minmax(150px,1.8fr) minmax(80px,.9fr) minmax(56px,.6fr) minmax(70px,.8fr) minmax(110px,1.1fr) minmax(76px,.8fr) minmax(70px,.7fr) minmax(170px,1.7fr)}
-.vrow .best b{font-size:13px}.vrow .best small{white-space:normal}
+.vrow .best b{font-size:13px;display:block}.vrow .best small{white-space:normal}
 @media(max-width:900px){.rrow.vrow{grid-template-columns:1fr 1fr;grid-template-areas:"nm nm" "pf c4" "c1 c2" "c3 c5" "bs bs"}
  .rrow.vrow>:nth-child(1){grid-area:nm}.rrow.vrow>:nth-child(2){grid-area:c1;text-align:left}.rrow.vrow>:nth-child(3){grid-area:c2;text-align:right}.rrow.vrow>:nth-child(4){grid-area:c3;text-align:left}
  .rrow.vrow>:nth-child(5){grid-area:pf;text-align:left}.rrow.vrow>:nth-child(6){grid-area:c4;text-align:right}.rrow.vrow>:nth-child(7){grid-area:c5;text-align:right}.rrow.vrow>:nth-child(8){grid-area:bs}}
 .trend{font-size:11px;font-weight:700;margin-left:4px}.trend.up{color:var(--a)}.trend.down{color:var(--red)}
 .tchart{width:100%;height:auto;display:block}.tchart text{fill:var(--muted);font-size:11px}.tread{font-size:12px;color:var(--muted);min-height:18px;margin:4px 0 2px}.tread b{color:var(--text)}
 .wk{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px;margin-top:8px}
-.wkd{border:1px solid #23364a;border-radius:9px;padding:8px 6px;text-align:center;background:#0e1a29;font-size:12px;position:relative}.wkd b{display:block;font-size:14px;margin:3px 0}.wkd small{color:var(--muted);font-size:10.5px;display:block}
-.wkd.best{border-color:#65c4ad;background:#173a33}.wkd.vbest{box-shadow:inset 0 -3px 0 var(--gold)}.wkd.reset::after{content:'重置';position:absolute;top:3px;right:4px;font-size:9px;color:var(--gold)}
-.tadvice{margin-top:12px;font-size:12.5px;line-height:1.8;background:#0d1826;border:1px solid #23364a;border-radius:10px;padding:10px 13px}.tadvice ul{margin:0;padding-left:18px}
+.wkd{border:1px solid var(--k45);border-radius:9px;padding:8px 6px;text-align:center;background:var(--k70);font-size:12px;position:relative}.wkd b{display:block;font-size:14px;margin:3px 0}.wkd small{color:var(--muted);font-size:10.5px;display:block}
+.wkd.best{border-color:var(--k43);background:var(--k87)}.wkd.vbest{box-shadow:inset 0 -3px 0 var(--gold)}.wkd.reset::after{content:'重置';position:absolute;top:3px;right:4px;font-size:9px;color:var(--gold)}
+.tadvice{margin-top:12px;font-size:12.5px;line-height:1.8;background:var(--k46);border:1px solid var(--k45);border-radius:10px;padding:10px 13px}.tadvice ul{margin:0;padding-left:18px}
 
-.pricepanel{border-color:#2f5a5a}
+.pricepanel{border-color:var(--k94)}
 .pgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.pt{background:#0d1927;border:1px solid #263a50;border-radius:13px;padding:14px;min-width:0}.pt .label{font-size:12px;color:var(--muted);font-weight:650}.pt .label .tiny{margin-left:4px}
+.pt{background:var(--k68);border:1px solid var(--k69);border-radius:13px;padding:14px;min-width:0}.pt .label{font-size:12px;color:var(--muted);font-weight:650}.pt .label .tiny{margin-left:4px}
 .pnum{font-size:28px;font-weight:800;letter-spacing:-.6px;margin:8px 0 6px;font-variant-numeric:tabular-nums}.pt .hint{font-size:11.5px;color:var(--muted);line-height:1.6}
-.pt.warnt{border-color:#6b3445;background:#21161d}.pt.mine{border-color:#3f7f78;background:#0f2224}
+.pt.warnt{border-color:var(--k91);background:var(--k95)}.pt.mine{border-color:var(--k84);background:var(--k96)}
 .pin{display:flex;align-items:center;gap:6px;margin:8px 0 6px}.pin input.input{width:100%;height:42px;font-size:20px;font-weight:700}.pin span{color:var(--muted)}
 .pquick{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px}.pres{font-size:22px;font-weight:800}.presult .tiny{line-height:1.6}
-.pscale{margin-top:10px}.pscale .track{position:relative;height:30px;border-radius:8px;background:#16273a;margin:42px 10px 44px}
-.pnum2{font-size:14px;color:#f3cdd4;margin-top:10px}.pnum2 b{font-size:20px;color:var(--gold)}.pnum2.big{font-size:16px;margin:8px 0 6px}.pnum2.big b{font-size:28px;font-weight:800;letter-spacing:-.6px}
-.pscale .oppz{position:absolute;top:0;bottom:0;background:#4a3a20}.pscale .mk.op{background:var(--gold)}.pscale .mk.op span{color:var(--gold)}
-.pscale .lossz{position:absolute;left:0;top:0;bottom:0;background:#4a2330;border-radius:8px 0 0 8px}
-.pscale .mk{position:absolute;top:0;bottom:0;width:2px;background:#98abc2}.pscale .mk span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;color:var(--text);margin-bottom:3px}
-.pscale .mk.be{background:var(--red)}.pscale .mk.mn{background:#8db9fa}.pscale .mk.av{background:var(--gold)}.pscale .mk.me{background:var(--a);width:3px}
+.pscale{margin-top:10px}.pscale .track{position:relative;height:30px;border-radius:8px;background:var(--k97);margin:42px 10px 44px}
+.pnum2{font-size:14px;color:var(--k89);margin-top:10px}.pnum2 b{font-size:20px;color:var(--gold)}.pnum2.big{font-size:16px;margin:8px 0 6px}.pnum2.big b{font-size:28px;font-weight:800;letter-spacing:-.6px}
+.pscale .oppz{position:absolute;top:0;bottom:0;background:var(--k98)}.pscale .mk.op{background:var(--gold)}.pscale .mk.op span{color:var(--gold)}
+.pscale .lossz{position:absolute;left:0;top:0;bottom:0;background:var(--k32);border-radius:8px 0 0 8px}
+.pscale .mk{position:absolute;top:0;bottom:0;width:2px;background:var(--k5)}.pscale .mk span{position:absolute;bottom:100%;left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;color:var(--text);margin-bottom:3px}
+.pscale .mk.be{background:var(--red)}.pscale .mk.mn{background:var(--k9)}.pscale .mk.av{background:var(--gold)}.pscale .mk.me{background:var(--a);width:3px}
 .pscale .mk.dn span,.pscale .mk.dn2 span{bottom:auto;top:100%;margin:3px 0 0}.pscale .mk.up2 span{margin-bottom:19px}.pscale .mk.dn2 span{margin-top:19px}.pscale .mk.me span{color:var(--a);font-weight:700}
 @media(max-width:900px){.pgrid{grid-template-columns:1fr}}
 @media(max-width:560px){.pgrid{grid-template-columns:1fr}.pnum{font-size:24px}}
 .rtag{display:inline-block;font-size:10.5px;font-weight:700;padding:1px 6px;border-radius:6px;margin-left:4px;vertical-align:1px}
-.rtag.low{background:#173a33;color:#a6f0dc}.rtag.mid{background:#42351e;color:#f6d99b}.rtag.high{background:#4a2631;color:#ffb3bf}
-.rstrip{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-top:12px;padding:11px 14px;border-radius:12px;border:1px solid #263a50;background:#0d1927;font-size:12.5px;color:var(--muted)}
+.rtag.low{background:var(--k87);color:var(--k99)}.rtag.mid{background:var(--k29);color:var(--k28)}.rtag.high{background:var(--k100);color:var(--k101)}
+.rstrip{display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;margin-top:12px;padding:11px 14px;border-radius:12px;border:1px solid var(--k69);background:var(--k68);font-size:12.5px;color:var(--muted)}
 .rstrip b{color:var(--text)}.rstrip small{color:var(--muted)}
 .rstrip .rbig{font-size:14px;font-weight:800;color:var(--text);padding:3px 10px;border-radius:8px}
-.rstrip.low .rbig{background:#173a33;color:#a6f0dc}.rstrip.mid .rbig{background:#42351e;color:#f6d99b}.rstrip.high .rbig{background:#4a2631;color:#ffb3bf}
-.rstrip.high{border-color:#6b3445}.rstrip.mid{border-color:#795e31}
+.rstrip.low .rbig{background:var(--k87);color:var(--k99)}.rstrip.mid .rbig{background:var(--k29);color:var(--k28)}.rstrip.high .rbig{background:var(--k100);color:var(--k101)}
+.rstrip.high{border-color:var(--k91)}.rstrip.mid{border-color:var(--k30)}
 .rstrip .rtip{flex-basis:100%;color:var(--text);line-height:1.6}
 .vtag{display:inline-block;margin-top:6px;font-size:11.5px;font-weight:700;padding:3px 8px;border-radius:7px;white-space:nowrap}
-.vtag.sell{background:#4a2631;color:#ffb3bf;border:1px solid #8a4152}.vtag.craft{background:#173a33;color:#a6f0dc;border:1px solid #2f6f62}
-.rrow.sellmat{border-color:#5a3240;background:linear-gradient(160deg,#21202f,#171b29);box-shadow:inset 3px 0 0 #e0788a}
+.vtag.sell{background:var(--k100);color:var(--k101);border:1px solid var(--k102)}.vtag.craft{background:var(--k87);color:var(--k99);border:1px solid var(--k103)}
+.rrow.sellmat{border-color:var(--k104);background:linear-gradient(160deg,var(--k105),var(--k106));box-shadow:inset 3px 0 0 var(--k107)}
 .rrow.sellmat .profit{opacity:.75}
-.rlist .empty{border:1px dashed #2b4157;border-radius:13px}
+.rlist .empty{border:1px dashed var(--k75);border-radius:13px}
 @media(max-width:900px){.rhead{display:none}
  .rrow{grid-template-columns:30px 1fr auto;grid-template-areas:"st nm pf" "st cr sc" "st c1 c2" "st c3 c3";row-gap:8px}
  .rrow>:nth-child(1){grid-area:st;align-self:start}.rrow>:nth-child(2){grid-area:nm}.rrow>:nth-child(3){grid-area:cr}
@@ -201,42 +204,38 @@ details.note{margin-top:4px}details.note summary{cursor:pointer;font-weight:700;
  .rrow.crow>:nth-child(1){grid-area:nm}.rrow.crow>:nth-child(2){grid-area:cr;text-align:left}.rrow.crow>:nth-child(3){grid-area:c1;text-align:left}.rrow.crow>:nth-child(4){grid-area:c2;text-align:right}
  .rrow.crow>:nth-child(5){grid-area:pf;text-align:left}.rrow.crow>:nth-child(6){grid-area:c4;text-align:right}.rrow.crow>:nth-child(7){grid-area:c3;text-align:right}
  .rrow.crow .nm small{white-space:normal}}
-.star{background:none;border:0;font-size:17px;line-height:1;color:#4f6378;padding:2px 4px}.star.on{color:var(--gold)}.star:hover{color:var(--gold)}
+.star{background:none;border:0;font-size:17px;line-height:1;color:var(--k108);padding:2px 4px}.star.on{color:var(--gold)}.star:hover{color:var(--gold)}
 .age{font-size:11px;color:var(--muted)}.age.old{color:var(--red)}
 .footer{font-size:12px;line-height:1.8;color:var(--muted);margin-top:20px}
-.toast{position:fixed;bottom:24px;right:24px;background:#24443d;color:#c6fff0;padding:12px 18px;border:1px solid #5aab9f;border-radius:12px;box-shadow:var(--shadow);z-index:9}
+.toast{position:fixed;bottom:24px;right:24px;background:var(--k109);color:var(--k110);padding:12px 18px;border:1px solid var(--k111);border-radius:12px;box-shadow:var(--shadow);z-index:9}
 .rowtitle{margin:0 0 12px;font-size:15px}
 .picker{position:relative;flex:1;min-width:240px}
-.suggest{position:absolute;top:100%;left:0;right:0;z-index:5;background:#0f1c2b;border:1px solid #35485b;border-radius:10px;margin-top:4px;max-height:320px;overflow:auto;box-shadow:var(--shadow)}
-.suggest button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--text);padding:9px 12px;border-bottom:1px solid #1f3043}.suggest button:hover{background:#1c3043}
+.suggest{position:absolute;top:100%;left:0;right:0;z-index:5;background:var(--k112);border:1px solid var(--k39);border-radius:10px;margin-top:4px;max-height:320px;overflow:auto;box-shadow:var(--shadow)}
+.suggest button{display:block;width:100%;text-align:left;background:none;border:0;color:var(--text);padding:9px 12px;border-bottom:1px solid var(--k93)}.suggest button:hover{background:var(--k113)}
 .suggest small{color:var(--muted);margin-left:6px}
 details.help summary{cursor:pointer;color:var(--a);font-size:12px;font-weight:650}
 details.help div{font-size:12px;line-height:1.8;color:var(--muted);margin-top:8px}
 .rng{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}.rng input{accent-color:var(--a);flex:1}.rng b{color:var(--text);width:28px;text-align:right}
-.favt td{vertical-align:middle}.favt tbody tr{cursor:pointer}.favt tbody tr:hover{background:#1a2b3d}.favt .today{font-size:17px;font-weight:800;letter-spacing:-.3px}
-.tag.ship{background:#1d3550;color:#a9d4f5}.tag.new{background:#4a2a12;color:#ffc98a}
-.kbd{font-family:ui-monospace,Consolas,monospace;font-size:11px;background:#16273a;border:1px solid #2c4058;border-radius:5px;padding:1px 5px;color:#bdd3eb}
+.favt td{vertical-align:middle}.favt tbody tr{cursor:pointer}.favt tbody tr:hover{background:var(--k114)}.favt .today{font-size:17px;font-weight:800;letter-spacing:-.3px}
+.tag.ship{background:var(--k115);color:var(--k116)}.tag.scrip{background:var(--k117);color:var(--k118)}
+.copyname{background:none;border:0;padding:0;color:inherit;font:inherit;font-weight:inherit;cursor:copy;border-bottom:1px dashed transparent}.copyname:hover{color:var(--a);border-bottom-color:var(--a)}.copyname .ci{font-size:.75em;color:var(--muted);margin-left:3px}
+.mybox{margin-top:12px;display:grid;grid-template-columns:minmax(220px,.8fr) minmax(0,2fr);gap:12px}.mybox .pt{margin:0}
+.myres{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px}.myres>div{background:var(--k112);border:1px solid var(--k83);border-radius:10px;padding:9px 11px}.myres .k{font-size:11px;color:var(--muted)}.myres .v{font-size:19px;font-weight:800;margin-top:4px;font-variant-numeric:tabular-nums}.myres .s{font-size:11px;color:var(--muted);margin-top:2px}
+.curgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}.curgrid input[type=number].input{width:100%}
+@media(max-width:900px){.mybox{grid-template-columns:1fr}}.tag.new{background:var(--k119);color:var(--k120)}
+.kbd{font-family:ui-monospace,Consolas,monospace;font-size:11px;background:var(--k97);border:1px solid var(--k71);border-radius:5px;padding:1px 5px;color:var(--k55)}
 .rrow:focus-visible{outline:2px solid var(--a);outline-offset:2px}
 tr.isdone td{opacity:.45}tr.isdone strong{text-decoration:line-through}
 td .chk{accent-color:var(--a);width:16px;height:16px;margin-right:8px;vertical-align:-3px;cursor:pointer}td .chk+strong{display:inline}
-.mcgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
-.mcmacros{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-bottom:12px}
-.mcm{border:1px solid #263a50;border-radius:12px;background:#0d1927;overflow:hidden;min-width:0}
-.mch{display:flex;align-items:center;gap:10px;padding:10px 12px;border-bottom:1px solid #23364a}.mch .tiny{flex:1}
-.mcm pre{margin:0;padding:12px;font:12.5px/1.65 ui-monospace,Consolas,"Noto Sans Mono CJK TC",monospace;white-space:pre;overflow:auto;color:#d6e4f3}
-.crrow{display:grid;grid-template-columns:90px repeat(4,minmax(0,1fr));gap:10px;align-items:end;padding:9px 0;border-bottom:1px solid #1f3043}.crrow:last-child{border:0}
-.crrow b{padding-bottom:9px}.crrow b small{display:block;font-size:10.5px;font-weight:600;color:var(--muted);margin-top:2px}.crrow.ok b small{color:var(--a)}.crrow.quick{background:#0d1826;border:1px solid #23364a;border-radius:11px;padding:10px 12px;margin-bottom:6px;grid-template-columns:90px repeat(4,minmax(0,1fr)) auto}.crrow.hl{outline:2px solid var(--a);outline-offset:3px;border-radius:8px}.crrow{grid-template-columns:90px repeat(4,minmax(0,1fr)) auto}.crrow label{display:flex;flex-direction:column;gap:5px;font-size:11px;color:var(--muted);font-weight:650}.crrow input[type=number].input{width:100%}
-#mc-mode .chip{white-space:nowrap}
-@media(max-width:700px){.crrow.quick{grid-template-columns:repeat(2,minmax(0,1fr))}.crrow>.btn{grid-column:1/3}#macro .controls .field:has(#mc-mode){min-width:100%}#macro .controls .field.picker{min-width:100%}.chips.seg .chip{padding:0 8px}#mc-go{flex:1}.crrow{grid-template-columns:repeat(2,minmax(0,1fr))}.crrow b{grid-column:1/3;padding:0}}
+@media(max-width:700px){.chips.seg .chip{padding:0 8px}}
 @media(max-width:1150px){.overview{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.app{grid-template-columns:190px 1fr}.main{padding:24px}}
-@media(max-width:700px){.app{display:block}.side{height:auto;position:relative;display:block;padding:12px 15px;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:0}.nav{display:flex;overflow:auto;margin-top:12px;gap:6px}.nav button{min-width:max-content;font-size:12px;padding:8px 10px}.side-note{display:none}.main{padding:22px 16px 80px}.top h1{font-size:23px}.overview{gap:8px}.stat{padding:12px}.stat .num{font-size:19px}.panel{padding:14px}.field{min-width:calc(50% - 6px);flex:1}input[type=number].input{width:100%}.search{min-width:100%}.node .head{grid-template-columns:1fr auto}.node select{grid-column:1/3;width:100%}.toast{left:16px;right:16px}}
+@media(max-width:700px){.app{display:block}.side{height:auto;position:relative;display:block;padding:12px 15px;border-right:0;border-bottom:1px solid var(--line)}.brand{padding:0}.nav{display:flex;overflow:auto;margin-top:12px;gap:6px}.nav button{min-width:max-content;font-size:12px;padding:8px 10px}.side-foot{display:none}.main{padding:22px 16px 80px}.top h1{font-size:23px}.overview{gap:8px}.stat{padding:12px}.stat .num{font-size:19px}.panel{padding:14px}.field{min-width:calc(50% - 6px);flex:1}input[type=number].input{width:100%}.search{min-width:100%}.node .head{grid-template-columns:1fr auto}.node select{grid-column:1/3;width:100%}.toast{left:16px;right:16px}}
 </style></head><body>
 <div class="app"><aside class="side">
 <div class="brand"><div class="logo">✦</div><div><strong>CraftWise</strong><div class="tiny">FFXIV 繁中服生產收益</div></div></div>
 <nav class="nav" id="nav">
 <button data-tab="ranking" class="active"><span class="ico">▦</span> 商機排行榜</button>
 <button data-tab="planner"><span class="ico">◇</span> 生產規劃</button>
-<button data-tab="macro"><span class="ico">⌘</span> 生產巨集</button>
 <button data-tab="favorites"><span class="ico">★</span> 我的收藏 <span class="cnt" id="fav-cnt">0</span></button>
 <button data-tab="collect"><span class="ico">◈</span> 收藏品</button>
 <button data-tab="venture"><span class="ico">⛏</span> 雇員委託</button>
@@ -244,10 +243,10 @@ td .chk{accent-color:var(--a);width:16px;height:16px;margin-right:8px;vertical-a
 <button data-tab="prefs"><span class="ico">⚙</span> 設定</button>
 <button data-tab="settings"><span class="ico">ⓘ</span> 資料與說明</button>
 </nav>
-<div class="side-note" id="side-note"><strong style="color:#a6f4de">● 即時行情</strong><br>價格來自 Universalis 繁中服資料，物品／配方／NPC 商店資料與貝爾的市場小屋同源。<br><span id="db-state">資料庫載入中…</span></div>
+<div class="side-foot"><span class="tiny" id="db-state">資料庫載入中…</span><button class="btn small" id="theme-toggle" title="切換深色／淺色">◐ 主題</button></div>
 </aside>
 <main class="main">
-<header class="top"><div><div class="eyebrow">CRAFTWISE · 繁中服</div><h1 id="page-title">現在製作什麼最值得？</h1><p class="sub" id="page-sub">每種材料自動在市場板、NPC 商店、自採、自製中挑最便宜的，再依銷量與利潤排行。</p></div>
+<header class="top"><div><h1 id="page-title">現在製作什麼最值得？</h1><p class="sub" id="page-sub">每種材料自動在市場板、NPC 商店、自採、自製中挑最便宜的，再依銷量與利潤排行。</p></div>
 <div class="actions"><span class="badge" id="target-badge">陸行鳥（全服）</span><button class="btn" id="export-btn">↓ 匯出排行 CSV</button></div></header>
 
 <!-- ============ 排行榜 ============ -->
@@ -334,23 +333,6 @@ td .chk{accent-color:var(--a);width:16px;height:16px;margin-right:8px;vertical-a
 <div id="planner-body"><div class="panel empty">從排行榜點一列，或在上方搜尋商品。</div></div>
 </section>
 
-<!-- ============ 生產巨集 ============ -->
-<section id="macro" class="page hidden">
-<div class="panel"><div class="panel-title"><h2>生產巨集計算</h2><span class="badge" id="mc-stat-badge">—</span></div>
- <div class="controls">
-  <div class="field picker"><label for="mc-search">配方（可搜尋任何可製作物品）</label><input class="input" id="mc-search" placeholder="輸入名稱…" autocomplete="off"><div class="suggest hidden" id="mc-suggest"></div></div>
-  <div class="field"><span class="flabel">品質目標</span><div class="chips seg" id="mc-mode"><button class="chip" data-mm="max">品質全滿</button><button class="chip" data-mm="pct">自訂 %</button><button class="chip hidden" data-mm="coll">收藏品</button><button class="chip" data-mm="none">只求完成</button></div></div>
-  <div class="field hidden" id="mc-pct-f"><label for="mc-pct">目標品質 %</label><input class="input" id="mc-pct" type="number" min="1" max="100" value="100"></div>
-  <div class="field hidden" id="mc-tier-f"><label for="mc-tier">收藏價值檔位</label><select class="input" id="mc-tier"></select></div>
-  <div class="field"><label for="mc-initq" title="使用 HQ 材料時，製作一開始就有的品質（製作筆記選好材料後會顯示）">初期品質（HQ 材料）</label><input class="input" id="mc-initq" type="number" min="0" step="100" value="0"></div>
-  <button class="btn primary" id="mc-go" disabled>▶ 計算巨集</button><button class="btn hidden" id="mc-stop">中止</button>
- </div>
- <div class="scanbar idle" id="mc-bar" style="margin-top:12px"><div class="progress"><div class="bar" id="mc-prog"></div></div><span class="tiny" id="mc-prog-text"></span></div>
-</div>
-<div id="macro-body"><div class="panel empty">資料庫載入中…</div></div>
-<details class="note"><summary>計算說明</summary>依設定頁填的作業精度、加工精度、製作力與等級，用遊戲的製作公式逐步模擬，搜尋出品質最高的技能順序；達到品質目標時改找步數最少的做法。進展與品質的計算和遊戲相同（每 100% 效率的進展 = 作業精度 × 10 ÷ 配方除數 + 2，品質 = 加工精度 × 10 ÷ 配方除數 + 35，職業等級不高於配方等級時再乘上配方係數），內靜、改革、闊步、崇敬、堅信、儉約、掌握、連擊與工匠的絕技都照實際規則處理。只使用結果固定的技能，不用倉促、高速製作這類有失敗率的技能，也不用需要特定製作狀態的技能（祕訣、集中加工、集中製作）與專家技能。搜尋是近似法（束搜尋）：一般都能找到最佳或非常接近最佳的順序，但不保證是理論最佳；想要更好的結果可在設定頁把搜尋精細度調成「精細」。巨集假設製作狀態全程為「通常」。技能名稱採用繁中服用語。</details>
-</section>
-
 <!-- ============ 我的收藏 ============ -->
 <section id="favorites" class="page hidden">
 <div class="panel"><div class="panel-title"><h2>今日行情 <span class="tiny" id="favm-meta"></span></h2><div class="actions"><button class="btn small" id="fav-refresh">↻ 更新收藏行情</button></div></div>
@@ -376,20 +358,20 @@ td .chk{accent-color:var(--a);width:16px;height:16px;margin-right:8px;vertical-a
  <div class="fbar">
   <div class="chips seg" id="ven-cat"><button class="chip" data-vc="all">全部</button><button class="chip" data-vc="17">採礦</button><button class="chip" data-vc="18">園藝</button><button class="chip" data-vc="19">捕魚</button><button class="chip" data-vc="34">狩獵</button></div>
   <input class="input fsearch" id="ven-search" placeholder="🔍 搜尋材料…" aria-label="搜尋雇員委託">
-  <select class="input" id="ven-sort" aria-label="排行依據"><option value="bal">排序：平衡（收益÷清倉天數）</option><option value="trip">排序：每趟直接賣</option><option value="clear">排序：清倉最快</option><option value="vel">排序：每日售出</option><option value="price">排序：成交均價</option><option value="vq">排序：每趟數量</option><option value="best">排序：每趟最高收益（含加工）</option></select>
+  <select class="input" id="ven-sort" aria-label="排行依據"><option value="bal">排序：平衡（收益÷清倉天數）</option><option value="trip">排序：每趟直接賣</option><option value="clear">排序：清倉最快</option><option value="vel">排序：每日售出</option><option value="price">排序：成交均價</option><option value="vq">排序：每趟數量</option><option value="best">排序：每趟最高收益（依銷量含加工）</option></select>
   <button class="btn ftoggle fbtn" data-toggle="venf" aria-expanded="false">⚲ 篩選 <span class="fcnt" id="venf-cnt"></span> <span class="chev">▾</span></button>
  </div>
  <div class="fbody fpanel">
   <div class="field"><span class="flabel">我的雇員能力（打開雇員的「職業／能力」畫面照填，數量依此計算，也套用到排行榜的「雇員」材料來源）</span>
   <div class="controls"><div class="field"><label for="ven-lvl">雇員等級</label><input class="input" id="ven-lvl" type="number" min="1" max="100" value="100"></div><div class="field"><label for="ven-g">獲得力</label><input class="input" id="ven-g" type="number" min="0" step="50" value="3277"></div><div class="field"><label for="ven-p">鑑別力</label><input class="input" id="ven-p" type="number" min="0" step="50" value="4965"></div><div class="field"><label for="ven-i" title="狩獵委託用">平均物品等級</label><input class="input" id="ven-i" type="number" min="0" step="5" value="710"></div></div></div>
-  <div class="controls"><div class="field"><label for="ven-minvel">每日售出 ≥</label><input class="input" id="ven-minvel" type="number" min="0" step="1" value="1"></div></div>
-  <div class="tgls"><label class="tgl"><input type="checkbox" id="ven-nocrys" checked>排除碎晶／水晶</label><label class="tgl" title="只列出做成成品比直接賣更賺的"><input type="checkbox" id="ven-craftonly">只看加工更賺</label></div>
+  <div class="controls"><div class="field"><label for="ven-minvel">材料每日售出 ≥</label><input class="input" id="ven-minvel" type="number" min="0" step="1" value="1"></div><div class="field"><label for="ven-horizon" title="推薦做成成品時，最多只做這麼多天內賣得完的數量，其餘材料直接賣">成品幾天內賣完</label><input class="input" id="ven-horizon" type="number" min="0.5" max="30" step="0.5" value="3"></div></div>
+  <div class="tgls"><label class="tgl"><input type="checkbox" id="ven-nocrys" checked>排除碎晶／水晶</label><label class="tgl" title="只列出依銷量算過後，做成成品仍比直接賣更賺的"><input type="checkbox" id="ven-craftonly">只看建議加工的</label></div>
  </div>
  </div>
  <div class="rlist" id="ven-list"><div class="rhead vhead"><span>材料</span><span>委託</span><span class="sortable num" data-k="vq">每趟</span><span class="sortable num" data-k="price">成交均價</span><span class="sortable num" data-k="trip">每趟直接賣</span><span class="sortable num" data-k="vel">每日售出</span><span class="sortable num" data-k="clear">清倉天數</span><span class="sortable" data-k="best">最佳用途</span></div>
   <div id="ven-body"><div class="empty">資料庫載入中…</div></div></div>
 </div>
-<details class="note"><summary>計算說明</summary>每趟直接賣 = 滿裝雇員一趟帶回的數量 × 成交均價 × (1−稅) − 探險幣計價。成交均價 = 實際成交（剔除極端成交後）的總金額 ÷ 總件數，依成交數量加權，買 1 個的零星高價不會拉高均價。優先用近 7 天的成交；若近 3 天的成交均價更低（價格正在跌），改用近 3 天，避免用舊的高價高估收益。沒有近期成交的材料不列入。每趟數量依你填的雇員能力計算：採集與捕魚委託看鑑別力、狩獵看平均物品等級，取達到的最高數量階；雇員等級或獲得力不足的委託不會列出。門檻來自遊戲資料（Teamcraft 與繁中客戶端資料一致），例如 Lv100 採礦委託最高階需鑑別力約 5,958～6,102。清倉天數 = 一趟的數量 ÷ 市場每日售出件數（只靠你一個人賣掉一趟要幾天）。平衡排序 = 每趟收益 ÷ max(1, 清倉天數)，兼顧賺得多與賣得快。最佳用途：在已掃描的配方裡，找出用到這個材料、做成成品後「每個材料換算價值」最高的一個（其他自採／雇員材料以市價計算機會成本），和直接賣比較。需要先在商機排行榜掃描才會顯示加工用途。</details>
+<details class="note"><summary>計算說明</summary>每趟直接賣 = 滿裝雇員一趟帶回的數量 × 成交均價 × (1−稅) − 探險幣計價。成交均價 = 實際成交（剔除極端成交後）的總金額 ÷ 總件數，依成交數量加權，買 1 個的零星高價不會拉高均價。優先用近 7 天的成交；若近 3 天的成交均價更低（價格正在跌），改用近 3 天，避免用舊的高價高估收益。沒有近期成交的材料不列入。每趟數量依你填的雇員能力計算：採集與捕魚委託看鑑別力、狩獵看平均物品等級，取達到的最高數量階；雇員等級或獲得力不足的委託不會列出。門檻來自遊戲資料（Teamcraft 與繁中客戶端資料一致），例如 Lv100 採礦委託最高階需鑑別力約 5,958～6,102。清倉天數 = 一趟的數量 ÷ 市場每日售出件數（只靠你一個人賣掉一趟要幾天）。平衡排序 = 每趟收益 ÷ max(1, 清倉天數)，兼顧賺得多與賣得快。最佳用途：在已掃描的配方裡，找出用到這個材料的成品，依「每個材料換算價值」（其他自採／雇員材料以市價計算機會成本）和成品銷量一起評估：一趟帶回的材料最多只做成「成品幾天內賣完」（預設 3 天，可在篩選調整）的數量，剩下的材料直接賣；成品每日售出未滿 1 件的不考慮。這樣算出的每趟收益比直接賣多 5% 以上才建議製作，否則顯示「直接賣材料」，避免做了賣不出去。需要先在商機排行榜掃描才會顯示加工用途。</details>
 </section>
 
 <!-- ============ 收藏品 ============ -->
@@ -429,19 +411,13 @@ td .chk{accent-color:var(--a);width:16px;height:16px;margin-right:8px;vertical-a
 <!-- ============ 設定 ============ -->
 <section id="prefs" class="page hidden">
 <div class="panel">
- <div class="panel-title"><h2>製作者數值 <span class="tiny">｜「生產巨集」分頁用這裡的數值計算</span></h2><span class="badge" id="cr-saved">—</span></div>
- <div id="cr-table"></div>
- <p class="tiny" style="margin:10px 0 0;line-height:1.7">八個製作職業各自一列，輸入後自動保存在這個瀏覽器（也會包含在「下載計畫與設定 JSON」裡）。每個職業的數值都一樣時，填最上面那一列再按「套用到全部職業」。請照角色面板填寫；打算吃食物或喝藥水製作的話，填「吃完之後」的數值。製作力填上限（CP）。等級會決定可用的技能與技能效率。</p>
- <div class="divider"></div>
- <h3 class="rowtitle">巨集格式</h3>
- <div class="controls">
-  <div class="field"><label for="mac-wa" title="製作、加工這類有動作的技能">技能等待（秒）</label><input class="input" id="mac-wa" type="number" min="1" max="9" value="3"></div>
-  <div class="field"><label for="mac-wb" title="改革、崇敬、儉約這類增益技能">增益等待（秒）</label><input class="input" id="mac-wb" type="number" min="1" max="9" value="2"></div>
-  <div class="field"><label for="mac-se" title="/echo 結尾的提示音 &lt;se.1&gt;～&lt;se.16&gt;">提示音編號</label><input class="input" id="mac-se" type="number" min="1" max="16" value="1"></div>
-  <div class="field"><label for="mac-width">搜尋精細度</label><select class="input" id="mac-width"><option value="fast">快速</option><option value="std">標準</option><option value="fine">精細（較慢）</option></select></div>
- </div>
- <div class="controls" style="margin-top:10px"><label class="switch"><input type="checkbox" id="mac-echo" checked> 每個巨集結尾加提示（/echo＋提示音，佔 1 行）</label><label class="switch"><input type="checkbox" id="mac-lock"> 每個巨集開頭加 /mlock（鎖定巨集，佔 1 行）</label></div>
- <div class="field" style="margin-top:12px"><span class="flabel">可使用的技能（點一下停用還沒學會或不想用的技能；等級不足的會自動排除）</span><div class="chips sm" id="mac-ban"></div></div>
+ <div class="panel-title"><h2>外觀</h2></div>
+ <div class="controls"><div class="field"><span class="flabel">主題</span><div class="chips seg" id="theme-set"><button class="chip" data-th="dark">☾ 深色</button><button class="chip" data-th="light">☀ 淺色</button><button class="chip" data-th="auto">跟隨系統</button></div></div><span class="tiny" style="align-self:flex-end">只影響這個瀏覽器，切換後立即生效。</span></div>
+</div>
+<div class="panel" id="cur-panel">
+ <div class="panel-title"><h2>工票／軍票價值 <span class="tiny">｜每張折算多少 G，用來和市場價比較</span></h2><button class="btn small" id="cur-est" title="用「收藏品」分頁「自採按市價」的最低每票成本，估算巧手橙票、巧手紫票每張的價值">依收藏品估算巧手票</button></div>
+ <div class="curgrid" id="cur-grid"></div>
+ <p class="tiny" style="margin:10px 0 0;line-height:1.7">填了價值的貨幣，材料成本會多一個「工票」來源，和市場、NPC、自採、自製一起比，取最低。例如紫電靈砂可用 300 張大地橙票兌換：每張填 30 G 時成本就是 9,000 G。留空 = 不使用這種貨幣；填 0 = 當作免費（手上票用不完時）。巧手票可按上方按鈕，用收藏品換票的最低成本估算（自採材料按市價算）；大地票與軍票請依自己取得的成本填寫。軍票通用三個大國防聯軍。</p>
 </div>
 <div class="panel">
  <div class="panel-title"><h2>市場稅率</h2></div>
@@ -452,7 +428,7 @@ td .chk{accent-color:var(--a);width:16px;height:16px;margin-right:8px;vertical-a
  <div class="panel-title"><h2>依材料類別固定來源</h2><span class="tiny">優先順序：個別物品 ＞ 類別 ＞ 自動取最低。指定的來源沒有價格時，會自動改回取最低。</span></div>
  <div class="fbar" style="margin-bottom:12px">
   <input class="input fsearch" id="pc-search" placeholder="🔍 搜尋類別或材料名稱…" aria-label="搜尋類別">
-  <select class="input" id="pc-bulk-src" style="min-width:130px" aria-label="批量套用來源"><option value="">自動（最低）</option><option value="mkt">市場</option><option value="npc">NPC</option><option value="venture">雇員</option><option value="gather">自採</option><option value="craft">自製</option></select>
+  <select class="input" id="pc-bulk-src" style="min-width:130px" aria-label="批量套用來源"><option value="">自動（最低）</option><option value="mkt">市場</option><option value="npc">NPC</option><option value="scrip">工票</option><option value="venture">雇員</option><option value="gather">自採</option><option value="craft">自製</option></select>
   <button class="btn" id="pc-bulk">套用到勾選的類別</button>
   <button class="btn small" id="pc-all">全選顯示中</button>
   <button class="btn small" id="pc-clear">全部改回自動</button>
@@ -483,11 +459,12 @@ td .chk{accent-color:var(--a);width:16px;height:16px;margin-right:8px;vertical-a
  <div class="divider"></div>
  <h3 class="rowtitle">計算方式</h3>
  <div class="subtle">
- <b>材料逐項取最低</b>：每種材料比較 ① 市場（最低掛單或成交均價）② NPC 吉爾商店 ③ 自採（市價 × 自採計價 %）④ 自製（遞迴計算它自己的材料，最多 4 層，並除以產出數），自動挑最便宜的；在「生產規劃」可逐項改成指定來源，偏好會套用到所有用到該材料的配方。<br>
+ <b>材料逐項取最低</b>：每種材料比較 ① 市場（最低掛單或成交均價）② NPC 吉爾商店 ②' 工票／軍票兌換 ③ 自採（市價 × 自採計價 %）④ 自製（遞迴計算它自己的材料，最多 4 層，並除以產出數），自動挑最便宜的；在「生產規劃」可逐項改成指定來源，偏好會套用到所有用到該材料的配方。<br>
  <b>剔除極端值</b>：每個成品與材料都抓近 14 天最多 80 筆成交，用中位數 ± 3 × 1.4826 × MAD（約 3σ）剔除極端成交後取平均（樣本少於 4 筆不剔除；近 14 天沒有成交就不採用舊均價）。最低掛單（NQ、HQ 各自對照同品質成交）若低於中位數 60% 或高於 180% 且超出 3σ 範圍（異常低的釣魚價、異常高的亂掛），或該筆掛單超過設定時數沒有被重新確認，就不採用，改抓前 20 筆掛單找最便宜的合理掛單；都不合理時改用剔除後的成交均價。可在掃描設定關閉。<br>
  <b>時效</b>：每列顯示行情最後上傳時間；超過「掛單資料過期」時數會標紅，預設從排行隱藏。行情來自 Universalis 的玩家上傳，只有有人開啟市場板的物品才會更新。<br>
  <b>掛單深度</b>：材料市價不是只看最低一筆，而是抓前 50 筆掛單，依要買的數量由便宜到貴「整組」購買（遊戲裡一次要買整筆掛單），略過極端值與過期掛單，算出需要的數量平均單價；多買的部分不算進單價，但採購清單會列出要付的整組金額與多買數量。掛單不夠時，不足的部分用剔除後的成交均價估算。排行榜以「估算採購量」（預設 10 件成品）計算，生產規劃用你填的製作數量，收藏品用換 1,000 票所需的數量。<br>
  <b>市場稅</b>：FF14 的市場稅由買方支付，賣方收到完整掛單價。設定頁可分開設定買入稅（預設 5%，自動加進市場材料成本與採購清單）與賣出稅（預設 0%）。<br>
+ <b>工票／軍票</b>：特殊商店與大國防聯軍商店可用巧手橙票、巧手紫票、大地橙票、大地紫票、軍票兌換的材料，成本 = 張數 × 設定頁填的每張價值（沒填的貨幣不參與比價）。材料樹會列出兌換所需張數，並算出「每張低於多少 G 就比市場划算」；採購清單另列需要的張數。軍票商店有軍階限制。<br>
  <b>雇員</b>：有雇員委託的材料可選「雇員」來源，每個成本 = 探險幣數 × 雇員計價 ÷ 每趟數量（預設計價 0）。每趟數量依「雇員委託」分頁填的雇員等級、獲得力、鑑別力計算，派不了的委託不會當作來源。成本相同時優先用雇員（比自己採省事）。<br>
  <b>行情快取</b>：行情存在瀏覽器（IndexedDB），重新整理不必重掃；超過設定分鐘數的物品在用到時會自動重抓，按「開始掃描」一律抓最新。<br>
  <b>競爭風險</b>：四個訊號各給 0／1／2 分──在售量 ÷ 日銷量（市場上已排了幾天的貨，&gt;3 天 1 分、&gt;7 天 2 分）、同品質最低掛單比 14 天成交中位數低多少（&gt;8% 1 分、&gt;20% 2 分）、近 3 天或 7 天成交均價跌幅（&gt;5% 1 分、&gt;15% 2 分）；物品頁再加上你填的製作數量削價上架要賣幾天（&gt;1 天 1 分、&gt;3 天 2 分）。排行榜只看市場本身的三個訊號。合計 ≥4 為高、2–3 為中，划算度分別乘 0.55、0.8（可關閉）。物品頁建議一次製作量：市場擁擠（在售 &gt;3 天銷量）時約 1 天銷量，否則約 2 天。在售量取全服前 100 筆掛單並排除關服伺服器。<br>
@@ -495,8 +472,7 @@ td .chk{accent-color:var(--a);width:16px;height:16px;margin-right:8px;vertical-a
  <b>划算度</b>：淨利<sup>w₂</sup> × 每日售出<sup>w₁</sup> ÷ 成本基準<sup>w₃</sup>（預設 1、0.5、0.5），在單個成本與每日售出數量之間取平衡；成本基準至少取售價 10%。虧錢的配方 0 分。<br>
  <b>缺價</b>：任何材料四種來源都抓不到價格時整筆標成「材料缺價」，不會當成 0 元。<br>
  <b>品質</b>：材料以 NQ／HQ 中較便宜的掛單計價；成品可選綜合、只算 NQ 或只算 HQ 的售價（HQ 需自行確保做得出 HQ）。<br>
- <b>生產巨集</b>：配方的難度、品質、耐久與等級係數來自同一份配方資料；依設定頁的製作者數值模擬並搜尋技能順序，詳見「生產巨集」分頁下方的計算說明。<br>
- <b>快速鍵</b>：按 <span class="kbd">/</span> 跳到目前分頁的搜尋框；搜尋配方時 <span class="kbd">Enter</span> 選第一筆、<span class="kbd">↑</span><span class="kbd">↓</span> 移動、<span class="kbd">Esc</span> 關閉；排行列可用 <span class="kbd">Tab</span>＋<span class="kbd">Enter</span> 開啟。網址的 <span class="kbd">#分頁</span> 會記住目前分頁，重新整理或上一頁都會回到原處。
+ <b>快速鍵</b>：按 <span class="kbd">/</span> 跳到目前分頁的搜尋框；生產規劃搜尋配方時 <span class="kbd">Enter</span> 選第一筆、<span class="kbd">↑</span><span class="kbd">↓</span> 移動、<span class="kbd">Esc</span> 關閉；排行列可用 <span class="kbd">Tab</span>＋<span class="kbd">Enter</span> 開啟。網址的 <span class="kbd">#分頁</span> 會記住目前分頁，重新整理或上一頁都會回到原處。
  </div>
  <div class="divider"></div>
  <div class="controls"><button class="btn" id="clear-cache">清除行情快取</button><button class="btn" id="reset-all">清除本機設定與清單</button><button class="btn" id="download-json">下載計畫與設定 JSON</button><label class="btn" style="display:inline-flex;align-items:center;cursor:pointer">匯入 JSON <input id="upload-json" type="file" accept="application/json,.json" class="hidden"></label></div>
@@ -517,7 +493,10 @@ const FALLBACK_DCS = [{ name: '陸行鳥', region: '繁中服', worlds: [4028, 4
 const FALLBACK_WORLDS = { 4028: '伊弗利特', 4029: '迦樓羅', 4030: '利維坦', 4031: '鳳凰', 4032: '奧汀', 4033: '巴哈姆特', 4034: '拉姆', 4035: '泰坦' };
 const JOBS = { 8: '木工', 9: '鍛鐵', 10: '鑄甲', 11: '雕金', 12: '製革', 13: '裁衣', 14: '煉金', 15: '烹調' };
 const GJOB = { MIN: '採礦', BTN: '園藝', FSH: '捕魚' };
-const SRC = { mkt: '市場', npc: 'NPC', venture: '雇員', gather: '自採', craft: '自製' };
+const SRC = { mkt: '市場', npc: 'NPC', scrip: '工票', venture: '雇員', gather: '自採', craft: '自製' };
+/* 工票／軍票：兌換用的貨幣。軍票三個大國防聯軍通用一個價值（seal） */
+const CURS = { 41784: '巧手橙票', 33913: '巧手紫票', 41785: '大地橙票', 33914: '大地紫票', seal: '軍票' };
+const curKey = id => id === 20 || id === 21 || id === 22 ? 'seal' : CURS[id] ? String(id) : null;
 const VEN_CAT = { 17: '採礦', 18: '園藝', 19: '捕魚', 34: '狩獵' };
 const SELF = s => s === 'gather' || s === 'venture';   // 自己取得（不花錢買）的來源
 const MAXD = 4;
@@ -539,6 +518,7 @@ const TIER = { high: '高', mid: '中', base: '基本' };
 const $ = id => document.getElementById(id);
 const fmt = n => n == null || !isFinite(n) ? '—' : Math.round(n).toLocaleString('zh-TW');
 const fmt1 = n => n == null || !isFinite(n) ? '—' : (Math.round(n * 10) / 10).toLocaleString('zh-TW', { minimumFractionDigits: 1 });
+const fmtN = n => n == null || !isFinite(n) ? '—' : Number.isInteger(n) ? fmt(n) : fmt1(n);   // 整數不顯示小數
 const pct = n => n == null || !isFinite(n) ? '—' : (n * 100).toFixed(0) + '%';
 const esc = s => String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const sleep = ms => new Promise(r => setTimeout(r, ms));
@@ -612,35 +592,22 @@ async function fetchRepoJSON(path) {
 /* ================= 狀態 ================= */
 const DEF = {
   dc: '陸行鳥', target: '陸行鳥', isDC: true, jobs: [8, 9, 10, 11, 12, 13, 14, 15], cLvl: 100, cMinLvl: 1,
-  src: { mkt: true, npc: true, venture: true, gather: true, craft: true }, gLvl: 100, gPct: 0, matBasis: 'min', noLimited: false, noLegend: false,
+  src: { mkt: true, npc: true, scrip: true, venture: true, gather: true, craft: true }, gLvl: 100, gPct: 0, matBasis: 'min', noLimited: false, noLegend: false,
   quality: 'all', sellBasis: 'avg', tax: 0, minVel: 1, wv: 0.5, wa: 1, wc: 0.5,
   sort: 'score', desc: true, onlyProfit: true, hideMissing: true, noGatherOnly: false, maxCost: 0, minROI: 0,
   robust: true, staleH: 48, patchDate: '', buyTax: 5, riskAdj: true, retLv: 100, retG: 3277, retP: 4965, retI: 710, estQty: 10, ventureG: 0, cacheMin: 30, hideStale: true, favOnly: false, worthCraft: false, catRule: {},
+  curG: {},   // 工票／軍票每張折算多少 G；沒填的貨幣不參與比價
   shipVel: 10, newVel: 0, twPatch: '7.3',   // 新版本物品清單：每日售出門檻、目前繁中服版本
     // 潛水艇／飛空艇素材清單：每日售出門檻
-  crafter: { v2: true, all: { lvl: 100, cms: 0, ctl: 0, cp: 0 }, jobs: {} },                       // 製作者數值（生產巨集用）
-  mac: { waitA: 3, waitB: 2, echo: true, se: 1, lock: false, width: 'std', ban: {} },                 // 巨集格式
 };
 const STORE = 'craftwise-live-v1';
 let saved = {}; try { saved = JSON.parse(localStorage.getItem(STORE) || '{}') || {}; } catch { saved = {}; }
 const CFG = Object.assign({}, DEF, saved.cfg || {}); CFG.src = Object.assign({}, DEF.src, (saved.cfg || {}).src || {});
 if (!('wc' in (saved.cfg || {}))) CFG.wv = DEF.wv;
 if (!CFG.catRule || typeof CFG.catRule !== 'object') CFG.catRule = {};
-/* 製作者數值與巨集格式：存檔或匯入的資料都先整理成合法範圍 */
-function normCrafter(c) {
-  const num = (v, mx) => { v = Math.floor(+v); return isFinite(v) && v > 0 ? Math.min(mx, v) : 0; };
-  const one = s => ({ lvl: num(s && s.lvl, 100) || 100, cms: num(s && s.cms, 9999), ctl: num(s && s.ctl, 9999), cp: num(s && s.cp, 999) });
-  // 每個職業各存一組。舊版「八職共用」的資料：把共用數值帶到每個職業（只轉換一次）
-  const out = { v2: true, all: one(c && c.all), jobs: {} }, legacyShared = c && !c.v2 && c.same !== false;
-  for (const j of [8, 9, 10, 11, 12, 13, 14, 15]) out.jobs[j] = one(legacyShared ? c.all : c && c.jobs && c.jobs[j]);
-  return out;
-}
-function normMac(m) {
-  m = m && typeof m === 'object' ? m : {}; const d = DEF.mac, rng = (v, lo, hi, def) => { v = Math.round(+v); return isFinite(v) && v >= lo && v <= hi ? v : def; };
-  const ban = {}; if (m.ban && typeof m.ban === 'object') for (const k in m.ban) if (m.ban[k] && /^[a-z0-9]{1,6}$/.test(k)) ban[k] = 1;
-  return { waitA: rng(m.waitA, 1, 9, d.waitA), waitB: rng(m.waitB, 1, 9, d.waitB), se: rng(m.se, 1, 16, d.se), echo: m.echo !== false, lock: !!m.lock, width: ['fast', 'std', 'fine'].includes(m.width) ? m.width : d.width, ban };
-}
-CFG.crafter = normCrafter((saved.cfg || {}).crafter); CFG.mac = normMac((saved.cfg || {}).mac);
+if (!CFG.curG || typeof CFG.curG !== 'object') CFG.curG = {};
+for (const k in CFG.curG) { const v = +CFG.curG[k]; if (!CURS[k] || CFG.curG[k] === null || CFG.curG[k] === '' || !isFinite(v) || v < 0) delete CFG.curG[k]; else CFG.curG[k] = v; }
+delete CFG.crafter; delete CFG.mac;   // 已移除的生產巨集設定：舊存檔裡的資料不再保留
 CFG.quality = 'all';   // 首頁一律綜合；NQ／HQ 改在物品頁比較
 // 市場稅改成買／賣分開：FF14 由買方付稅，舊設定的 5% 市場稅改為買入稅，賣出稅歸零（只轉換一次）
 if (saved.cfg && !('buyTax' in saved.cfg)) { CFG.buyTax = saved.cfg.tax ?? 5; CFG.tax = 0; }
@@ -655,21 +622,18 @@ const ST = {
   plans: Array.isArray(saved.plans) ? saved.plans : [],
   pq: ['all', 'nq', 'hq'].includes(saved.pq) ? saved.pq : 'all',
   myPrice: saved.myPrice && typeof saved.myPrice === 'object' ? saved.myPrice : {},
-  ven: Object.assign({ cat: 'all', sort: 'bal', desc: true, lvl: 100, minVel: 1, noCrys: true, craftOnly: false, mid: false }, saved.ven || {}),
+  ven: Object.assign({ cat: 'all', sort: 'bal', desc: true, lvl: 100, minVel: 1, horizon: 3, noCrys: true, craftOnly: false, mid: false }, saved.ven || {}),
   weekly: saved.weekly && typeof saved.weekly === 'object' ? saved.weekly : null,                   // [{id, qty}]
   fav: Array.isArray(saved.fav) ? saved.fav.filter(Number.isInteger) : [], // 收藏的成品 id
   ui: Object.assign({ scan: false, filt: true, colf: true, venf: true }, saved.ui || {}),   // true = 收合
   col: Object.assign({ cur: 41784, tier: 'high', sort: 'cps', desc: false, myJobs: true, hideMiss: true, noInt: false, lvMin: 1, lvMax: 100, jobs: [] }, saved.col || {}),
-  mc: Object.assign({ id: null, mode: 'max', pct: 100, tier: 'high', initQ: 0 }, saved.mc || {}),   // 生產巨集分頁
   done: saved.done && typeof saved.done === 'object' ? saved.done : {},                              // 採購清單已備妥的材料
   rows: [], scanned: [], scanMeta: '', shown: 100, abort: null,
 };
-if (!['max', 'pct', 'coll', 'none'].includes(ST.mc.mode)) ST.mc.mode = 'max';
-ST.mc.pct = Math.min(100, Math.max(1, Math.round(+ST.mc.pct) || 100)); ST.mc.initQ = Math.max(0, Math.round(+ST.mc.initQ) || 0);
 if (!Array.isArray(ST.col.jobs)) ST.col.jobs = [];
 if (saved.col && !saved.col.v2) { ST.col.tier = 'high'; ST.col.v2 = true; }   // 收藏價值一律預設最高檔（舊設定重設一次）
 ST.col.v2 = true;
-const save = () => { try { localStorage.setItem(STORE, JSON.stringify({ cfg: CFG, selected: ST.selected, batch: ST.batch, ov: ST.ov, plans: ST.plans, fav: ST.fav, col: ST.col, ui: ST.ui, pq: ST.pq, weekly: ST.weekly, ven: ST.ven, myPrice: ST.myPrice, mc: ST.mc, done: ST.done })); } catch { if (!save.warned) { save.warned = true; setTimeout(() => toast('無法寫入瀏覽器儲存空間（可能是無痕模式或空間已滿），這次的設定關閉頁面後不會保留'), 0); } } };
+const save = () => { try { localStorage.setItem(STORE, JSON.stringify({ cfg: CFG, selected: ST.selected, batch: ST.batch, ov: ST.ov, plans: ST.plans, fav: ST.fav, col: ST.col, ui: ST.ui, pq: ST.pq, weekly: ST.weekly, ven: ST.ven, myPrice: ST.myPrice, done: ST.done })); } catch { if (!save.warned) { save.warned = true; setTimeout(() => toast('無法寫入瀏覽器儲存空間（可能是無痕模式或空間已滿），這次的設定關閉頁面後不會保留'), 0); } } };
 
 const DB = { ready: false, names: {}, cat: {}, catNames: {}, marketable: null, recipes: {}, vendor: {}, gather: {}, dcs: [], worlds: {} };
 const P = {};       // 物品 id -> 市場資料 {vN,vH,aN,aH,mN,mH,wN,wH,t}
@@ -715,7 +679,6 @@ async function loadDB() {
     DB.marketable = new Set(mk);
     // 配方：同一成品取等級最低者；排除島嶼／設備
     const rec = decodeMsgpack(recBuf);
-    DB.lvTable = (rec && rec.gathererCrafterLvAdjustTable) || null; const rlt = (rec && rec.recipeLevelTable) || {};
     // 潛水艇／飛空艇組件（部隊工房製作）：記下組件與它們直接用到的素材，供排行與收藏篩選
     DB.shipParts = new Set(); DB.shipMats = new Map();
     for (const r of (rec && rec.recipes) || []) {
@@ -727,13 +690,7 @@ async function loadDB() {
       if (!r.result || !JOBS[r.job] || !DB.names[r.result]) continue;
       const ing = (r.ingredients || []).filter(x => x && x.id > 0).map(x => ({ id: x.id, amount: x.amount || 1 }));
       if (!ing.length) continue;
-      // 製作數值（生產巨集用）：難度、品質、耐久與配方等級的除數／係數
-      const lt = rlt[r.rlvl] || {};
-      let cr = r.progress > 0 && r.durability > 0 ? { lvl: r.lvl || 1, rlvl: r.rlvl || 0, progress: r.progress, quality: r.hq === false ? 0 : (r.quality || 0), durability: r.durability,
-        progressDivider: r.progressDivider || lt.progressDivider, qualityDivider: r.qualityDivider || lt.qualityDivider, progressModifier: r.progressModifier || lt.progressModifier || 100, qualityModifier: r.qualityModifier || lt.qualityModifier || 100,
-        expert: !!r.expert, cmsReq: r.craftsmanshipReq || 0, ctlReq: r.controlReq || 0 } : null;
-      if (cr && !(cr.progressDivider > 0 && cr.qualityDivider > 0)) cr = null;
-      const c = { id: r.result, job: r.job, lvl: r.lvl || 1, yields: r.yields || 1, stars: r.stars || 0, hq: r.hq !== false, ing, cr };
+      const c = { id: r.result, job: r.job, lvl: r.lvl || 1, yields: r.yields || 1, stars: r.stars || 0, hq: r.hq !== false, ing };
       const cur = DB.recipes[r.result];
       if (!cur || c.lvl < cur.lvl) DB.recipes[r.result] = c;
     }
@@ -744,6 +701,20 @@ async function loadDB() {
       for (const t of s.trades || []) {
         const cur = t.currencies || []; if (cur.length !== 1 || cur[0].id !== 1 || !(cur[0].amount > 0)) continue;
         for (const it of t.items || []) { if (!it.id) continue; const u = cur[0].amount / (it.amount || 1); if (DB.vendor[it.id] == null || u < DB.vendor[it.id]) DB.vendor[it.id] = u; }
+      }
+    }
+    // 工票／軍票兌換（特殊商店、大國防聯軍商店）：每種貨幣取兌換 1 個所需最少的張數
+    DB.cshop = {};
+    for (const sid in shops) {
+      const s = shops[sid]; if (!s || (s.type !== 'SpecialShop' && s.type !== 'GCShop')) continue;
+      for (const t of s.trades || []) {
+        const cur = t.currencies || []; if (cur.length !== 1 || !(cur[0].amount > 0)) continue;
+        const k = curKey(cur[0].id); if (!k) continue;
+        for (const it of t.items || []) {
+          if (!it.id) continue; const amt = cur[0].amount / (it.amount || 1), list = DB.cshop[it.id] || (DB.cshop[it.id] = []);
+          const ex = list.find(e => e.k === k);
+          if (!ex) list.push({ k, amt, rank: t.requiredGCRank || 0 }); else if (amt < ex.amt) { ex.amt = amt; ex.rank = t.requiredGCRank || 0; }
+        }
       }
     }
     // 採集節點
@@ -803,7 +774,7 @@ async function loadDB() {
     fillCats(); updatePatchLabels();
     $('scan-btn').disabled = false;
     renderRanking(); if (ST.tab === 'prefs') renderPrefs();
-    if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites(); if (ST.tab === 'collect') renderCollect(); if (ST.tab === 'venture') renderVenture(); if (ST.tab === 'macro') renderMacro();
+    if (ST.tab === 'planner') renderPlanner(); if (ST.tab === 'shopping') renderShopping(); if (ST.tab === 'favorites') renderFavorites(); if (ST.tab === 'collect') renderCollect(); if (ST.tab === 'venture') renderVenture();
   } catch (e) {
     $('db-badge').textContent = '資料庫載入失敗'; $('db-badge').className = 'badge err';
     $('db-state').textContent = '資料庫載入失敗。';
@@ -869,7 +840,7 @@ for (const [id, k] of Object.entries(SELS)) $(id).addEventListener('change', () 
 for (const [id, k] of Object.entries(CHKS)) $(id).addEventListener('change', () => { CFG[k] = $(id).checked; RB.clear(); save(); recompute(); });
 for (const k of ['wv', 'wa', 'wc']) $(k).addEventListener('input', () => { CFG[k] = +$(k).value; $(k + '-v').textContent = CFG[k].toFixed(1); save(); recompute(); });
 $('search').addEventListener('input', () => { ST.shown = 100; renderRanking(); });
-const syncShipBtn = () => { for (const [v, id] of [['ship', 'rank-ship'], ['new', 'rank-new']]) { const on = $('cat').value === v, b = $(id); b.setAttribute('aria-pressed', String(on)); b.style.cssText = on ? 'border-color:#65c4ad;background:#1a3a3a;color:#a6f4de' : ''; } };
+const syncShipBtn = () => { for (const [v, id] of [['ship', 'rank-ship'], ['new', 'rank-new']]) { const on = $('cat').value === v, b = $(id); b.setAttribute('aria-pressed', String(on)); b.style.cssText = on ? 'border-color:var(--k43);background:var(--k79);color:var(--k44)' : ''; } };
 $('cat').addEventListener('change', () => { ST.shown = 100; syncShipBtn(); updateSummary(); renderRanking(); });
 $('rank-new').addEventListener('click', () => { if (!DB.ready) return; $('cat').value = $('cat').value === 'new' ? '' : 'new'; $('cat').dispatchEvent(new Event('change')); });
 $('rank-ship').addEventListener('click', () => { if (!DB.ready) return; $('cat').value = $('cat').value === 'ship' ? '' : 'ship'; $('cat').dispatchEvent(new Event('change')); });
@@ -1276,6 +1247,10 @@ function resolve(id, memo, depth = 0, stack = new Set(), need = 1) {
     opts.mkt = v * (1 + CFG.buyTax / 100);   // 市場買入要另付買入稅
   }
   if (CFG.src.npc && DB.vendor[id] > 0) opts.npc = DB.vendor[id];
+  // 工票／軍票：張數 × 每張價值（設定頁填）；沒填價值的貨幣不參與比價，但材料樹仍會列出可以兌換
+  const ex = DB.cshop && DB.cshop[id]; let sc = null;
+  if (CFG.src.scrip && ex) for (const e of ex) { const g = CFG.curG[e.k]; if (g == null) continue; const v = e.amt * g; if (!sc || v < sc.v) sc = { ...e, g, v }; }
+  if (sc) opts.scrip = sc.v;
   // 雇員委託：每個 = 探險幣數 × 計價 ÷ 每趟數量（同分時排在自採前面，派雇員比自己採省事）
   const vi = ventInfo(id);
   if (CFG.src.venture && vi) opts.venture = CFG.ventureG * vi.cost / vi.qty;
@@ -1304,7 +1279,7 @@ function resolve(id, memo, depth = 0, stack = new Set(), need = 1) {
   let gv = 0, gc = 0;
   if (SELF(src)) { gv = (mi && mi.value) || 0; gc = unit || 0; }
   else if (src === 'craft' && kids) { rec.ing.forEach((x, i) => { gv += (kids[i].gv || 0) * x.amount; gc += (kids[i].gc || 0) * x.amount; }); gv /= rec.yields; gc /= rec.yields; }
-  const out = { id, need, unit, src, best, opts, gi, giAll, mi, bp, vi, gv, gc, rec: opts.craft != null ? rec : null, kids: opts.craft != null ? kids : null };
+  const out = { id, need, unit, src, best, opts, gi, giAll, mi, bp, vi, gv, gc, sc, ex, rec: opts.craft != null ? rec : null, kids: opts.craft != null ? kids : null };
   memo.set(key, out);
   return out;
 }
@@ -1484,7 +1459,7 @@ function rowHTML(r, i, maxScore, opts = {}) {
     : craftWin ? `<span class="vtag craft" title="製成成品較划算｜自採材料直接賣：${fmt(r.matSell)} G／件（稅後）｜做成成品：${fmt(r.craftNet)} G／件">✓ +${fmt(r.added)} G／件</span>` : '';
   return `<div class="rrow${sellMat ? ' sellmat' : ''}" data-id="${r.id}" tabindex="0" role="link" aria-label="${esc(r.name)}：開啟生產規劃">
    <div>${starBtn(r.id)}</div>
-   <div class="nm">${opts.rank === false ? '' : `<span class="rk">#${i + 1}</span>`}<b>${esc(r.name)}</b><small>${isNew(r.id) ? `<span class="tag new">${newLabel()}</span>` : usesNew(r) ? `<span class="tag new" title="用到 ${esc(r.rec.ing.filter(x => isNew(x.id)).map(x => DB.names[x.id]).join('、'))}">用新素材</span>` : ''}${esc(r.catName)}${isShip(r.id) ? ` · <span class="tag ship" title="${DB.shipMats.get(r.id)} 種潛水艇／飛空艇組件會用到">⚓ 艇材</span>` : ''} · <span class="${ageCls(r.up)}">更新 ${ago(r.up)}</span></small>${verdict}${opts.actions ? `<div class="fa"><button class="btn small" data-open="${r.id}">規劃</button><button class="btn small" data-addfav="${r.id}">＋清單</button>${r.rec.cr ? `<button class="btn small" data-macro="${r.id}">巨集</button>` : ''}</div>` : ''}</div>
+   <div class="nm">${opts.rank === false ? '' : `<span class="rk">#${i + 1}</span>`}<b>${esc(r.name)}</b><small>${isNew(r.id) ? `<span class="tag new">${newLabel()}</span>` : usesNew(r) ? `<span class="tag new" title="用到 ${esc(r.rec.ing.filter(x => isNew(x.id)).map(x => DB.names[x.id]).join('、'))}">用新素材</span>` : ''}${esc(r.catName)}${isShip(r.id) ? ` · <span class="tag ship" title="${DB.shipMats.get(r.id)} 種潛水艇／飛空艇組件會用到">⚓ 艇材</span>` : ''} · <span class="${ageCls(r.up)}">更新 ${ago(r.up)}</span></small>${verdict}${opts.actions ? `<div class="fa"><button class="btn small" data-open="${r.id}">規劃</button><button class="btn small" data-addfav="${r.id}">＋清單</button></div>` : ''}</div>
    <div class="cr" data-l="製作"><span class="tag craft">${JOBS[r.rec.job]} Lv${r.rec.lvl}${r.rec.stars ? ' ' + '★'.repeat(r.rec.stars) : ''}</span>${r.rec.yields > 1 ? `<span class="tag">×${r.rec.yields}</span>` : ''}${opts.actions && !craftable(r.rec) ? '<span class="tag warn">職業／等級不符</span>' : ''}</div>
    <div class="num" data-l="單個成本"><span class="val">${r.missing ? `<span class="tag warn">缺價 ${r.missing}</span>` : fmt(r.cost)}</span><small>${mixTags(r.mix)}</small></div>
    <div class="num" data-l="單個售價" title="${tip}"><span class="val">${fmt(r.price)}</span><small>${priceSub}</small></div>
@@ -1527,10 +1502,10 @@ $('export-btn').addEventListener('click', () => {
 /* ================= 生產規劃 ================= */
 function selectItem(id) { ST.selected = id; save(); $('item-search').value = DB.names[id] || ''; }
 const recipeIds = () => Object.keys(DB.recipes);
-/* 配方搜尋框（生產規劃與生產巨集共用）：輸入即搜尋，Enter 選第一筆，↑↓ 移動，Esc 關閉 */
+/* 配方搜尋框（生產規劃）：輸入即搜尋，Enter 選第一筆，↑↓ 移動，Esc 關閉 */
 function wirePicker(inputId, boxId, onPick) {
   const inp = $(inputId), box = $(boxId); let cur = -1;
-  const mark = () => [...box.querySelectorAll('button[data-id]')].forEach((b, i) => { b.style.background = i === cur ? '#1c3043' : ''; if (i === cur) b.scrollIntoView({ block: 'nearest' }); });
+  const mark = () => [...box.querySelectorAll('button[data-id]')].forEach((b, i) => { b.style.background = i === cur ? 'var(--k113)' : ''; if (i === cur) b.scrollIntoView({ block: 'nearest' }); });
   const show = () => {
     const q = inp.value.trim().toLowerCase(); cur = -1;
     if (!q || !DB.ready) { box.classList.add('hidden'); return; }
@@ -1553,7 +1528,6 @@ function wirePicker(inputId, boxId, onPick) {
   box.addEventListener('click', e => { const b = e.target.closest('button[data-id]'); if (b) pick(+b.dataset.id); });
 }
 wirePicker('item-search', 'suggest', id => { selectItem(id); renderPlanner(); });
-wirePicker('mc-search', 'mc-suggest', id => openMacro(id));
 document.addEventListener('click', e => { if (!e.target.closest('.picker')) document.querySelectorAll('.suggest').forEach(b => b.classList.add('hidden')); });
 $('pq').addEventListener('click', e => { const b = e.target.closest('[data-pq]'); if (!b) return; ST.pq = b.dataset.pq; save(); renderPlanner(); });
 $('batch').addEventListener('input', debounce(() => { ST.batch = Math.min(9999, Math.max(1, Math.floor(+$('batch').value) || 1)); save(); renderPlanner(); }, 250));
@@ -1597,13 +1571,13 @@ async function renderPlanner() {
   const gross = (r.price || 0) * made, fee = gross * CFG.tax / 100, net = totalCost != null ? gross - fee - totalCost : null;
   body.innerHTML = `<div class="overview">
     <div class="stat"><div class="label">每件材料成本</div><div class="num">${r.cost != null ? fmt(r.cost) + ' G' : '缺價'}</div><div class="hint">逐項依目前來源</div></div>
-    <div class="stat"><div class="label">每件淨利</div><div class="num ${r.profit > 0 ? 'positive' : 'negative'}">${r.profit != null ? sgn(r.profit) + fmt(r.profit) + ' G' : '—'}</div><div class="hint">售價 ${fmt(r.price)} G${CFG.tax ? ` 扣 ${CFG.tax}% 賣出稅` : ''}、扣材料（含 ${CFG.buyTax}% 買入稅）｜ROI ${r.cost === 0 && r.profit > 0 ? '∞（材料全自採）' : pct(r.roi)}</div></div>
+    <div class="stat"><div class="label">每件淨利</div><div class="num ${r.profit > 0 ? 'positive' : 'negative'}">${r.profit != null ? sgn(r.profit) + fmt(r.profit) + ' G' : '—'}</div><div class="hint">售價 ${fmt(r.price)} G${CFG.tax ? ` 扣 ${CFG.tax}% 賣出稅` : ''}、扣材料（含 ${CFG.buyTax}% 買入稅）｜ROI ${r.cost === 0 && r.profit > 0 ? '∞（材料全自採）' : pct(r.roi)}${ST.myPrice[id] > 0 ? `｜照我的上架價 ${fmt(ST.myPrice[id])} G：<b class="${ST.myPrice[id] * (1 - CFG.tax / 100) - (r.cost || 0) > 0 ? 'positive' : 'negative'}">${r.cost != null ? sgn(ST.myPrice[id] * (1 - CFG.tax / 100) - r.cost) + fmt(ST.myPrice[id] * (1 - CFG.tax / 100) - r.cost) : '—'} G</b>` : ''}</div></div>
     <div class="stat"><div class="label">製作 ${made} 件所需本金</div><div class="num">${totalCost != null ? fmt(totalCost) + ' G' : '—'}</div><div class="hint">${crafts} 次製作${rec.yields > 1 ? `，每次產出 ${rec.yields}` : ''}</div></div>
     <div class="stat"><div class="label">整批理論淨利</div><div class="num ${net > 0 ? 'positive' : 'negative'}">${net != null ? sgn(net) + fmt(net) + ' G' : '—'}</div><div class="hint">假設全部以售價賣出</div></div></div>
    ${priceBox(id, r, made)}
-   <div class="two"><div class="panel"><div class="panel-title"><h2>${starBtn(id)} ${esc(r.name)} · 材料樹</h2><div class="actions"><span class="tag craft">${JOBS[rec.job]} Lv${rec.lvl}</span><button class="btn small" id="reset-ov">重設為逐項最低</button></div></div>
+   <div class="two"><div class="panel"><div class="panel-title"><h2>${starBtn(id)} <button class="copyname" data-copy="${esc(r.name)}" title="點一下複製名稱">${esc(r.name)}<span class="ci">⧉</span></button> · 材料樹</h2><div class="actions"><span class="tag craft">${JOBS[rec.job]} Lv${rec.lvl}</span><button class="btn small" id="reset-ov">重設為逐項最低</button></div></div>
      <div class="tree">${r.ings.map(x => nodeHTML(x, x.amount * crafts, memo, 1)).join('')}</div>
-     <div class="divider"></div><div class="subtle">每種材料列出所有可用來源的單價，<b style="color:#bff3e4">框線</b>為最低、<b style="color:#a6f4de">底色</b>為目前採用。下拉選單可指定來源（套用到所有用到這個材料的配方）。選「自製」時會展開它的材料。</div></div>
+     <div class="divider"></div><div class="subtle">每種材料列出所有可用來源的單價，<b style="color:var(--k74)">框線</b>為最低、<b style="color:var(--k44)">底色</b>為目前採用。下拉選單可指定來源（套用到所有用到這個材料的配方）。選「自製」時會展開它的材料。</div></div>
     <div class="panel"><div class="panel-title"><h2>市場行情</h2><a class="tiny" href="${SITE}/item/${id}" target="_blank" rel="noopener">在市場小屋查看 ↗</a></div>
      <div class="line"><span>每日售出（${ST.pq === 'all' ? '綜合' : ST.pq.toUpperCase()}）</span><strong>${fmt1(r.vel)} 件</strong></div>
      <div class="line"><span>近 ${HIST_DAYS} 天成交均價${CFG.robust ? '（剔除後）' : ''}</span><strong>${fmt(r.avg)} G</strong></div>
@@ -1622,7 +1596,6 @@ async function renderPlanner() {
        <div class="tiny">${r.added > 0 ? `做成成品比較划算，加工增值 ${fmt(r.added)} G／件（${r.matSell > 0 ? '+' + fmt1(r.added / r.matSell * 100) + '%' : '材料本身賣不了錢'}）` : `直接賣材料比較划算，做成成品每件少賺 ${fmt(-r.added)} G`}</div></div>
      ${leafTable(r, made)}` : ''}
      <div class="divider"></div><button class="btn primary" style="width:100%" id="add-plan">＋ 加入採購清單（${made} 件）</button>
-     ${rec.cr ? '<button class="btn" style="width:100%;margin-top:8px" id="to-macro">⌘ 計算這個配方的生產巨集</button>' : ''}
      <p class="subtle" style="margin-bottom:0">可加入多個商品，會合併同名材料與中間材需求。</p></div></div>
    <div class="panel"><div class="panel-title"><h2>價格趨勢與上架時機</h2><span class="tiny">最多近 28 天成交・${ST.pq === 'all' ? '綜合（取成交較多的品質）' : ST.pq.toUpperCase()}</span></div><div id="trend-box"><div class="subtle">讀取近 28 天成交紀錄…</div></div></div>`;
   renderTrend(id, r);
@@ -1658,7 +1631,8 @@ function priceBox(id, r, made) {
   const beOpp = r.cost != null && r.gv > 0 && r.cash != null ? r.cash / (1 - tax) + r.gv : null;
   const thr = beOpp ?? be, thrOpp = beOpp != null;
   const low = r.bad.filter(b => b.price < (r.minL ?? Infinity)).sort((a, b) => a.price - b.price)[0];
-  PCTX = { id, cost: r.cost, tax, made, be, beOpp, thr, thrOpp, avg: ta ? ta.avg : null, minL: r.minL };
+  PCTX = { id, cost: r.cost, cash: r.cash, gv: r.gv, tax, made, be, beOpp, thr, thrOpp, avg: ta ? ta.avg : null, minL: r.minL };
+  const mine = ST.myPrice[id] > 0 ? ST.myPrice[id] : '';
   const pctTo = (a, b) => a != null && b > 0 ? `${a >= b ? '+' : ''}${Math.round((a / b - 1) * 100)}%` : '';
   const qlab = ST.pq === 'all' ? '綜合' : ST.pq.toUpperCase();
   return `<div class="panel pricepanel"><div class="panel-title"><h2>定價（${qlab}）</h2><span class="tiny">以 1 個成品計・買入稅 ${CFG.buyTax}%・賣出稅 ${CFG.tax}%</span></div>
@@ -1672,14 +1646,36 @@ function priceBox(id, r, made) {
      <div class="hint">${thr == null ? '有材料抓不到價格' : thrOpp ? `自採／雇員材料按市價算${r.cash > 0 ? `，買的材料含 ${CFG.buyTax}% 買入稅` : ''}` : `材料成本 ${fmt(r.cost)} G（含 ${CFG.buyTax}% 買入稅）${CFG.tax ? `÷ (1 − ${CFG.tax}% 賣出稅)` : ''}`}</div>
      ${r.minL != null && thr != null ? `<div class="hint" style="margin-top:6px">${r.minL < thr ? (thrOpp ? '<span class="gold">跟最低價賣，賺的比直接賣材料少</span>' : '<span class="negative">跟最低價賣會虧本</span>') : `最低價比這個價位高 ${fmt(r.minL - thr)} G`}</div>` : ''}</div>
    </div>
+   <div class="mybox">
+    <div class="pt mine"><div class="label">我的上架價<span class="tiny">（每個，自動記住）</span></div>
+     <div class="pin"><input class="input" id="my-price" type="number" min="1" step="1" inputmode="numeric" placeholder="輸入價格" value="${mine}" aria-label="我的上架價"><span>G</span></div>
+     <div class="pquick">${r.minL != null ? `<button class="btn small" data-myp="${Math.max(1, r.minL - 1)}">最低價 −1</button>` : ''}${ta ? `<button class="btn small" data-myp="${Math.round(ta.avg)}">成交均價</button>` : ''}${thr != null ? `<button class="btn small" data-myp="${Math.ceil(thr)}">${thrOpp ? '賣材料打平' : '保本價'}</button>` : ''}${mine ? '<button class="btn small" data-myp="">清除</button>' : ''}</div></div>
+    <div class="myres" id="my-res"></div>
+   </div>
    ${riskStrip(r, made)}
    <div class="pscale" id="pscale"></div></div>`;
 }
+/* 我的上架價：依輸入的價格算每件淨利、整批淨利、ROI，並和最低價、直接賣材料比較 */
+function myResult() {
+  const box = $('my-res'), C = PCTX; if (!box || !C) return;
+  const p = ST.myPrice[C.id];
+  if (!(p > 0)) { box.innerHTML = '<div style="grid-column:1/-1"><div class="k">輸入你打算掛在市場板的價格，就會算出這個價位的淨利。</div><div class="s">價格會記在這個瀏覽器，下次打開這個物品還在。</div></div>'; return; }
+  if (C.cost == null) { box.innerHTML = '<div style="grid-column:1/-1"><div class="k">有材料抓不到價格，無法計算淨利。</div></div>'; return; }
+  const get = p * (1 - C.tax), net = get - C.cost, cls = v => v > 0 ? 'positive' : v < 0 ? 'negative' : '';
+  const vsMat = C.gv > 0 && C.cash != null ? get - C.cash - C.gv * (1 - C.tax) : null;
+  const cell = (k, v, sub, c = '') => `<div><div class="k">${k}</div><div class="v ${c}">${v}</div>${sub ? `<div class="s">${sub}</div>` : ''}</div>`;
+  box.innerHTML = cell('每件淨利', `${sgn(net)}${fmt(net)} G`, `實拿 ${fmt(get)} G − 成本 ${fmt(C.cost)} G`, cls(net))
+    + cell(`整批淨利（${C.made} 件）`, `${sgn(net * C.made)}${fmt(net * C.made)} G`, `全部以這個價格賣出`, cls(net))
+    + cell('ROI', C.cost > 0 ? `${sgn(net)}${pct(net / C.cost)}` : net > 0 ? '∞' : '—', C.cost > 0 ? '淨利 ÷ 成本' : '材料全自採', cls(net))
+    + (C.minL != null ? cell('和最低價比', `${sgn(p - C.minL)}${fmt(p - C.minL)} G`, p > C.minL ? '比最低價貴，可能要等別人賣完' : p < C.minL ? '比最低價便宜，會排在最前面' : '和最低價相同', p > C.minL ? 'gold' : '') : '')
+    + (vsMat != null ? cell('比直接賣材料', `${sgn(vsMat)}${fmt(vsMat)} G`, '每件，自採／雇員材料按市價', cls(vsMat)) : '');
+}
 function updateMyPrice() {
+  myResult();
   const sc = $('pscale'); if (!sc || !PCTX) return;
-  const C = PCTX;
-  // 價格位置刻度：保本價、賣材料打平、最低價、成交均價
-  const marks = [[C.thrOpp ? '賣材料打平' : '虧本線', C.thr, 'op'], ['最低', C.minL, 'mn'], ['均價', C.avg, 'av']].filter(m => m[1] > 0);
+  const C = PCTX, mine = ST.myPrice[C.id];
+  // 價格位置刻度：保本價、賣材料打平、最低價、成交均價、我的上架價
+  const marks = [[C.thrOpp ? '賣材料打平' : '虧本線', C.thr, 'op'], ['最低', C.minL, 'mn'], ['均價', C.avg, 'av'], ['我的', mine, 'me']].filter(m => m[1] > 0);
   if (marks.length < 2) { sc.innerHTML = ''; return; }
   const lo = Math.min(...marks.map(m => m[1])) * 0.9, hi = Math.max(...marks.map(m => m[1])) * 1.1, span = hi - lo || 1;
   const x = v => ((v - lo) / span * 100).toFixed(2);
@@ -1744,12 +1740,15 @@ function mktNote(x) {
 }
 function nodeHTML(x, need, memo, depth) {
   const name = DB.names[x.id] || ('#' + x.id);
-  const optLabel = { mkt: '市場', npc: 'NPC', venture: '雇員', gather: '自採', craft: '自製' };
+  const optLabel = { mkt: '市場', npc: 'NPC', scrip: '工票', venture: '雇員', gather: '自採', craft: '自製' };
   const gTag = g => g ? '・' + g.jobs.map(j => GJOB[j]).join('/') + ' Lv' + g.lvl + (g.why && g.why.length ? '（' + g.why.join('、') + '）' : '') : '';
   const opts = Object.keys(optLabel).filter(k => x.opts[k] != null).map(k =>
-    `<span class="opt ${k === x.best ? 'best' : ''} ${k === x.src ? 'chosen' : ''}">${optLabel[k]} ${fmt(x.opts[k])}${k === 'mkt' ? mktNote(x) : ''}${k === 'gather' && x.gi ? gTag(x.gi) : ''}${k === 'gather' && x.mi && x.mi.value != null ? '・市價 ' + fmt(x.mi.value) : ''}${k === 'craft' && x.rec ? '・' + JOBS[x.rec.job] + ' Lv' + x.rec.lvl : ''}${k === 'venture' && x.vi ? `・${VEN_CAT[x.vi.cat] || ''}委託 每趟 ${x.vi.qty} 個${x.vi.cost > 1 ? `／${x.vi.cost} 張` : ''}` : ''}</span>`).join('');
+    `<span class="opt ${k === x.best ? 'best' : ''} ${k === x.src ? 'chosen' : ''}">${optLabel[k]} ${fmt(x.opts[k])}${k === 'mkt' ? mktNote(x) : ''}${k === 'gather' && x.gi ? gTag(x.gi) : ''}${k === 'gather' && x.mi && x.mi.value != null ? '・市價 ' + fmt(x.mi.value) : ''}${k === 'craft' && x.rec ? '・' + JOBS[x.rec.job] + ' Lv' + x.rec.lvl : ''}${k === 'scrip' && x.sc ? `・${fmtN(x.sc.amt)} 張${CURS[x.sc.k]}${x.sc.rank ? `（需軍階 ${x.sc.rank}）` : ''}` : ''}${k === 'venture' && x.vi ? `・${VEN_CAT[x.vi.cat] || ''}委託 每趟 ${x.vi.qty} 個${x.vi.cost > 1 ? `／${x.vi.cost} 張` : ''}` : ''}</span>`).join('');
   const extraGather = CFG.src.gather && x.opts.gather == null && x.giAll;
   const sel = `<select class="input" data-ov="${x.id}" aria-label="${esc(name)} 取得方式"><option value="">${CFG.catRule[DB.cat[x.id]] ? '類別規則：' + SRC[CFG.catRule[DB.cat[x.id]]] : '自動（最低）'}</option>${Object.keys(optLabel).filter(k => x.opts[k] != null || (k === 'gather' && extraGather)).map(k => `<option value="${k}" ${ST.ov[x.id] === k ? 'selected' : ''}>${optLabel[k]}${k === 'gather' && (extraGather || (x.gi && x.gi.why && x.gi.why.length)) ? '（' + (x.giAll.why.join('、') || '已排除') + '）' : ''}</option>`).join('')}</select>`;
+  // 可以用工票／軍票兌換、但設定頁還沒填每張價值：提示張數，並算出「每張低於多少 G 就比市場划算」
+  const unpriced = CFG.src.scrip && x.ex ? x.ex.filter(e => CFG.curG[e.k] == null) : [];
+  const scripChip = unpriced.map(e => `<span class="opt" title="到設定頁的「工票／軍票價值」填每張值多少 G，就會加入比價">可用 ${fmtN(e.amt)} 張${CURS[e.k]}兌換${x.opts.mkt != null ? `・每張低於 ${fmt1(x.opts.mkt / e.amt)} G 就比市場划算` : ''}・<a href="#prefs" data-curgo="1">填價值</a></span>`).join('');
   const extraChip = extraGather ? `<span class="opt" title="進階設定中排除了這類節點，自動取最低時不使用；可在右側下拉選單手動指定自採">可自採${gTag(x.giAll)}・需手動指定</span>` : '';
   let kids = '';
   if (x.src === 'craft' && x.rec) {
@@ -1758,17 +1757,26 @@ function nodeHTML(x, need, memo, depth) {
     const sub = x.rec.ing.map(c => ({ ...resolve(c.id, new Map(), depth + 1, new Set([x.id]), c.amount * crafts), amount: c.amount }));
     kids = `<div class="children"><div class="tiny">製作 ${crafts} 次${x.rec.yields > 1 ? `（每次 ${x.rec.yields} 個）` : ''}</div>${sub.map(c => nodeHTML(c, c.amount * crafts, memo, depth + 1)).join('')}</div>`;
   }
-  return `<div class="node"><div class="head"><div>${starBtn(x.id)}<span class="name">${esc(name)}</span>${isNew(x.id) ? ` <span class="tag new">${newLabel()}</span>` : ''} <span class="tag">× ${fmt(need)}</span>${x.unit == null ? ' <span class="tag warn">缺價</span>' : ''}</div><strong>${x.unit != null ? fmt(x.unit * need) + ' G' : '—'}${SELF(x.src) && x.gv > 0 ? `<small style="display:block;font-size:11px;color:var(--muted);font-weight:500">單賣值 ${fmt(x.gv * need)} G</small>` : ''}</strong>${sel}</div><div class="opts">${opts || (extraChip ? '' : '<span class="opt">沒有任何來源的價格</span>')}${extraChip}</div>${kids}</div>`;
+  return `<div class="node"><div class="head"><div>${starBtn(x.id)}<button class="copyname name" data-copy="${esc(name)}" title="點一下複製名稱">${esc(name)}</button>${isNew(x.id) ? ` <span class="tag new">${newLabel()}</span>` : ''} <span class="tag">× ${fmt(need)}</span>${x.unit == null ? ' <span class="tag warn">缺價</span>' : ''}</div><strong>${x.unit != null ? fmt(x.unit * need) + ' G' : '—'}${SELF(x.src) && x.gv > 0 ? `<small style="display:block;font-size:11px;color:var(--muted);font-weight:500">單賣值 ${fmt(x.gv * need)} G</small>` : ''}</strong>${sel}</div><div class="opts">${opts || (extraChip || scripChip ? '' : '<span class="opt">沒有任何來源的價格</span>')}${extraChip}${scripChip}</div>${kids}</div>`;
 }
+$('planner-body').addEventListener('input', e => {
+  if (e.target.id !== 'my-price') return; const v = Math.floor(+e.target.value);
+  if (v > 0) ST.myPrice[ST.selected] = v; else delete ST.myPrice[ST.selected];
+  // 只保留最近 300 個物品的自訂價格，避免存檔無限變大
+  const ks = Object.keys(ST.myPrice); if (ks.length > 300) ks.slice(0, ks.length - 300).forEach(k => delete ST.myPrice[k]);
+  save(); updateMyPrice();
+});
 $('planner-body').addEventListener('change', e => {
   const s = e.target.closest('select[data-ov]'); if (!s) return;
   if (s.value) ST.ov[s.dataset.ov] = s.value; else delete ST.ov[s.dataset.ov];
   save(); renderPlanner(); if (ST.scanned.length) { computeAll(); }
 });
 $('planner-body').addEventListener('click', e => {
+  const cg = e.target.closest('[data-curgo]'); if (cg) { e.preventDefault(); go('prefs'); setTimeout(() => { $('cur-panel').scrollIntoView({ block: 'start' }); const i = $('cur-grid').querySelector('input'); if (i) i.focus(); }, 50); return; }
+  const cn = e.target.closest('.copyname'); if (cn) { copyText(cn.dataset.copy, `已複製「${cn.dataset.copy}」`); return; }
   const sb = e.target.closest('[data-fav]'); if (sb) { const on = toggleFav(+sb.dataset.fav); sb.classList.toggle('on', on); sb.textContent = on ? '★' : '☆'; toast(on ? '已加入收藏' : '已取消收藏'); return; }
+  const mq = e.target.closest('[data-myp]'); if (mq) { const v = +mq.dataset.myp; if (v > 0) ST.myPrice[ST.selected] = v; else delete ST.myPrice[ST.selected]; save(); const i = $('my-price'); if (i) i.value = v > 0 ? v : ''; updateMyPrice(); return; }
   if (e.target.id === 'reset-ov') { ST.ov = {}; save(); renderPlanner(); if (ST.scanned.length) computeAll(); toast('材料來源已重設為逐項最低'); }
-  if (e.target.id === 'to-macro') { openMacro(ST.selected); return; }
   if (e.target.id === 'add-plan') {
     const rec = DB.recipes[ST.selected]; const qty = Math.ceil(ST.batch / rec.yields) * rec.yields;
     const ex = ST.plans.find(p => p.id === ST.selected); if (ex) ex.qty += qty; else ST.plans.push({ id: ST.selected, qty });
@@ -1777,402 +1785,6 @@ $('planner-body').addEventListener('click', e => {
 });
 
 /* ================= 我的收藏 ================= */
-/* ================= 生產巨集：模擬器與求解器 ================= */
-/* 技能表（7.x）：lv 習得等級、cp 製作力、d 耐久消耗、pg 作業效率、ql 加工效率、w 巨集等待秒數類型（b=增益） */
-const ACTS = [
-  { k: 'mm', n: '堅信', lv: 54, cp: 6, d: 10, pg: 300, first: 1 },
-  { k: 'ref', n: '閒靜', lv: 69, cp: 6, d: 10, ql: 300, first: 1 },
-  { k: 'eye', n: '工匠的神速技巧', lv: 80, cp: 250, d: 0, first: 1 },
-  { k: 'bs', n: '製作', lv: 1, cp: 0, d: 10, pg: 100, up: [31, 120] },
-  { k: 'cs', n: '模範製作', lv: 62, cp: 7, d: 10, pg: 150, up: [82, 180] },
-  { k: 'ps', n: '儉約製作', lv: 88, cp: 18, d: 5, pg: 180, noWN: 1 },
-  { k: 'gw', n: '坯料製作', lv: 72, cp: 18, d: 20, pg: 300, up: [86, 360] },
-  { k: 'ds', n: '精密製作', lv: 76, cp: 32, d: 10, pg: 100, up: [94, 150], ql: 100 },
-  { k: 'bt', n: '加工', lv: 5, cp: 18, d: 10, ql: 100 },
-  { k: 'st', n: '中級加工', lv: 18, cp: 32, d: 10, ql: 125 },
-  { k: 'at', n: '上級加工', lv: 68, cp: 46, d: 10, ql: 150 },
-  { k: 'pt', n: '儉約加工', lv: 66, cp: 25, d: 5, ql: 100, noWN: 1 },
-  { k: 'prep', n: '坯料加工', lv: 71, cp: 40, d: 20, ql: 200 },
-  { k: 'rt', n: '精煉加工', lv: 92, cp: 24, d: 10, ql: 100 },
-  { k: 'tf', n: '工匠的神技', lv: 90, cp: 32, d: 0, ql: 100 },
-  { k: 'bb', n: '比爾格的祝福', lv: 50, cp: 24, d: 10, ql: 100 },
-  { k: 'obs', n: '觀察', lv: 13, cp: 7, d: 0 },
-  { k: 'ven', n: '崇敬', lv: 15, cp: 18, d: 0, b: 1 },
-  { k: 'inno', n: '改革', lv: 26, cp: 18, d: 0, b: 1 },
-  { k: 'gs', n: '闊步', lv: 21, cp: 32, d: 0, b: 1 },
-  { k: 'wn', n: '儉約', lv: 15, cp: 56, d: 0, b: 1 },
-  { k: 'wn2', n: '長期儉約', lv: 47, cp: 98, d: 0, b: 1 },
-  { k: 'manip', n: '掌握', lv: 65, cp: 96, d: 0, b: 1 },
-  { k: 'mend', n: '精修', lv: 7, cp: 88, d: 0 },
-  { k: 'imm', n: '巧奪天工', lv: 98, cp: 112, d: 0 },
-  { k: 'tp', n: '工匠的絕技', lv: 100, cp: 0, d: 0, b: 1 },
-];
-const ACT = {}; ACTS.forEach((a, i) => { a.i = i; ACT[a.k] = a; });
-/* 職業等級 → 製作等級（Lv51 以上與配方等級 rlvl 比較用）；資料庫有同一張表時會覆蓋 */
-const CLVL_FALLBACK = [120, 125, 130, 133, 136, 139, 142, 145, 148, 150, 260, 265, 270, 273, 276, 279, 282, 285, 288, 290, 390, 395, 400, 403, 406, 409, 412, 415, 418, 420, 517, 520, 525, 530, 535, 540, 545, 550, 555, 560, 650, 653, 656, 660, 665, 670, 675, 680, 685, 690];
-const crafterLevel = (lv, table) => (table && table[lv] && table[lv].recipeLevel) || (lv <= 50 ? lv : CLVL_FALLBACK[Math.min(100, lv) - 51]);
-
-/* 建立一次製作的固定參數。rec：配方（progress／quality／durability／rlvl／各除數與係數）；st：{lvl, cms, ctl, cp} */
-function craftCtx(rec, st, opt = {}) {
-  const clvl = crafterLevel(st.lvl, opt.lvTable);
-  let bp = st.cms * 10 / rec.progressDivider + 2, bq = st.ctl * 10 / rec.qualityDivider + 35;
-  if (clvl <= rec.rlvl) { bp = bp * rec.progressModifier / 100; bq = bq * rec.qualityModifier / 100; }
-  const ctx = { maxP: rec.progress, maxQ: rec.quality, maxD: rec.durability, bp: Math.floor(bp), bq: Math.floor(bq), lvl: st.lvl, cp: st.cp,
-    initQ: Math.min(rec.quality, Math.max(0, opt.initQ || 0)), eyeOK: !rec.expert && st.lvl >= rec.lvl + 10, ban: opt.ban || {} };
-  ctx.pot = ACTS.map(a => a.pg ? (a.up && st.lvl >= a.up[0] ? a.up[1] : a.pg) : 0);
-  ctx.avail = ACTS.filter(a => st.lvl >= a.lv && !ctx.ban[a.k] && (a.k !== 'eye' || ctx.eyeOK));
-  ctx.has = {}; ctx.avail.forEach(a => ctx.has[a.k] = 1);
-  return ctx;
-}
-const startState = ctx => ({ p: 0, q: ctx.initQ, d: ctx.maxD, cp: ctx.cp, iq: 0, inno: 0, gs: 0, ven: 0, wn: 0, manip: 0, mm: 0, combo: 0, tp: 0, step: 0, done: false, prev: null, a: null });
-/* 執行一個技能，回傳新狀態；不能用或製作失敗（耐久歸零未完成）回傳 null。search = true 時另外略過明顯無益的用法 */
-function applyAct(ctx, s, a, search, cap) {
-  const k = a.k;
-  let cost = a.cp;
-  if (k === 'st' && s.combo === 1) cost = 18; else if (k === 'at' && s.combo === 2) cost = 18;
-  if (cost > s.cp) return null;
-  if (a.first && s.step) return null;
-  if (a.noWN && s.wn) return null;
-  if (k === 'bb' && !s.iq) return null;
-  if (k === 'tf' && s.iq < 10) return null;
-  if (k === 'tp' && s.tp) return null;
-  if (search) {
-    if (a.ql && !a.pg && s.q >= cap) return null;
-    if ((k === 'inno' || k === 'gs' || k === 'obs') && s.q >= cap) return null;
-    if (k === 'inno' && s.inno > 1) return null;
-    if (k === 'ven' && s.ven > 1) return null;
-    if (k === 'gs' && s.gs) return null;
-    if ((k === 'wn' || k === 'wn2') && s.wn) return null;
-    if (k === 'manip' && s.manip > 1) return null;
-    if (k === 'mend' && ctx.maxD - s.d < 30) return null;
-    if (k === 'imm' && ctx.maxD - s.d < 40) return null;
-    if (k === 'obs' && (!ctx.has.at || s.cp < 25)) return null;
-    if (k === 'ds' && s.q >= cap) return null;
-  }
-  const n = { p: s.p, q: s.q, d: s.d, cp: s.cp - cost, iq: s.iq, inno: s.inno, gs: s.gs, ven: s.ven, wn: s.wn, manip: s.manip, mm: s.mm, combo: 0, tp: s.tp, step: s.step + 1, done: false, prev: s, a };
-  let dc = a.d;
-  if (dc) { if (s.tp === 1) { dc = 0; n.tp = 2; } else if (s.wn) dc = dc / 2; }
-  let pg = ctx.pot[a.i], ql = a.ql || 0;
-  if (k === 'gw' && s.d < dc) pg = pg / 2;
-  if (k === 'bb') ql = 100 + 20 * s.iq;
-  if (pg) { n.p += Math.floor(ctx.bp * pg * (2 + (s.ven ? 1 : 0) + (s.mm ? 2 : 0)) / 200); n.mm = 0; }
-  if (ql) {
-    n.q += Math.floor(ctx.bq * ql * (10 + s.iq) * (2 + (s.inno ? 1 : 0) + (s.gs ? 2 : 0)) / 2000); n.gs = 0;
-    n.iq = k === 'bb' ? 0 : Math.min(10, s.iq + (k === 'prep' || k === 'ref' || (k === 'rt' && s.combo === 1) ? 2 : 1));
-  }
-  if (k === 'eye') n.q = ctx.maxQ;
-  if (n.q > ctx.maxQ) n.q = ctx.maxQ;
-  n.d -= dc;
-  if (n.p >= ctx.maxP) { n.p = ctx.maxP; n.done = true; return n; }
-  if (n.d <= 0) return null;
-  if (k === 'mend') n.d = Math.min(ctx.maxD, n.d + 30); else if (k === 'imm') n.d = ctx.maxD;
-  if (k !== 'manip' && s.manip) n.d = Math.min(ctx.maxD, n.d + 5);
-  if (n.inno) n.inno--; if (n.ven) n.ven--; if (n.wn) n.wn--; if (n.manip) n.manip--; if (n.gs) n.gs--; if (n.mm) n.mm--;
-  if (k === 'mm') n.mm = 5; else if (k === 'ven') n.ven = 4; else if (k === 'inno') n.inno = 4; else if (k === 'gs') n.gs = 3;
-  else if (k === 'wn') n.wn = 4; else if (k === 'wn2') n.wn = 8; else if (k === 'manip') n.manip = 8; else if (k === 'tp') n.tp = 1;
-  if (k === 'bt') n.combo = 1; else if ((k === 'st' && s.combo === 1) || k === 'obs') n.combo = 2;
-  return n;
-}
-/* 依序執行技能代號，回傳每一步的狀態（驗證與顯示用）；中途失敗就停在那一步 */
-function simulate(ctx, keys) {
-  let s = startState(ctx); const steps = [];
-  for (const k of keys) { const n = applyAct(ctx, s, ACT[k], false, 0); if (!n) return { steps, ok: false, final: s, failAt: k }; steps.push(n); s = n; if (n.done) break; }
-  return { steps, ok: s.done, final: s };
-}
-const pathOf = s => { const out = []; for (let x = s; x && x.a; x = x.prev) out.push(x.a.k); return out.reverse(); };
-
-/* 剩餘進展的收尾成本估計（不靠增益）：最少要多少 CP 與保留多少耐久才能做完 */
-function makeFinisher(ctx, rate) {
-  const syn = ['bs', 'cs', 'ps', 'gw'].filter(k => ctx.has[k]).map(k => ({ cp: ACT[k].cp, d: ACT[k].d, g: Math.floor(ctx.bp * ctx.pot[ACT[k].i] / 100), gv: Math.floor(ctx.bp * ctx.pot[ACT[k].i] * 3 / 200) }));
-  const maxG = Math.max(1, ...syn.map(a => a.gv)), memo = new Map();
-  const far = rem => { const n = rem / maxG; return { cost: n * (12 + rate * 12), cp: n * 12, dur: n * 12, steps: Math.ceil(n * 1.2) }; };
-  function f(rem, ven) {
-    if (rem <= 0) return { cost: 0, cp: 0, dur: 0, steps: 0 };
-    if (rem > maxG * 14) return far(rem);
-    const key = rem * 8 + ven; let r = memo.get(key); if (r) return r;
-    r = { cost: Infinity, cp: 0, dur: 0, steps: 0 };
-    for (const a of syn) {
-      const g = ven ? a.gv : a.g, last = rem - g <= 0;
-      const t = last ? null : f(rem - g, ven ? ven - 1 : 0);
-      const dur = last ? (a.d > 10 ? a.d : 5) : a.d + t.dur, cp = a.cp + (last ? 0 : t.cp), cost = cp + rate * dur;
-      if (cost < r.cost) r = { cost, cp, dur, steps: 1 + (last ? 0 : t.steps) };
-    }
-    if (!ven && ctx.has.ven) { const t = f(rem, 4); if (t.cost + 18 < r.cost) r = { cost: t.cost + 18, cp: t.cp + 18, dur: t.dur, steps: t.steps + 1 }; }
-    memo.set(key, r); return r;
-  }
-  return rem => f(rem, 0);
-}
-
-/* 放寬模型的品質估值表：把耐久折成 CP（每點 rate），只留加工相關狀態（CP 當量、內靜、改革、闊步、連擊），
-   用動態規劃算出「剩這些資源最多還能加多少品質」。束搜尋拿它當評分，比固定換算率準確得多。 */
-function makeQualityTable(ctx, rate, cMax) {
-  const r = d => Math.round(rate * d), h = ctx.has, NS = 11 * 5 * 4 * 3;
-  const V = new Float32Array((cMax + 1) * NS);
-  const idx = (iq, inno, gs, combo) => ((iq * 5 + inno) * 4 + gs) * 3 + combo;
-  const T = [];
-  if (h.bt) T.push({ c: [18 + r(10), 18 + r(10), 18 + r(10)], pot: 100, iq: [1, 1, 1], combo: [1, 1, 1] });
-  if (h.st) T.push({ c: [32 + r(10), 18 + r(10), 32 + r(10)], pot: 125, iq: [1, 1, 1], combo: [0, 2, 0] });
-  if (h.at) T.push({ c: [46 + r(10), 46 + r(10), 18 + r(10)], pot: 150, iq: [1, 1, 1], combo: [0, 0, 0] });
-  if (h.pt) T.push({ c: [25 + r(5), 25 + r(5), 25 + r(5)], pot: 100, iq: [1, 1, 1], combo: [0, 0, 0] });
-  if (h.prep) T.push({ c: [40 + r(20), 40 + r(20), 40 + r(20)], pot: 200, iq: [2, 2, 2], combo: [0, 0, 0] });
-  if (h.rt) T.push({ c: [24 + r(10), 24 + r(10), 24 + r(10)], pot: 100, iq: [1, 2, 1], combo: [0, 0, 0] });
-  if (h.tf) T.push({ c: [32, 32, 32], pot: 100, iq: [1, 1, 1], combo: [0, 0, 0], need10: 1 });
-  const bbC = 24 + r(10);
-  for (let c = 1; c <= cMax; c++) for (let iq = 0; iq <= 10; iq++) for (let inno = 0; inno <= 4; inno++) for (let gs = 0; gs <= 3; gs++) for (let combo = 0; combo < 3; combo++) {
-    let best = 0; const i1 = inno ? inno - 1 : 0, g1 = gs ? gs - 1 : 0, mult = (10 + iq) * (2 + (inno ? 1 : 0) + (gs ? 2 : 0)) / 2000;
-    for (const t of T) {
-      const cc = t.c[combo]; if (cc > c || (t.need10 && iq < 10)) continue;
-      const v = t.pot * mult + V[(c - cc) * NS + idx(Math.min(10, iq + t.iq[combo]), i1, 0, t.combo[combo])]; if (v > best) best = v;
-    }
-    if (h.bb && iq && bbC <= c) { const v = (100 + 20 * iq) * mult + V[(c - bbC) * NS + idx(0, i1, 0, 0)]; if (v > best) best = v; }
-    if (h.inno && inno <= 1 && c >= 18) { const v = V[(c - 18) * NS + idx(iq, 4, g1, 0)]; if (v > best) best = v; }
-    if (h.gs && !gs && c >= 32) { const v = V[(c - 32) * NS + idx(iq, i1, 3, 0)]; if (v > best) best = v; }
-    if (h.at && c >= 7) { const v = V[(c - 7) * NS + idx(iq, i1, g1, 2)]; if (v > best) best = v; }
-    V[c * NS + idx(iq, inno, gs, combo)] = best;
-  }
-  return (R, s) => R <= 0 ? 0 : V[Math.min(cMax, Math.floor(R)) * NS + idx(s.iq, s.inno, s.gs, s.combo)] * ctx.bq;
-}
-/* 束搜尋：每一步保留評分最高的 width 個狀態。評分 = 已得品質 + 估值表（剩餘資源還能換多少品質）；
-   剩餘資源先扣掉收尾需要的 CP 與耐久。達到品質目標後改比「還要幾步做完」，找出最短的巨集。 */
-async function beamSearch(ctx, o) {
-  const { target, width, rate, first, onStep } = o;
-  const cap = Math.min(ctx.maxQ, target);
-  const fin = makeFinisher(ctx, rate);
-  const cMax = Math.ceil(ctx.cp + rate * (ctx.maxD + 30) + 260);
-  const QV = cap > ctx.initQ ? makeQualityTable(ctx, rate, cMax) : () => 0;
-  const bsGain = Math.max(1, Math.floor(ctx.bp * ctx.pot[ACT.bs.i] / 100));
-  const hasTP = ctx.has.tp;
-  const score = s => {
-    const f = fin(ctx.maxP - s.p);
-    let effCp = s.cp - f.cp, effD = s.d - f.dur, steps = f.steps;
-    if (effCp < 0) { steps = Math.ceil((ctx.maxP - s.p) / bsGain); effCp = s.cp; effD = s.d - (steps * 10 - 5); }
-    const R = effCp + (effD >= 0 ? rate * effD : 3.2 * effD) + s.wn * rate * o.wnv + s.manip * rate * 5 + (hasTP && s.tp < 2 ? rate * 20 : 0) + (s.p < ctx.maxP ? (s.mm ? 40 : 0) + s.ven * 4.5 : 0);
-    if (s.q >= cap) return 1e9 - steps * 1000 + R;
-    if (R < 0) return s.q + R * ctx.bq * 0.3;
-    const pot = QV(R, s);
-    if (s.q + pot >= cap) return 1e9 - (steps + (cap - s.q) / (ctx.bq * 4.5) + 3) * 1000 + Math.min(999, R);
-    return s.q + pot;
-  };
-  let beam = [startState(ctx)], best = null, visited = 0;
-  const better = (a, b) => !b || Math.min(a.q, cap) > Math.min(b.q, cap) || (Math.min(a.q, cap) === Math.min(b.q, cap) && (a.step < b.step || (a.step === b.step && a.cp > b.cp)));
-  for (let depth = 1; depth <= 70 && beam.length; depth++) {
-    const map = new Map();
-    for (const s of beam) for (const a of ctx.avail) {
-      if (depth === 1 && first && !first(a.k)) continue;
-      const n = applyAct(ctx, s, a, true, cap); if (!n) continue; visited++;
-      if (n.done) { if (better(n, best)) best = n; continue; }
-      const key = n.p + '|' + n.d + '|' + n.cp + '|' + (n.iq | n.inno << 4 | n.gs << 7 | n.ven << 9 | n.wn << 12 | n.manip << 16 | n.mm << 20 | n.combo << 23 | n.tp << 25);
-      const cur = map.get(key); if (!cur || n.q > cur.q) map.set(key, n);
-    }
-    if (best && best.q >= cap) break;
-    let next = [...map.values()];
-    if (next.length > width) { for (const s of next) s.sc = score(s); next.sort((a, b) => b.sc - a.sc); next.length = width; }
-    beam = next;
-    if (onStep) await onStep(depth, visited);
-  }
-  return { best, visited };
-}
-/* 多組參數各跑一次束搜尋，取最好的結果：品質高者優先，其次步數少 */
-async function solveCraft(ctx, { target = Infinity, width = 2500, onProgress } = {}) {
-  const cap = Math.min(ctx.maxQ, target);
-  const openers = [null];
-  if (ctx.has.mm) openers.push(k => k === 'mm'); if (ctx.has.ref) openers.push(k => k === 'ref');
-  if (openers.length > 1) openers[0] = k => k !== 'mm' && k !== 'ref';
-  const runs = []; for (const first of openers) for (const [rate, wnv] of [[2, 6], [1.5, 6]]) runs.push({ first, rate, wnv });
-  let best = null, visited = 0, i = 0;
-  for (const r of runs) {
-    const res = await beamSearch(ctx, { ...r, target, width, onStep: onProgress ? (d, v) => onProgress((i + Math.min(1, d / 40)) / runs.length, visited + v) : null });
-    visited += res.visited; i++;
-    const b = res.best;
-    if (b && (!best || Math.min(b.q, cap) > Math.min(best.q, cap) || (Math.min(b.q, cap) === Math.min(best.q, cap) && b.step < best.step))) best = b;
-  }
-  return best ? { keys: pathOf(best), visited } : { keys: null, visited };
-}
-
-/* ================= 生產巨集：介面 ================= */
-/* 品質百分比 → HQ 機率（遊戲內建對照表） */
-const HQ_TABLE = [1, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 9, 9, 9, 10, 10, 10, 11, 11, 11, 12, 12, 12, 13, 13, 13, 14, 14, 14, 15, 15, 15, 16, 16, 17, 17, 17, 18, 18, 18, 19, 19, 20, 20, 21, 22, 23, 24, 26, 28, 31, 34, 38, 42, 47, 52, 58, 64, 68, 71, 74, 76, 78, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 94, 96, 98, 100];
-const hqChance = (q, max) => max > 0 ? HQ_TABLE[Math.max(0, Math.min(100, Math.floor(q / max * 100)))] : 0;
-const MC_WIDTH = { fast: 500, std: 1500, fine: 4000 };
-const MC = { res: null, tok: 0, busy: false };
-function crafterStats(job) { const s = CFG.crafter.jobs[job] || {}; return { lvl: s.lvl || 100, cms: s.cms || 0, ctl: s.ctl || 0, cp: s.cp || 0 }; }
-const statsReady = st => st.cms > 0 && st.cp > 0;
-const mcMode = (cr, coll) => !cr.quality ? 'none' : ST.mc.mode === 'coll' && !coll ? 'max' : ST.mc.mode;
-function mcTarget(cr, coll) {
-  const m = mcMode(cr, coll);
-  if (m === 'none') return { q: 0, label: '只求完成' };
-  if (m === 'coll') { const t = coll[ST.mc.tier] || coll.high; return { q: Math.min(cr.quality, t.rating * 10), label: `收藏價值 ${fmt(t.rating)}（${TIER[ST.mc.tier] || '高'}檔）` }; }
-  if (m === 'pct') return { q: Math.ceil(cr.quality * ST.mc.pct / 100), label: `品質 ${ST.mc.pct}%` };
-  return { q: cr.quality, label: '品質全滿' };
-}
-const mcKey = (id, st, tq) => JSON.stringify([id, st, ST.mc.initQ, tq, CFG.mac.ban, CFG.mac.width]);
-const waitOf = a => a.b ? CFG.mac.waitB : CFG.mac.waitA;
-/* 把技能序列切成每個最多 15 行的巨集（結尾提示與 /mlock 各佔一行） */
-function macroTexts(keys) {
-  const M = CFG.mac, per = Math.max(1, 15 - (M.echo ? 1 : 0) - (M.lock ? 1 : 0)), out = [];
-  for (let i = 0; i < keys.length; i += per) {
-    const part = keys.slice(i, i + per), n = out.length + 1, last = i + per >= keys.length;
-    const lines = part.map(k => `/ac "${ACT[k].n}" <wait.${waitOf(ACT[k])}>`);
-    if (M.lock) lines.unshift('/mlock');
-    if (M.echo) lines.push(`/echo ${last ? '製作完成' : `巨集 ${n} 完成，請按巨集 ${n + 1}`} <se.${M.se}>`);
-    out.push({ text: lines.join('\n'), lines: lines.length, sec: part.reduce((a, k) => a + waitOf(ACT[k]), 0), n: part.length });
-  }
-  return out;
-}
-const buffTags = s => [[s.iq, '內靜'], [s.inno, '改革'], [s.gs, '闊步'], [s.ven, '崇敬'], [s.wn, '儉約'], [s.manip, '掌握'], [s.mm, '堅信']].filter(b => b[0]).map(b => `<span class="tag">${b[1]} ${b[0]}</span>`).join('') + (s.tp === 1 ? '<span class="tag">絕技</span>' : '');
-function macroResultHTML(R, cr, coll) {
-  const steps = R.sim.steps, f = R.sim.final, macros = macroTexts(R.keys);
-  const qpct = cr.quality ? f.q / cr.quality * 100 : 0, hit = f.q >= R.target.q;
-  const secs = macros.reduce((a, m) => a + m.sec, 0);
-  let qHint;
-  if (!cr.quality) qHint = '這個配方沒有品質';
-  else if (coll) { const v = Math.floor(f.q / 10), t = ['high', 'mid', 'base'].find(k => v >= coll[k].rating); qHint = `收藏價值 ${fmt(v)}・${t ? `達${TIER[t]}檔（${coll[t].scrip} 張票）` : '未達基本檔'}`; }
-  else qHint = `${qpct.toFixed(1)}%・HQ 機率約 ${hqChance(f.q, cr.quality)}%`;
-  let prev = { p: 0, q: R.ctx.initQ };
-  const rows = steps.map((s, i) => { const dp = s.p - prev.p, dq = s.q - prev.q; prev = s;
-    return `<tr><td class="rank">${i + 1}</td><td><strong>${esc(s.a.n)}</strong></td><td class="num">${fmt(s.p)}${dp ? `<small class="positive">+${fmt(dp)}</small>` : ''}</td><td class="num">${fmt(s.q)}${dq ? `<small class="gold">+${fmt(dq)}</small>` : ''}</td><td class="num">${Math.max(0, s.d)}</td><td class="num">${s.cp}</td><td>${buffTags(s)}</td></tr>`; }).join('');
-  return `<div class="overview">
-    <div class="stat"><div class="label">最終品質</div><div class="num ${hit ? 'positive' : 'gold'}">${fmt(f.q)} <span class="tiny">/ ${fmt(cr.quality)}</span></div><div class="hint">${qHint}</div></div>
-    <div class="stat"><div class="label">步數</div><div class="num">${steps.length} 步</div><div class="hint">${macros.length} 個巨集・約 ${secs} 秒</div></div>
-    <div class="stat"><div class="label">剩餘製作力</div><div class="num">${f.cp} CP</div><div class="hint">完成時耐久 ${Math.max(0, f.d)} / ${cr.durability}</div></div>
-    <div class="stat"><div class="label">目標</div><div class="num ${hit ? 'positive' : 'negative'}">${hit ? '✓ 達成' : '未達成'}</div><div class="hint">${esc(R.target.label)}${R.target.q ? `（品質 ${fmt(R.target.q)}）` : ''}</div></div></div>
-   ${hit ? '' : `<div class="note" style="margin-bottom:18px">以目前的數值找不到能達到目標的做法，下面是品質最高的一組（${qpct.toFixed(1)}%）。可以提高加工精度或製作力（食物、藥水、裝備鑲嵌）、改用 HQ 材料並填入「初期品質」，或在設定頁把搜尋精細度調高再算一次。</div>`}
-   <div class="panel"><div class="panel-title"><h2>巨集 <span class="tiny">｜共 ${macros.length} 個，依序按</span></h2><div class="actions">${macros.length > 1 ? '<button class="btn small" data-mcopy="all">複製全部</button>' : ''}</div></div>
-    <div class="mcmacros">${macros.map((m, i) => `<div class="mcm"><div class="mch"><b>巨集 ${i + 1}</b><span class="tiny">${m.n} 個技能・${m.lines} 行・約 ${m.sec} 秒</span><button class="btn small primary" data-mcopy="${i}">複製</button></div><pre>${esc(m.text)}</pre></div>`).join('')}</div>
-    <p class="subtle" style="margin-bottom:0">在遊戲內開啟「用戶巨集」，每個巨集各貼到一格。巨集假設製作狀態全程為「通常」：出現「高品質／最高品質」只會讓品質更高，但「低品質」會讓該步的加工打折，品質剛好壓線時建議留一點餘裕。等待秒數與結尾提示可在設定頁調整。</p></div>
-   <div class="panel"><div class="panel-title"><h2>逐步模擬</h2><span class="tiny">搜尋 ${fmt(R.visited)} 個狀態・${(R.ms / 1000).toFixed(1)} 秒</span></div>
-    <div class="table-wrap" style="max-height:none"><table><thead><tr><th>#</th><th>技能</th><th class="num">進展 / ${fmt(cr.progress)}</th><th class="num">品質 / ${fmt(cr.quality)}</th><th class="num">耐久</th><th class="num">CP</th><th>執行後的狀態（剩餘回合）</th></tr></thead><tbody>${rows}</tbody></table></div></div>`;
-}
-function renderMacro() {
-  const body = $('macro-body'), M = ST.mc;
-  if (!DB.ready) { body.innerHTML = '<div class="panel empty">資料庫載入中…</div>'; return; }
-  if (!DB.recipes[M.id] && DB.recipes[ST.selected]) M.id = ST.selected;
-  const id = M.id, rec = id && DB.recipes[id];
-  if (document.activeElement !== $('mc-search')) $('mc-search').value = rec ? DB.names[id] || '' : '';
-  const cr = rec && rec.cr, coll = rec && DB.coll && DB.coll[id] || null;
-  const mode = cr ? mcMode(cr, coll) : M.mode;
-  [...$('mc-mode').children].forEach(b => { b.classList.toggle('on', b.dataset.mm === mode); if (b.dataset.mm === 'coll') b.classList.toggle('hidden', !coll); });
-  $('mc-pct-f').classList.toggle('hidden', mode !== 'pct'); $('mc-tier-f').classList.toggle('hidden', mode !== 'coll');
-  if (document.activeElement !== $('mc-pct')) $('mc-pct').value = M.pct;
-  if (document.activeElement !== $('mc-initq')) $('mc-initq').value = M.initQ;
-  if (coll) $('mc-tier').innerHTML = ['high', 'mid', 'base'].map(t => `<option value="${t}" ${M.tier === t ? 'selected' : ''}>${TIER[t]}檔（收藏價值 ${fmt(coll[t].rating)}・${coll[t].scrip} 張）</option>`).join('');
-  $('mc-go').disabled = MC.busy || !cr; $('mc-stop').classList.toggle('hidden', !MC.busy);
-  if (!rec) { body.innerHTML = '<div class="panel empty">在上方搜尋配方，或從「生產規劃」按「計算這個配方的生產巨集」。</div>'; return; }
-  const head = `<div class="panel-title"><h2>${starBtn(id)} ${esc(DB.names[id] || '#' + id)}</h2><div class="actions"><span class="tag craft">${JOBS[rec.job]} Lv${rec.lvl}${rec.stars ? ' ' + '★'.repeat(rec.stars) : ''}</span>${cr && cr.expert ? '<span class="tag warn">高難度配方</span>' : ''}${coll ? `<span class="tag npc">收藏品・${SCRIP[coll.cur]}</span>` : ''}<button class="btn small" data-mplan="${id}">材料與利潤 →</button></div></div>`;
-  if (!cr) { body.innerHTML = `<div class="panel">${head}<div class="empty">這個配方沒有難度／品質／耐久資料，無法計算巨集。</div></div>`; return; }
-  const st = crafterStats(rec.job), ready = statsReady(st), tgt = mcTarget(cr, coll);
-  const ctx = ready ? craftCtx(cr, st, { lvTable: DB.lvTable, initQ: M.initQ, ban: CFG.mac.ban }) : null;
-  const warn = [];
-  if (!ready) warn.push(`還沒有填${JOBS[rec.job]}的製作者數值。<a href="#prefs" data-crjob="${rec.job}">到設定頁填寫${JOBS[rec.job]}的作業精度、加工精度與製作力 →</a>`);
-  else {
-    if (st.lvl < rec.lvl) warn.push(`${JOBS[rec.job]}等級 ${st.lvl} 低於配方等級 ${rec.lvl}，遊戲內可能無法製作。`);
-    if (cr.cmsReq > st.cms) warn.push(`作業精度 ${fmt(st.cms)} 低於配方要求的 ${fmt(cr.cmsReq)}，無法開始製作。`);
-    if (cr.ctlReq > st.ctl) warn.push(`加工精度 ${fmt(st.ctl)} 低於配方要求的 ${fmt(cr.ctlReq)}，無法開始製作。`);
-  }
-  if (cr.expert) warn.push('高難度配方的製作狀態變化很多（安定、高效、長持續等），固定巨集只能當參考，實際製作需要依狀態手動調整。');
-  $('mc-stat-badge').textContent = ready ? `${JOBS[rec.job]} Lv${st.lvl}・作業 ${fmt(st.cms)}・加工 ${fmt(st.ctl)}・CP ${st.cp}` : `尚未填寫${JOBS[rec.job]}的數值`;
-  $('mc-stat-badge').className = 'badge' + (ready ? '' : ' warn');
-  const R = MC.res && ready && MC.res.key === mcKey(id, st, tgt.q) ? MC.res : null;
-  body.innerHTML = `<div class="panel">${head}
-    <div class="mcgrid">
-     <div class="box"><div class="tiny">配方</div>
-      <div class="line"><span>難度（進展）</span><strong>${fmt(cr.progress)}</strong></div><div class="line"><span>品質上限</span><strong>${cr.quality ? fmt(cr.quality) : '—'}</strong></div>
-      <div class="line"><span>耐久</span><strong>${cr.durability}</strong></div><div class="line"><span>要求作業／加工精度</span><strong>${cr.cmsReq ? fmt(cr.cmsReq) : '—'} / ${cr.ctlReq ? fmt(cr.ctlReq) : '—'}</strong></div></div>
-     <div class="box"><div class="tiny">你的數值（${JOBS[rec.job]}）・<a href="#prefs" data-crjob="${rec.job}">修改</a></div>
-      <div class="line"><span>等級</span><strong>${st.lvl}</strong></div><div class="line"><span>作業精度／加工精度</span><strong>${fmt(st.cms)} / ${fmt(st.ctl)}</strong></div>
-      <div class="line"><span>製作力</span><strong>${st.cp} CP</strong></div><div class="line"><span>每 100% 效率</span><strong>${ctx ? `進展 +${fmt(ctx.bp)}・品質 +${fmt(ctx.bq)}` : '—'}</strong></div></div>
-    </div>
-    ${warn.map(w => `<div class="note" style="margin-top:12px">${w}</div>`).join('')}</div>
-   ${R ? (R.keys ? macroResultHTML(R, cr, coll) : `<div class="panel empty"><b class="negative">以目前的數值無法完成這個配方。</b><br><br>一次「製作」只能推進 ${fmt(Math.floor(R.ctx.bp * R.ctx.pot[ACT.bs.i] / 100))} 進展（難度 ${fmt(cr.progress)}），在耐久與製作力用完前做不完。請提高作業精度或製作力。</div>`)
-      : ready ? `<div class="panel empty">${MC.busy ? '計算中…' : `按「計算巨集」開始。目標：${esc(tgt.label)}${M.initQ ? `・初期品質 ${fmt(M.initQ)}` : ''}`}</div>` : ''}`;
-}
-async function solveMacro() {
-  const id = ST.mc.id, rec = DB.ready && DB.recipes[id]; if (!rec || !rec.cr) return;
-  const cr = rec.cr, coll = DB.coll && DB.coll[id] || null, st = crafterStats(rec.job);
-  if (!statsReady(st)) { toast(`請先填寫${JOBS[rec.job]}的製作者數值`); focusCrafter(rec.job); return; }
-  const tgt = mcTarget(cr, coll), key = mcKey(id, st, tgt.q);
-  const ctx = craftCtx(cr, st, { lvTable: DB.lvTable, initQ: ST.mc.initQ, ban: CFG.mac.ban });
-  const tok = ++MC.tok, t0 = performance.now(); let last = t0;
-  MC.busy = true; MC.res = null; $('mc-bar').classList.remove('idle'); $('mc-prog').style.width = '0%'; $('mc-prog-text').textContent = '計算中…'; renderMacro();
-  try {
-    const r = await solveCraft(ctx, { target: tgt.q, width: MC_WIDTH[CFG.mac.width] || MC_WIDTH.std, onProgress: async (f, v) => {
-      if (tok !== MC.tok) throw Object.assign(new Error('aborted'), { name: 'AbortError' });
-      const now = performance.now(); if (now - last < 50) return; last = now;
-      $('mc-prog').style.width = (f * 100).toFixed(0) + '%'; $('mc-prog-text').textContent = `已搜尋 ${fmt(v)} 個狀態`; await sleep(0);
-    } });
-    if (tok !== MC.tok) return;
-    const sim = r.keys ? simulate(ctx, r.keys) : null;
-    MC.res = { key, id, keys: sim && sim.ok ? r.keys : null, sim, ctx, target: tgt, visited: r.visited, ms: performance.now() - t0 };
-    $('mc-prog').style.width = '100%'; $('mc-prog-text').textContent = `完成，用時 ${((performance.now() - t0) / 1000).toFixed(1)} 秒`;
-  } catch (e) { if (e.name !== 'AbortError') { $('mc-prog-text').textContent = '計算失敗：' + e.message; } }
-  finally { if (tok === MC.tok) { MC.busy = false; if (ST.tab === 'macro') renderMacro(); } }
-}
-function mcSelect(id) { ST.mc.id = id; save(); $('mc-search').value = DB.names[id] || ''; }
-/* 從其他分頁按「巨集」進來：切到巨集分頁，數值已填且還沒算過就直接開始算 */
-function openMacro(id) {
-  mcSelect(id); go('macro');
-  const rec = DB.ready && DB.recipes[id]; if (!rec || !rec.cr || MC.busy) return;
-  const st = crafterStats(rec.job);
-  if (statsReady(st) && !(MC.res && MC.res.key === mcKey(id, st, mcTarget(rec.cr, DB.coll && DB.coll[id] || null).q))) solveMacro();
-}
-$('mc-stop').addEventListener('click', () => { MC.tok++; MC.busy = false; $('mc-prog-text').textContent = '已中止'; renderMacro(); });
-$('mc-go').addEventListener('click', solveMacro);
-$('mc-mode').addEventListener('click', e => { const b = e.target.closest('[data-mm]'); if (!b) return; ST.mc.mode = b.dataset.mm; save(); renderMacro(); });
-$('mc-tier').addEventListener('change', () => { ST.mc.tier = $('mc-tier').value; save(); renderMacro(); });
-$('mc-pct').addEventListener('input', () => { ST.mc.pct = Math.min(100, Math.max(1, Math.round(+$('mc-pct').value) || 100)); save(); renderMacro(); });
-$('mc-initq').addEventListener('input', () => { ST.mc.initQ = Math.max(0, Math.round(+$('mc-initq').value) || 0); save(); renderMacro(); });
-$('macro-body').addEventListener('click', e => {
-  const sb = e.target.closest('[data-fav]'); if (sb) { const on = toggleFav(+sb.dataset.fav); sb.classList.toggle('on', on); sb.textContent = on ? '★' : '☆'; toast(on ? '已加入收藏' : '已取消收藏'); return; }
-  const cj = e.target.closest('[data-crjob]'); if (cj) { e.preventDefault(); focusCrafter(+cj.dataset.crjob); return; }
-  const pl = e.target.closest('[data-mplan]'); if (pl) { selectItem(+pl.dataset.mplan); go('planner'); return; }
-  const cp = e.target.closest('[data-mcopy]'); if (!cp || !MC.res || !MC.res.keys) return;
-  const ms = macroTexts(MC.res.keys), k = cp.dataset.mcopy;
-  copyText(k === 'all' ? ms.map((m, i) => `【巨集 ${i + 1}】\n${m.text}`).join('\n\n') : ms[+k].text, k === 'all' ? '已複製全部巨集' : `已複製巨集 ${+k + 1}`);
-});
-
-/* ================= 設定：製作者數值與巨集格式 ================= */
-const CR_FIELDS = [['lvl', '等級', 1, 100], ['cms', '作業精度', 0, 9999], ['ctl', '加工精度', 0, 9999], ['cp', '製作力 CP', 0, 999]];
-const crFilled = j => { const x = CFG.crafter.jobs[j]; return !!(x && x.cms > 0 && x.cp > 0); };
-function crStatus() {
-  const n = Object.keys(JOBS).filter(crFilled).length;
-  $('cr-saved').textContent = `已填 ${n} / 8 個職業・自動保存`; $('cr-saved').className = 'badge' + (n ? '' : ' warn');
-  document.querySelectorAll('#cr-table .crrow[data-job]').forEach(r => { const ok = crFilled(r.dataset.job); r.classList.toggle('ok', ok); r.querySelector('b small').textContent = ok ? '✓ 已填' : '未填'; });
-}
-function renderCrafter() {
-  const c = CFG.crafter, M = CFG.mac;
-  const cells = (key, s) => CR_FIELDS.map(([f, l, mn, mx]) => `<label><span>${l}</span><input class="input" type="number" inputmode="numeric" min="${mn}" max="${mx}" value="${s[f] || ''}" data-cr="${key}|${f}" placeholder="${f === 'lvl' ? '100' : '未填'}" aria-label="${key === 'all' ? '快速填入' : JOBS[key]} ${l}"></label>`).join('');
-  $('cr-table').innerHTML = `<div class="crrow quick"><b>快速填入<small>八職相同時用</small></b>${cells('all', c.all)}<button class="btn small" id="cr-apply">套用到全部職業</button></div>`
-    + Object.entries(JOBS).map(([k, v]) => `<div class="crrow" data-job="${k}"><b>${v}<small></small></b>${cells(k, c.jobs[k] || {})}<button class="btn small" data-crclr="${k}" title="清空這個職業的數值">清空</button></div>`).join('');
-  crStatus();
-  $('mac-wa').value = M.waitA; $('mac-wb').value = M.waitB; $('mac-se').value = M.se; $('mac-echo').checked = M.echo; $('mac-lock').checked = M.lock; $('mac-width').value = M.width;
-  $('mac-ban').innerHTML = ACTS.filter(a => a.k !== 'bs').map(a => `<button class="chip ${M.ban[a.k] ? '' : 'on'}" data-ban="${a.k}" title="Lv${a.lv} 習得">${a.n}</button>`).join('');
-}
-/* 切到設定頁並把游標放到指定職業那一列 */
-function focusCrafter(job) {
-  go('prefs');
-  const row = document.querySelector(`#cr-table .crrow[data-job="${job}"]`); if (!row) return;
-  row.scrollIntoView({ block: 'center' }); row.classList.add('hl'); setTimeout(() => row.classList.remove('hl'), 2500);
-  const i = row.querySelector(crFilled(job) ? 'input' : '[data-cr$="|cms"]'); if (i) i.focus();
-}
-$('cr-table').addEventListener('input', e => {
-  const i = e.target.closest('[data-cr]'); if (!i) return; const [key, f] = i.dataset.cr.split('|'), c = CFG.crafter;
-  const fd = CR_FIELDS.find(x => x[0] === f), v = Math.min(fd[3], Math.max(0, Math.floor(+i.value) || 0));
-  const tgt = key === 'all' ? c.all : (c.jobs[key] || (c.jobs[key] = { lvl: 100, cms: 0, ctl: 0, cp: 0 }));
-  tgt[f] = f === 'lvl' ? (v || 100) : v; save(); crStatus();
-});
-$('cr-table').addEventListener('click', e => {
-  const c = CFG.crafter;
-  if (e.target.id === 'cr-apply') {
-    if (!(c.all.cms > 0 && c.all.cp > 0)) return toast('請先在「快速填入」那一列填作業精度與製作力');
-    if (Object.keys(JOBS).some(crFilled) && !confirm('確定用這組數值覆蓋八個職業目前的數值？')) return;
-    for (const j in JOBS) c.jobs[j] = { ...c.all }; save(); renderCrafter(); toast('已套用到全部職業'); return;
-  }
-  const b = e.target.closest('[data-crclr]'); if (b) { c.jobs[b.dataset.crclr] = { lvl: 100, cms: 0, ctl: 0, cp: 0 }; save(); renderCrafter(); }
-});
-for (const [id, k, mn, mx] of [['mac-wa', 'waitA', 1, 9], ['mac-wb', 'waitB', 1, 9], ['mac-se', 'se', 1, 16]]) $(id).addEventListener('change', () => { CFG.mac[k] = Math.min(mx, Math.max(mn, Math.round(+$(id).value) || DEF.mac[k])); $(id).value = CFG.mac[k]; save(); });
-for (const [id, k] of [['mac-echo', 'echo'], ['mac-lock', 'lock']]) $(id).addEventListener('change', () => { CFG.mac[k] = $(id).checked; save(); });
-$('mac-width').addEventListener('change', () => { CFG.mac.width = $('mac-width').value; save(); });
-$('mac-ban').addEventListener('click', e => { const b = e.target.closest('[data-ban]'); if (!b) return; const k = b.dataset.ban; if (CFG.mac.ban[k]) delete CFG.mac.ban[k]; else CFG.mac.ban[k] = 1; save(); renderCrafter(); });
 
 /* 某一天的成交均價：back = 0 今天、1 昨天（瀏覽器本地時間的 0 點起算）；days > 1 則是往回多天的區間。
    NQ、HQ 各自剔除極端值後合併，依成交數量加權。 */
@@ -2228,7 +1840,7 @@ async function favSearchRender() {
   const box = $('fav-results'), q = $('fav-search').value.trim().toLowerCase(), key = FAV.list;
   $('fav-ship').classList.toggle('primary', key === 'ship'); $('fav-new').classList.toggle('primary', key === 'new');
   if (!DB.ready || (!q && !key)) { box.innerHTML = ''; box.style.cssText = ''; return; }
-  const wrap = n => { box.style.cssText = n > 8 ? 'max-height:380px;overflow:auto;border:1px solid #23364a;border-radius:10px;margin-bottom:12px' : 'margin-bottom:12px'; };
+  const wrap = n => { box.style.cssText = n > 8 ? 'max-height:380px;overflow:auto;border:1px solid var(--k45);border-radius:10px;margin-bottom:12px' : 'margin-bottom:12px'; };
   if (key) {
     const L0 = LISTS[key], all = L0.ids().filter(id => DB.marketable.has(id) && DB.names[id]), tok = ++shipTok;
     if (key === 'new' && !Object.keys(DB.ver || {}).length) { box.innerHTML = '<div class="subtle" style="padding:10px">物品版本資料下載失敗，無法判斷新版本物品，請重新整理再試。</div>'; wrap(0); return; }
@@ -2286,7 +1898,6 @@ $('fav-content').addEventListener('click', e => {
   const sb = e.target.closest('[data-fav]'); if (sb) { toggleFav(+sb.dataset.fav); renderFavorites(); return; }
   const hd = e.target.closest('#fav-head .sortable'); if (hd) { const k = hd.dataset.k; if (CFG.sort === k) CFG.desc = !CFG.desc; else { CFG.sort = k; CFG.desc = k !== 'cost'; } $('sort').value = k; save(); renderFavorites(); return; }
   const ad = e.target.closest('[data-addfav]'); if (ad) { const id = +ad.dataset.addfav, y = DB.recipes[id].yields; const ex = ST.plans.find(p => p.id === id); if (ex) ex.qty += y; else ST.plans.push({ id, qty: y }); save(); updateCount(); toast(`已加入採購清單（${DB.names[id]} ×${y}）`); return; }
-  const mb = e.target.closest('[data-macro]'); if (mb) { openMacro(+mb.dataset.macro); return; }
   const op = e.target.closest('.rrow[data-id]'); if (op) { selectItem(+op.dataset.id); go('planner'); }
 });
 $('fav-market').addEventListener('click', e => {
@@ -2435,7 +2046,7 @@ function expandPlans() {
       const r = resolve(id, new Map(), 1, new Set(), need);
       const src = c ? (c.src === 'craft' ? r.src : c.src) : null;
       const unit = src && r.opts[src] != null ? r.opts[src] : (c ? c.unit : null);
-      leaves[id] = { id, qty: need, src, unit, gi: r.gi || (c && c.gi), vi: r.vi, bp: src === 'mkt' ? r.bp : null };
+      leaves[id] = { id, qty: need, src, unit, gi: r.gi || (c && c.gi), vi: r.vi, sc: r.sc || (c && c.sc), bp: src === 'mkt' ? r.bp : null };
     }
   }
   return { crafts, leaves: Object.values(leaves) };
@@ -2462,10 +2073,12 @@ async function renderShopping() {
   const evals = ST.plans.map(p => ({ p, r: DB.recipes[p.id] ? evalItem(p.id, memo) : null }));
   const { crafts, leaves } = expandPlans();
   const payOf = l => l.src === 'mkt' && l.bp ? l.bp.total * (1 + CFG.buyTax / 100) : (l.unit || 0) * l.qty;   // 市場整組購買＋買入稅   // 市場要整組買，付的是整組金額
-  const totalBuy = leaves.reduce((a, l) => a + (l.unit != null && !SELF(l.src) ? payOf(l) : 0), 0);
+  const totalBuy = leaves.reduce((a, l) => a + (l.unit != null && !SELF(l.src) && l.src !== 'scrip' ? payOf(l) : 0), 0);
+  const scripVal = leaves.reduce((a, l) => a + (l.src === 'scrip' && l.unit ? l.unit * l.qty : 0), 0);
+  const scripNeed = {}; leaves.forEach(l => { if (l.src === 'scrip' && l.sc) scripNeed[l.sc.k] = (scripNeed[l.sc.k] || 0) + Math.ceil(l.sc.amt * l.qty); });
   const revenue = evals.reduce((a, { p, r }) => a + (r && r.price ? r.price * p.qty * (1 - CFG.tax / 100) : 0), 0);
   const gatherVal = leaves.reduce((a, l) => a + (SELF(l.src) && l.unit ? l.unit * l.qty : 0), 0);
-  const groups = { mkt: [], npc: [], venture: [], gather: [], none: [] };
+  const groups = { mkt: [], npc: [], scrip: [], venture: [], gather: [], none: [] };
   leaves.forEach(l => (groups[l.src] || groups.none).push(l));
   const nm = id => esc(DB.names[id] || '#' + id);
   // 已備妥的勾選只保留清單裡還有的材料
@@ -2476,21 +2089,23 @@ async function renderShopping() {
   const section = (key, title, cols) => groups[key].length ? `<h3 class="rowtitle">${title}（${groups[key].length} 種）</h3><div class="table-wrap" style="margin-bottom:18px;max-height:none"><table><thead><tr>${cols.map(c => `<th>${c}</th>`).join('')}</tr></thead><tbody>${groups[key].sort((a, b) => (DB.names[a.id] || '').localeCompare(DB.names[b.id] || '', 'zh-Hant')).map(l => rowFor(key, l)).join('')}</tbody></table></div>` : '';
   const rowFor = (key, l) => key === 'mkt' ? `${trOpen(l)}<td>${tick(l)}<strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td class="num">${fmt(l.unit)}</td><td class="num">${fmt(payOf(l))}${l.bp && l.bp.surplus ? `<small>多買 ${fmt(l.bp.surplus)} 個</small>` : ''}</td><td>${l.bp ? `${l.bp.worlds.length} 台伺服器・${l.bp.take.length} 筆掛單・${fmt(l.bp.take[0].p)}～${fmt(l.bp.take[l.bp.take.length - 1].p)} G<small>${esc(l.bp.worlds.map(wName).join('、'))}</small>` + (l.bp.short ? `<small class="negative">掛單不足 ${fmt(l.bp.short)} 個，已用均價估算</small>` : '') : esc(marketWorld(l.id) || '—')}</td></tr>`
     : key === 'venture' ? `${trOpen(l)}<td>${tick(l)}<strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td>${l.vi ? `${VEN_CAT[l.vi.cat] || ''}委託 Lv${l.vi.lvl}` : '—'}</td><td class="num">${l.vi ? l.vi.qty : '—'}</td><td class="num">${l.vi ? Math.ceil(l.qty / l.vi.qty) * l.vi.cost : '—'}</td></tr>`
+    : key === 'scrip' ? `${trOpen(l)}<td>${tick(l)}<strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td>${l.sc ? CURS[l.sc.k] + (l.sc.rank ? `<small>需軍階 ${l.sc.rank}</small>` : '') : '—'}</td><td class="num">${l.sc ? fmtN(l.sc.amt) : '—'}</td><td class="num">${l.sc ? fmt(Math.ceil(l.sc.amt * l.qty)) : '—'}</td><td class="num">${fmt(l.unit * l.qty)}</td></tr>`
     : key === 'npc' ? `${trOpen(l)}<td>${tick(l)}<strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td class="num">${fmt(l.unit)}</td><td class="num">${fmt(l.unit * l.qty)}</td></tr>`
     : key === 'gather' ? `${trOpen(l)}<td>${tick(l)}<strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td>${l.gi ? l.gi.jobs.map(j => GJOB[j]).join(' / ') + ' Lv' + l.gi.lvl : '—'}</td><td class="num">${fmt(marketMat(l.id))}</td></tr>`
     : `${trOpen(l)}<td>${tick(l)}<strong>${nm(l.id)}</strong></td><td class="num">${fmt(l.qty)}</td><td><span class="tag warn">四種來源都沒有價格</span></td></tr>`;
   box.innerHTML = `<div class="overview">
      <div class="stat"><div class="label">計畫品項</div><div class="num">${ST.plans.length}</div><div class="hint">合計 ${ST.plans.reduce((a, p) => a + p.qty, 0)} 件成品${leaves.length ? `・材料已備妥 <span id="done-cnt">${nDone}</span> / ${leaves.length}` : ''}</div></div>
-     <div class="stat"><div class="label">需購買金額</div><div class="num">${fmt(totalBuy)} G</div><div class="hint">市場 + NPC${gatherVal ? `；自採估值 ${fmt(gatherVal)} G` : ''}</div></div>
+     <div class="stat"><div class="label">需購買金額</div><div class="num">${fmt(totalBuy)} G</div><div class="hint">市場 + NPC${scripVal ? `；工票 ${Object.entries(scripNeed).map(([k, n]) => `${CURS[k]} ${fmt(n)} 張`).join('、')}（折 ${fmt(scripVal)} G）` : ''}${gatherVal ? `；自採估值 ${fmt(gatherVal)} G` : ''}</div></div>
      <div class="stat"><div class="label">預估稅後收入</div><div class="num">${fmt(revenue)} G</div><div class="hint">全部以售價賣出</div></div>
-     <div class="stat"><div class="label">理論淨利</div><div class="num ${revenue - totalBuy - gatherVal > 0 ? 'positive' : 'negative'}">${fmt(revenue - totalBuy - gatherVal)} G</div><div class="hint">收入 − 購買 − 自採估值</div></div></div>
+     <div class="stat"><div class="label">理論淨利</div><div class="num ${revenue - totalBuy - gatherVal - scripVal > 0 ? 'positive' : 'negative'}">${fmt(revenue - totalBuy - gatherVal - scripVal)} G</div><div class="hint">收入 − 購買 − 工票折算 − 自採估值</div></div></div>
    <h3 class="rowtitle">生產佇列</h3><div class="table-wrap" style="margin-bottom:18px;max-height:none"><table><thead><tr><th>商品</th><th class="num">件數</th><th class="num">每件淨利</th><th class="num">售價</th><th>操作</th></tr></thead><tbody>
-   ${evals.map(({ p, r }, i) => `<tr><td><strong>${nm(p.id)}</strong>${r ? `<small>${JOBS[r.rec.job]} Lv${r.rec.lvl}</small>` : ''}</td><td class="num"><input class="input" type="number" min="1" max="9999" value="${p.qty}" data-qty="${i}" style="width:84px;height:30px"></td><td class="num ${r && r.profit > 0 ? 'positive' : 'negative'}">${r && r.profit != null ? sgn(r.profit) + fmt(r.profit) : '—'}</td><td class="num">${fmt(r && r.price)}</td><td><button class="btn small" data-open="${p.id}">規劃</button> ${r && r.rec.cr ? `<button class="btn small" data-macro="${p.id}">巨集</button> ` : ''}<button class="btn small" data-rm="${i}">移除</button></td></tr>`).join('')}
+   ${evals.map(({ p, r }, i) => `<tr><td><strong>${nm(p.id)}</strong>${r ? `<small>${JOBS[r.rec.job]} Lv${r.rec.lvl}</small>` : ''}</td><td class="num"><input class="input" type="number" min="1" max="9999" value="${p.qty}" data-qty="${i}" style="width:84px;height:30px"></td><td class="num ${r && r.profit > 0 ? 'positive' : 'negative'}">${r && r.profit != null ? sgn(r.profit) + fmt(r.profit) : '—'}</td><td class="num">${fmt(r && r.price)}</td><td><button class="btn small" data-open="${p.id}">規劃</button> <button class="btn small" data-rm="${i}">移除</button></td></tr>`).join('')}
    </tbody></table></div>
    ${crafts.filter(c => !c.top).length ? `<h3 class="rowtitle">需先自製的中間材</h3><div class="table-wrap" style="margin-bottom:18px;max-height:none"><table><thead><tr><th>中間材</th><th class="num">需要</th><th class="num">製作次數</th><th>職業</th></tr></thead><tbody>${crafts.filter(c => !c.top).map(c => `<tr><td><strong>${nm(c.id)}</strong></td><td class="num">${fmt(c.need)}</td><td class="num">${c.times}</td><td>${JOBS[c.rec.job]} Lv${c.rec.lvl}</td></tr>`).join('')}</tbody></table></div>` : ''}
    ${routeHTML(groups.mkt)}
    ${section('mkt', '市場板購買', ['材料', '數量', '平均單價', '需付（整組）', '掛單（詳見上方購買路線）'])}
    ${section('npc', 'NPC 商店購買', ['材料', '數量', '單價', '小計'])}
+   ${section('scrip', '工票／軍票兌換', ['材料', '數量', '貨幣', '每個張數', '合計張數', '折算 G'])}
    ${section('venture', '派雇員採集', ['材料', '數量', '委託', '每趟數量', '需探險幣'])}
    ${section('gather', '自行採集', ['材料', '數量', '採集職業', '市價參考'])}
    ${section('none', '缺價材料', ['材料', '數量', '備註'])}
@@ -2499,7 +2114,6 @@ async function renderShopping() {
 $('plans-content').addEventListener('click', e => {
   if (e.target.id === 'go-plan') return go('planner');
   const rm = e.target.closest('[data-rm]'); if (rm) { ST.plans.splice(+rm.dataset.rm, 1); save(); renderShopping(); return; }
-  const mb = e.target.closest('[data-macro]'); if (mb) { openMacro(+mb.dataset.macro); return; }
   const op = e.target.closest('[data-open]'); if (op) { selectItem(+op.dataset.open); go('planner'); }
 });
 $('plans-content').addEventListener('change', e => {
@@ -2514,9 +2128,9 @@ function listText() {
   const { crafts, leaves } = expandPlans(); const nm = id => DB.names[id] || '#' + id;
   const L = [`CraftWise 生產清單（${CFG.target}）`, '', '【成品】', ...ST.plans.map(p => `${nm(p.id)} × ${p.qty}`)];
   const mid = crafts.filter(c => !c.top); if (mid.length) L.push('', '【先自製】', ...mid.map(c => `${nm(c.id)} × ${c.need}（${JOBS[c.rec.job]} 製作 ${c.times} 次）`));
-  for (const [k, t] of [['mkt', '市場購買'], ['npc', 'NPC 購買'], ['venture', '派雇員'], ['gather', '自行採集']]) {
+  for (const [k, t] of [['mkt', '市場購買'], ['npc', 'NPC 購買'], ['scrip', '工票／軍票兌換'], ['venture', '派雇員'], ['gather', '自行採集']]) {
     const g = leaves.filter(l => l.src === k); if (!g.length) continue;
-    L.push('', `【${t}】`, ...g.map(l => `${nm(l.id)} × ${l.qty}` + (k === 'mkt' ? `（均 ${fmt(l.unit)} G${l.bp ? '・' + l.bp.take.map(t => wName(t.w) + ' ' + t.q + '×' + fmt(t.p)).join('、') : marketWorld(l.id) ? '・' + marketWorld(l.id) : ''}）` : k === 'venture' ? (l.vi ? `（${VEN_CAT[l.vi.cat] || ''}委託 ${Math.ceil(l.qty / l.vi.qty)} 趟）` : '') : k === 'npc' ? `（${fmt(l.unit)} G）` : l.gi ? `（${l.gi.jobs.map(j => GJOB[j]).join('/')}）` : '')));
+    L.push('', `【${t}】`, ...g.map(l => `${nm(l.id)} × ${l.qty}` + (k === 'mkt' ? `（均 ${fmt(l.unit)} G${l.bp ? '・' + l.bp.take.map(t => wName(t.w) + ' ' + t.q + '×' + fmt(t.p)).join('、') : marketWorld(l.id) ? '・' + marketWorld(l.id) : ''}）` : k === 'venture' ? (l.vi ? `（${VEN_CAT[l.vi.cat] || ''}委託 ${Math.ceil(l.qty / l.vi.qty)} 趟）` : '') : k === 'scrip' ? (l.sc ? `（${CURS[l.sc.k]} ${fmt(Math.ceil(l.sc.amt * l.qty))} 張）` : '') : k === 'npc' ? `（${fmt(l.unit)} G）` : l.gi ? `（${l.gi.jobs.map(j => GJOB[j]).join('/')}）` : '')));
   }
   return L.join('\n');
 }
@@ -2527,15 +2141,16 @@ $('csv-list').addEventListener('click', () => {
   const rows = [['類型', '物品ID', '物品', '數量', '來源', '單價', '小計', '備註']];
   ST.plans.forEach(p => rows.push(['成品', p.id, nm(p.id), p.qty, '製作', '', '', '']));
   crafts.filter(c => !c.top).forEach(c => rows.push(['中間材', c.id, nm(c.id), c.need, '自製', '', '', `${JOBS[c.rec.job]} ${c.times} 次`]));
-  leaves.forEach(l => rows.push(['材料', l.id, nm(l.id), l.qty, SRC[l.src] || '缺價', l.unit != null ? Math.round(l.unit) : '', l.unit != null ? Math.round(l.unit * l.qty) : '', l.src === 'mkt' ? (l.bp ? l.bp.take.map(t => wName(t.w) + ' ' + t.q + '×' + Math.round(t.p)).join('；') : marketWorld(l.id)) : l.src === 'venture' && l.vi ? `${VEN_CAT[l.vi.cat] || ''}委託 ${Math.ceil(l.qty / l.vi.qty)} 趟` : l.gi ? l.gi.jobs.map(j => GJOB[j]).join('/') : '']));
+  leaves.forEach(l => rows.push(['材料', l.id, nm(l.id), l.qty, SRC[l.src] || '缺價', l.unit != null ? Math.round(l.unit) : '', l.unit != null ? Math.round(l.unit * l.qty) : '', l.src === 'mkt' ? (l.bp ? l.bp.take.map(t => wName(t.w) + ' ' + t.q + '×' + Math.round(t.p)).join('；') : marketWorld(l.id)) : l.src === 'scrip' && l.sc ? `${CURS[l.sc.k]} ${Math.ceil(l.sc.amt * l.qty)} 張` : l.src === 'venture' && l.vi ? `${VEN_CAT[l.vi.cat] || ''}委託 ${Math.ceil(l.qty / l.vi.qty)} 趟` : l.gi ? l.gi.jobs.map(j => GJOB[j]).join('/') : '']));
   download(toCSV(rows), 'text/csv;charset=utf-8', 'craftwise_採購清單.csv'); toast('CSV 已匯出');
 });
 
 /* ================= 設定：類別與個別材料來源 ================= */
-const SRC_OPTS = [['', '自動（最低）'], ['mkt', '市場'], ['npc', 'NPC'], ['venture', '雇員'], ['gather', '自採'], ['craft', '自製']];
+const SRC_OPTS = [['', '自動（最低）'], ['mkt', '市場'], ['npc', 'NPC'], ['scrip', '工票'], ['venture', '雇員'], ['gather', '自採'], ['craft', '自製']];
 const srcSelect = (attr, val) => `<select class="input" ${attr}>${SRC_OPTS.map(([v, l]) => `<option value="${v}" ${v === (val || '') ? 'selected' : ''}>${l}</option>`).join('')}</select>`;
 function renderPrefs() {
-  $('patch-date').value = CFG.patchDate || ''; if (document.activeElement !== $('tw-patch')) $('tw-patch').value = CFG.twPatch; renderCrafter();
+  renderCurGrid();
+  $('patch-date').value = CFG.patchDate || ''; if (document.activeElement !== $('tw-patch')) $('tw-patch').value = CFG.twPatch;
   if (!DB.ready) return;
   const q = $('pc-search').value.trim().toLowerCase();
   // 類別名稱符合的排前面，只因為裡面有同名材料而符合的排後面
@@ -2556,6 +2171,32 @@ function renderPrefs() {
   $('po-list').innerHTML = ov.length ? ov.map(([id, v]) => `<div class="ovrow"><div><b>${esc(DB.names[id] || '#' + id)}</b><small>${esc(DB.catNames[DB.cat[id]] || '')}</small></div>${srcSelect(`data-posel="${id}"`, v)}<button class="btn small" data-porm="${id}">移除</button></div>`).join('')
     : '<div class="subtle">還沒有個別設定。上方搜尋材料，或在生產規劃的材料樹用下拉選單指定。</div>';
 }
+function renderCurGrid() {
+  $('cur-grid').innerHTML = Object.entries(CURS).map(([k, n]) => `<div class="field"><label for="cur-${k}">${n}（G／張）</label><input class="input" id="cur-${k}" type="number" min="0" step="1" inputmode="decimal" data-cur="${k}" placeholder="未設定" value="${CFG.curG[k] ?? ''}"></div>`).join('');
+}
+$('cur-grid').addEventListener('change', e => {
+  const i = e.target.closest('[data-cur]'); if (!i) return; const k = i.dataset.cur, raw = i.value.trim(), v = Number(raw);
+  if (raw === '' || !isFinite(v) || v < 0) { delete CFG.curG[k]; i.value = ''; } else CFG.curG[k] = Math.round(v * 10) / 10;
+  rulesChanged(raw === '' ? `${CURS[k]}已設為不使用` : `${CURS[k]}每張 ${fmt1(CFG.curG[k])} G`);
+});
+/* 用收藏品分頁的計算，估算巧手票每張成本（最高檔、所有職業、材料逐項取最低） */
+$('cur-est').addEventListener('click', async () => {
+  if (!DB.ready) return; const b = $('cur-est'); b.disabled = true; b.textContent = '估算中…';
+  try {
+    const keep = { ...ST.col }, saveSrc = CFG.src.scrip, out = [];
+    CFG.src.scrip = false;   // 估算時不讓工票來源回頭影響自己
+    for (const cur of [41784, 33913]) {
+      const ids = Object.keys(DB.coll).filter(k => DB.coll[k].cur === cur).flatMap(k => [+k, ...closure([+k])]);
+      try { await fetchPrices(ids, { label: '收藏品材料' }); } catch { }
+      Object.assign(ST.col, { cur, tier: 'high', myJobs: false, jobs: [], lvMin: 1, lvMax: 100, noInt: false, hideMiss: true });
+      const $s = $('col-search'), q = $s.value; $s.value = '';
+      const best = collRows().filter(r => r.ops > 0).sort((a, b) => a.ops - b.ops)[0]; $s.value = q;   // 自採／雇員材料按市價（放棄賣掉材料的機會成本），否則全自採的收藏品會估成 0 G
+      if (best) { CFG.curG[cur] = Math.round(best.ops * 10) / 10; out.push(`${CURS[cur]} ${fmt1(best.ops)} G（${DB.names[best.id]}）`); }
+    }
+    Object.assign(ST.col, keep); CFG.src.scrip = saveSrc;
+    renderCurGrid(); rulesChanged(out.length ? '已估算：' + out.join('、') : '估算失敗：收藏品材料缺價');
+  } finally { b.disabled = false; b.textContent = '依收藏品估算巧手票'; }
+});
 function rulesChanged(msg) { RB.clear(); save(); recompute(); renderPrefs(); if (msg) toast(msg); }
 $('pc-search').addEventListener('input', renderPrefs);
 $('patch-date').addEventListener('change', () => { CFG.patchDate = $('patch-date').value || ''; save(); toast(CFG.patchDate ? '已設定版本更新日' : '已清除'); });
@@ -2635,9 +2276,26 @@ function ventureUses() {
       const ta = tradeAvg(x.id);
       const base = (ta && ta.avg) || (x.mi && x.mi.value) || mv(x); if (!(base > 0)) continue;
       const perX = base * mult;
-      const cur = best.get(x.id);
-      if (!cur || perX > cur.perX) best.set(x.id, { pid: r.id, perX, mult, vel: r.vel, amount: x.amount, yields: r.rec.yields });
+      // 每種材料保留所有用得到它的成品，之後依「一趟的量 + 成品銷量」挑出實際最賺的那一個
+      (best.get(x.id) || best.set(x.id, []).get(x.id)).push({ pid: r.id, perX, mult, vel: r.vel || 0, amount: x.amount, yields: r.rec.yields });
     }
+  }
+  return best;
+}
+/* 依銷量決定一趟材料要做多少成品：成品最多只做「H 天內賣得完」的量（每日售出 × H），剩下的材料直接賣。
+   成品每日售出未滿 VEN_MIN_VEL 件不考慮；收益比直接賣多 5% 以上才建議製作。 */
+const VEN_MIN_VEL = 1;
+function pickUse(cands, vq, price, tax, vcost) {
+  const H = Math.max(0.5, ST.ven.horizon || 3);
+  let best = null;
+  for (const c of cands || []) {
+    if (!(c.vel >= VEN_MIN_VEL)) continue;
+    const maxCrafts = Math.floor(vq / c.amount); if (!maxCrafts) continue;
+    const crafts = Math.min(maxCrafts, Math.floor(c.vel * H / c.yields));   // 銷量能消化的製作次數
+    if (crafts < 1) continue;
+    const used = crafts * c.amount, prods = crafts * c.yields;
+    const trip = used * c.perX + (vq - used) * price * tax - vcost;
+    if (!best || trip > best.trip) best = { ...c, crafts, used, prods, rest: vq - used, days: prods / c.vel, capped: crafts < maxCrafts, maxProds: maxCrafts * c.yields, trip };
   }
   return best;
 }
@@ -2658,14 +2316,11 @@ function venRows() {
     const vcost = CFG.ventureG * vi.cost;
     const trip = vq * price * tax - vcost;
     const clear = vel > 0 ? vq / vel : null;
-    const u = uses.get(id);
-    const craftTrip = u ? u.perX * vq - vcost : null;
-    const prods = u ? Math.floor(vq / u.amount) * u.yields : 0;            // 一趟能做出幾個成品
-    const prodDays = u && u.vel > 0 ? prods / u.vel : null;                     // 這些成品要賣幾天
-    const gain = u ? u.perX - price * tax : null;
-    if (V.craftOnly && !(gain > 0)) continue;
-    out.push({ id, name, vi, vq, price, vel, trip, clear, u, craftTrip, gain, prods, prodDays, trend: trendFor(id, 'nq'), st: s.st, ta,
-      bal: clear != null ? trip / Math.max(1, clear) : 0, best: Math.max(trip, craftTrip ?? -Infinity) });
+    const cands = uses.get(id), u = pickUse(cands, vq, price, tax, vcost);
+    const craft = !!(u && u.trip > trip * 1.05 && u.trip - trip >= 1);   // 依銷量算過後仍明顯比直接賣好，才建議製作
+    if (V.craftOnly && !craft) continue;
+    out.push({ id, name, vi, vq, price, vel, trip, clear, u, craft, cands: cands ? cands.length : 0, trend: trendFor(id, 'nq'), st: s.st, ta,
+      bal: clear != null ? trip / Math.max(1, clear) : 0, best: craft ? u.trip : trip });
   }
   return out;
 }
@@ -2673,7 +2328,7 @@ let venToken = 0;
 async function renderVenture() {
   const V = ST.ven; updateSummary();
   [...$('ven-cat').children].forEach(b => b.classList.toggle('on', b.dataset.vc === String(V.cat)));
-  $('ven-sort').value = V.sort; $('ven-minvel').value = V.minVel; $('ven-nocrys').checked = V.noCrys; $('ven-craftonly').checked = V.craftOnly;
+  $('ven-sort').value = V.sort; $('ven-minvel').value = V.minVel; $('ven-horizon').value = V.horizon; $('ven-nocrys').checked = V.noCrys; $('ven-craftonly').checked = V.craftOnly;
   for (const [id, k] of [['ven-lvl', 'retLv'], ['ven-g', 'retG'], ['ven-p', 'retP'], ['ven-i', 'retI']]) if (document.activeElement !== $(id)) $(id).value = CFG[k];
   const body = $('ven-body');
   if (!DB.ready) { body.innerHTML = '<div class="empty">資料庫載入中…</div>'; return; }
@@ -2692,10 +2347,11 @@ async function renderVenture() {
   if (!rows.length) { body.innerHTML = '<div class="empty">沒有符合條件的委託，放寬篩選試試。</div>'; return; }
   const max = rows.reduce((m, r) => Math.max(m, r.trip), 0) || 1;
   body.innerHTML = rows.slice(0, 200).map((r, i) => {
-    const u = r.u, better = r.gain > 0;
+    const u = r.u;
+    const H = ST.ven.horizon || 3;
     const bestHTML = !ST.rows.length ? '<small>先到商機排行榜掃描，才能比較加工用途</small>'
-      : !u ? '<small>已掃描的配方沒有用到，直接賣</small>'
-      : `<b class="${better ? 'positive' : ''}">${better ? '做成' : '直接賣較好・'}${esc(DB.names[u.pid] || '')}</b><small>${better ? `加工倍率 ×${u.mult.toFixed(2)}，每個材料值 ${fmt(u.perX)} G（直接賣 ${fmt(r.price * (1 - CFG.tax / 100))}），每趟約 ${fmt(r.craftTrip)} G。一趟可做 ${fmt(r.prods)} 個成品${r.prodDays != null ? `，約 ${fmt1(r.prodDays)} 天賣完` : ''}${r.prodDays > 7 ? '<span class="negative">（市場吃不下，實際收益會打折）</span>' : ''}` : `加工倍率 ×${u.mult.toFixed(2)}，做成後每個材料只值 ${fmt(u.perX)} G`}</small>`;
+      : r.craft ? `<b class="positive">做成 ${esc(DB.names[u.pid] || '')}</b><small>每趟約 <b>${fmt(u.trip)} G</b>（直接賣 ${fmt(r.trip)} G，多 ${fmt(u.trip - r.trip)} G）。用 ${fmt(u.used)} 個材料做 ${fmt(u.prods)} 個成品，成品每日售出 ${fmt1(u.vel)} 件、約 ${fmt1(u.days)} 天賣完${u.rest ? `；剩 ${fmt(u.rest)} 個直接賣` : ''}${u.capped ? `<span class="gold">（一趟可做 ${fmt(u.maxProds)} 個，但 ${fmt1(H)} 天只賣得掉 ${fmt(u.prods)} 個）</span>` : ''}</small>`
+      : !r.cands ? '<small>直接賣（已掃描的配方沒用到）</small>' : `<b>直接賣材料</b><small>${ !u ? `用得到的 ${r.cands} 個成品每日售出都不到 ${VEN_MIN_VEL} 件，或 ${fmt1(H)} 天內賣不完一次製作的量，做了容易賣不出去` : `最好的用途是做 ${esc(DB.names[u.pid] || '')}，但依銷量只能做 ${fmt(u.prods)} 個，每趟約 ${fmt(u.trip)} G，沒有比直接賣明顯好`}</small>`;
     return `<div class="rrow vrow" data-vid="${r.id}" tabindex="0" role="link">
      <div class="nm">${starBtn(r.id)}<span class="rk">#${i + 1}</span><b style="display:inline">${esc(r.name)}</b><small>${esc(DB.catNames[DB.cat[r.id]] || '')}・近 ${r.ta.win} 天 ${r.ta.n} 筆／${fmt(r.ta.units)} 件成交${trendTag(r.trend)}</small></div>
      <div data-l="委託"><span class="tag venture">${VEN_CAT[r.vi.cat] || '委託'} Lv${r.vi.lvl}</span></div>
@@ -2711,6 +2367,7 @@ async function renderVenture() {
 $('ven-cat').addEventListener('click', e => { const b = e.target.closest('[data-vc]'); if (!b) return; ST.ven.cat = b.dataset.vc; save(); renderVenture(); });
 $('ven-sort').addEventListener('change', () => { ST.ven.sort = $('ven-sort').value; ST.ven.desc = ST.ven.sort !== 'clear'; save(); renderVenture(); });
 $('ven-search').addEventListener('input', debounce(() => renderVenture()));
+$('ven-horizon').addEventListener('change', () => { ST.ven.horizon = Math.min(30, Math.max(0.5, +$('ven-horizon').value || 3)); $('ven-horizon').value = ST.ven.horizon; save(); renderVenture(); });
 $('ven-minvel').addEventListener('change', () => { ST.ven.minVel = Math.max(0, +$('ven-minvel').value || 0); save(); renderVenture(); });
 for (const [id, key] of [['ven-nocrys', 'noCrys'], ['ven-craftonly', 'craftOnly']]) $(id).addEventListener('change', () => { ST.ven[key] = $(id).checked; save(); renderVenture(); });
 document.querySelector('#ven-list .vhead').addEventListener('click', e => {
@@ -2720,7 +2377,7 @@ document.querySelector('#ven-list .vhead').addEventListener('click', e => {
   if ($('ven-sort').querySelector(`option[value="${k}"]`)) $('ven-sort').value = k;
   save(); renderVenture();
 });
-$('ven-body').addEventListener('click', e => { const sb = e.target.closest('[data-fav]'); if (sb) { const on = toggleFav(+sb.dataset.fav); sb.classList.toggle('on', on); sb.textContent = on ? '★' : '☆'; toast(on ? '已加入收藏' : '已取消收藏'); return; } const r = e.target.closest('[data-vid]'); if (!r) return; const id = +r.dataset.vid; const v = venRows().find(x => x.id === id); if (v && v.u) { selectItem(v.u.pid); go('planner'); } else window.open(`${SITE}/item/${id}`, '_blank', 'noopener'); });
+$('ven-body').addEventListener('click', e => { const sb = e.target.closest('[data-fav]'); if (sb) { const on = toggleFav(+sb.dataset.fav); sb.classList.toggle('on', on); sb.textContent = on ? '★' : '☆'; toast(on ? '已加入收藏' : '已取消收藏'); return; } const r = e.target.closest('[data-vid]'); if (!r) return; const id = +r.dataset.vid; const v = venRows().find(x => x.id === id); if (v && v.craft) { selectItem(v.u.pid); go('planner'); } else window.open(`${SITE}/item/${id}`, '_blank', 'noopener'); });
 $('ven-refresh').addEventListener('click', () => { Object.keys(DB.vent).forEach(k => forget(+k)); RB.clear(); renderVenture(); toast('正在更新雇員材料行情'); });
 
 /* ================= 價格趨勢與上架時機 ================= */
@@ -2814,10 +2471,10 @@ function lineChart(days, key, W = 640) {
   const ticks = [lo, (lo + hi) / 2, hi];
   const lbl = days.map((d, i) => i % Math.ceil(days.length / 7) === 0 || i === days.length - 1 ? `<text x="${x(i)}" y="${Hh - 6}" text-anchor="middle">${d.k.slice(5).replace('-', '/')}</text>` : '').join('');
   return `<svg class="tchart" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="每日成交中位價">
-   ${ticks.map(t => `<line x1="${pl}" x2="${W - pr}" y1="${y(t)}" y2="${y(t)}" stroke="#22344a" stroke-width="1"/><text x="${pl - 6}" y="${y(t) + 4}" text-anchor="end">${fmt(t)}</text>`).join('')}
-   ${segs.map(s => `<polyline points="${s.join(' ')}" fill="none" stroke="#82d3c6" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`).join('')}
-   ${pts.filter(p => p.v != null).map(p => `<circle cx="${x(p.i)}" cy="${y(p.v)}" r="3" fill="#82d3c6" stroke="#101b2a" stroke-width="2"/>`).join('')}
-   <line class="xh" x1="0" x2="0" y1="${pt}" y2="${Hh - pb}" stroke="#98abc2" stroke-width="1" stroke-dasharray="3 3" visibility="hidden"/>
+   ${ticks.map(t => `<line x1="${pl}" x2="${W - pr}" y1="${y(t)}" y2="${y(t)}" style="stroke:var(--k85)" stroke-width="1"/><text x="${pl - 6}" y="${y(t) + 4}" text-anchor="end">${fmt(t)}</text>`).join('')}
+   ${segs.map(s => `<polyline points="${s.join(' ')}" fill="none" style="stroke:var(--k6)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`).join('')}
+   ${pts.filter(p => p.v != null).map(p => `<circle cx="${x(p.i)}" cy="${y(p.v)}" r="3" style="fill:var(--k6);stroke:var(--k1)" stroke-width="2"/>`).join('')}
+   <line class="xh" x1="0" x2="0" y1="${pt}" y2="${Hh - pb}" style="stroke:var(--k5)" stroke-width="1" stroke-dasharray="3 3" visibility="hidden"/>
    ${lbl}
    ${days.map((d, i) => `<rect class="hit" data-i="${i}" x="${x(i) - (W - pl - pr) / days.length / 2}" y="${pt}" width="${(W - pl - pr) / days.length}" height="${Hh - pt - pb}" fill="transparent"/>`).join('')}
   </svg>`;
@@ -2826,8 +2483,8 @@ function barChart(days, W = 640) {
   const Hh = 80, pl = 46, pr = 10, pt = 6, pb = 6;
   const max = Math.max(...days.map(d => d.vol), 1), bw = (W - pl - pr) / days.length;
   return `<svg class="tchart" viewBox="0 0 ${W} ${Hh}" role="img" aria-label="每日成交量">
-   <line x1="${pl}" x2="${W - pr}" y1="${Hh - pb}" y2="${Hh - pb}" stroke="#22344a"/><text x="${pl - 6}" y="${pt + 8}" text-anchor="end">${fmt(max)}</text>
-   ${days.map((d, i) => { const h = d.vol / max * (Hh - pt - pb); return h > 0 ? `<rect x="${pl + i * bw + 1}" y="${Hh - pb - h}" width="${Math.max(1, bw - 2)}" height="${h}" rx="${Math.min(4, bw / 3)}" fill="${d.wd === RESET_DAY ? '#ebc680' : '#4d8f86'}"/>` : ''; }).join('')}
+   <line x1="${pl}" x2="${W - pr}" y1="${Hh - pb}" y2="${Hh - pb}" style="stroke:var(--k85)"/><text x="${pl - 6}" y="${pt + 8}" text-anchor="end">${fmt(max)}</text>
+   ${days.map((d, i) => { const h = d.vol / max * (Hh - pt - pb); return h > 0 ? `<rect x="${pl + i * bw + 1}" y="${Hh - pb - h}" width="${Math.max(1, bw - 2)}" height="${h}" rx="${Math.min(4, bw / 3)}" style="fill:${d.wd === RESET_DAY ? 'var(--k7)' : 'var(--k121)'}"/>` : ''; }).join('')}
    ${days.map((d, i) => `<rect class="hit" data-i="${i}" x="${pl + i * bw}" y="0" width="${bw}" height="${Hh}" fill="transparent"/>`).join('')}
   </svg>`;
 }
@@ -2898,6 +2555,22 @@ function renderWeekly() {
    <div class="tiny" style="margin-top:6px">大數字 = 近 4 週平均價格指數（100 = 該商品整段中位價）；「本週」= 最近 7 天當天的指數。</div>`;
 }
 
+/* ================= 主題 ================= */
+const THEME_KEY = 'craftwise-theme', mqLight = window.matchMedia ? matchMedia('(prefers-color-scheme: light)') : null;
+const themePref = () => { try { const t = localStorage.getItem(THEME_KEY); return ['dark', 'light', 'auto'].includes(t) ? t : 'dark'; } catch { return 'dark'; } };
+function applyTheme(pref = themePref()) {
+  const t = pref === 'auto' ? (mqLight && mqLight.matches ? 'light' : 'dark') : pref;
+  document.documentElement.dataset.theme = t;
+  const m = document.querySelector('meta[name="theme-color"]'); if (m) m.content = t === 'light' ? '#e9eef4' : '#0b1220';
+  document.querySelectorAll('#theme-set [data-th]').forEach(b => b.classList.toggle('on', b.dataset.th === pref));
+  $('theme-toggle').textContent = t === 'light' ? '☾ 深色' : '☀ 淺色';
+  if (ST.tab === 'planner' && $('trend-box')) renderPlanner();   // 圖表顏色跟著換
+}
+function setTheme(pref) { try { localStorage.setItem(THEME_KEY, pref); } catch { } applyTheme(pref); }
+$('theme-set').addEventListener('click', e => { const b = e.target.closest('[data-th]'); if (b) setTheme(b.dataset.th); });
+$('theme-toggle').addEventListener('click', () => setTheme(document.documentElement.dataset.theme === 'light' ? 'dark' : 'light'));
+if (mqLight) mqLight.addEventListener('change', () => { if (themePref() === 'auto') applyTheme('auto'); });
+
 /* ================= 收合／摘要 ================= */
 function applyFolds() {
   document.querySelectorAll('.fold[data-fold]').forEach(el => {
@@ -2922,7 +2595,7 @@ function updateSummary() {
   $('filt-cnt').textContent = n || '';
   let m = 0; const C = ST.col; if (C.tier !== 'high') m++; if (C.sort !== 'cps') m++; if (!C.myJobs) m++; if (!C.hideMiss) m++; if (C.noInt) m++; if (C.lvMin !== 1 || C.lvMax !== 100) m++; if (C.jobs.length) m++;
   $('colf-cnt').textContent = m || '';
-  let v = 0; const V = ST.ven; if (V.minVel !== 1) v++; if (!V.noCrys) v++; if (V.craftOnly) v++;
+  let v = 0; const V = ST.ven; if (V.minVel !== 1) v++; if (V.horizon !== 3) v++; if (!V.noCrys) v++; if (V.craftOnly) v++;
   $('venf-cnt').textContent = v || '';
 }
 $('filt-reset').addEventListener('click', () => {
@@ -2933,7 +2606,7 @@ $('filt-reset').addEventListener('click', () => {
 /* ================= 匯出入與其他 ================= */
 function toCSV(rows) { return '﻿' + rows.map(r => r.map(x => '"' + String(x ?? '').replaceAll('"', '""') + '"').join(',')).join('\r\n'); }
 function download(content, type, name) { const u = URL.createObjectURL(new Blob([content], { type })), a = document.createElement('a'); a.href = u; a.download = name; document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(u), 1000); }
-$('download-json').addEventListener('click', () => download(JSON.stringify({ version: 2, plans: ST.plans, ov: ST.ov, fav: ST.fav, catRule: CFG.catRule, crafter: CFG.crafter, mac: CFG.mac }, null, 2), 'application/json', 'craftwise_plan.json'));
+$('download-json').addEventListener('click', () => download(JSON.stringify({ version: 2, plans: ST.plans, ov: ST.ov, fav: ST.fav, catRule: CFG.catRule }, null, 2), 'application/json', 'craftwise_plan.json'));
 $('upload-json').addEventListener('change', async e => {
   const f = e.target.files && e.target.files[0]; if (!f) return;
   try {
@@ -2943,7 +2616,6 @@ $('upload-json').addEventListener('change', async e => {
     const ov = {}; if (d.ov && typeof d.ov === 'object') for (const k in d.ov) if (SRC[d.ov[k]] && /^\d+$/.test(k)) ov[k] = d.ov[k];
     ST.plans = d.plans.map(p => ({ id: p.id, qty: p.qty })); ST.ov = ov; if (d.catRule && typeof d.catRule === 'object') { CFG.catRule = {}; for (const k in d.catRule) if (SRC[d.catRule[k]] && /^\d+$/.test(k)) CFG.catRule[k] = d.catRule[k]; }
     if (Array.isArray(d.fav)) { ST.fav = d.fav.filter(Number.isInteger).slice(0, 1000); $('fav-cnt').textContent = ST.fav.length; }
-    if (d.crafter && typeof d.crafter === 'object') CFG.crafter = normCrafter(d.crafter); if (d.mac) CFG.mac = normMac(d.mac);
     save(); toast('匯入成功'); go('shopping');
   } catch { toast('無法匯入：請確認檔案格式'); }
   e.target.value = '';
@@ -2953,14 +2625,13 @@ $('reset-all').addEventListener('click', async () => { if (!confirm('確定清�
 
 const TITLES = {
   ranking: ['現在製作什麼最值得？', '每種材料自動在市場板、NPC 商店、自採、自製中挑最便宜的，再依銷量與利潤排行。'],
-  planner: ['生產規劃工作台', '展開完整材料樹，比較每種材料的四種取得方式，評估真正能實現的利潤。'],
-  macro: ['生產巨集', '依你的作業精度、加工精度與製作力，算出品質最高、步數最少的製作技能順序，直接複製成遊戲巨集。'],
+  planner: ['生產規劃工作台', '展開完整材料樹，比較每種材料的各種取得方式，評估真正能實現的利潤。'],
   favorites: ['我的收藏', '成品和材料都能收藏：直接看今天的成交均價，成品另外列出成本與利潤，一鍵加入採購清單。'],
   venture: ['雇員委託收益', '派雇員帶回什麼最賺：直接賣的每趟收益、清倉速度，以及做成哪個成品最划算。'],
   collect: ['收藏品換票', '計算製作收藏品換巧手橙票／紫票的成本，找出每張票最便宜的做法。'],
   shopping: ['材料採購與生產清單', '合併多個商品的材料需求，依市場（含跨服購買路線）、NPC、雇員、自採分開列出。'],
   settings: ['資料與說明', '資料來源、計算方式與本機資料管理。'],
-  prefs: ['設定', '製作者數值與巨集格式、市場稅率，以及批量指定材料一律用市場、NPC、自採或自製。'],
+  prefs: ['設定', '市場稅率、工票／軍票價值，以及批量指定材料一律用市場、NPC、工票、自採或自製。'],
 };
 function go(tab) {
   if (!TITLES[tab]) tab = 'ranking';
@@ -2972,7 +2643,7 @@ function go(tab) {
   $('export-btn').classList.toggle('hidden', tab !== 'ranking');
   // 分頁記在網址的 #，重新整理、上一頁／下一頁都會回到同一頁
   if (location.hash.slice(1) !== tab) { try { history.pushState(null, '', '#' + tab); } catch { } }
-  if (tab === 'ranking') renderRanking(); if (tab === 'planner') renderPlanner(); if (tab === 'macro') renderMacro(); if (tab === 'shopping') renderShopping(); if (tab === 'favorites') renderFavorites(); if (tab === 'collect') renderCollect(); if (tab === 'prefs') renderPrefs(); if (tab === 'venture') renderVenture();
+  if (tab === 'ranking') renderRanking(); if (tab === 'planner') renderPlanner(); if (tab === 'shopping') renderShopping(); if (tab === 'favorites') renderFavorites(); if (tab === 'collect') renderCollect(); if (tab === 'prefs') renderPrefs(); if (tab === 'venture') renderVenture();
   window.scrollTo({ top: 0 });
 }
 $('nav').addEventListener('click', e => { const b = e.target.closest('button[data-tab]'); if (b) go(b.dataset.tab); });
@@ -2990,7 +2661,7 @@ document.addEventListener('keydown', e => {
 });
 
 DB.dcs = FALLBACK_DCS.map(d => ({ ...d, worlds: d.worlds.filter(w => !EXCL.has(w)) })); Object.assign(DB.worlds, FALLBACK_WORLDS);
-updatePatchLabels(); syncInputs(); updateCount(); renderServerChips(); applyFolds(); updateSummary(); $('fav-cnt').textContent = ST.fav.length;
+applyTheme(); updatePatchLabels(); syncInputs(); updateCount(); renderServerChips(); applyFolds(); updateSummary(); $('fav-cnt').textContent = ST.fav.length;
 if (hashTab() !== 'ranking') go(hashTab()); else renderRanking();
 loadDB();
 </script></body></html>
